@@ -21,9 +21,6 @@
 </head>
 
 <body>
-
-
-
     <div class="content border">
         <div class="container">
             <div class="row">

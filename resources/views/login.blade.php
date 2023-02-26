@@ -21,19 +21,19 @@
 </head>
 
 <body>
-    <div class="content border">
+    <div class="content">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 order-md-2">
-                    <img src="images/undraw_file_sync_ot38.svg" alt="Image" class="img-fluid">
+                    <img src="images/log_in.svg" alt="Image" class="img-fluid">
                 </div>
                 <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center shadow p-3 mb-5 bg-body rounded">
                         <div class="col-md-8">
                             <div class="mb-4">
                                 <h3>Sign In <strong> </strong></h3>
-                                <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
-                                    adipisicing.</p>
+                                <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur
+                                    adipisicing.</p> -->
                             </div>
                             <form action="#" method="post">
                                 <div class="form-group first">
@@ -51,14 +51,13 @@
                                     <label class="control control--checkbox mb-0"><span class="caption">Remember
                                             me</span>
                                         <input type="checkbox" checked="checked" />
-                                        <div class="control__indicator"></div>
+                                        <div style="background-color: purple;" class="control__indicator"></div>
                                     </label>
-                                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                                    <span class="ml-auto"><a href="{{ route('forgotpas')}}" class="forgot-pass">Forgot Password</a></span>
                                 </div>
-                                <!-- button đăng nhập -->
-                                <input type="submit" value="Log In" class="btn text-white btn-block btn-primary">
-
-                                <!-- <span class="d-block text-left my-4 text-muted"> or sign in with</span> -->
+                                <!-- button -->
+                                <input type="submit" style="background-color: purple;border:1px solid purple;height: 45px;" value="Log In" class="btn text-white btn-block btn-primary">
+                                <hr>
 
                                 <div style="display:flex; justify-content:center ;" class="social-login mt-4">
                                     <a href="#" class="facebook">
@@ -72,6 +71,7 @@
                                     </a>
                                 </div>
                             </form>
+                            <a class="btn text-white btn-block btn-primary" href="{{ route('signup')}}" style="text-decoration: none;background-color: purple;border:1px solid purple;width: 150px;margin: 0 auto;height: 45px;">Sign Up<a />
                         </div>
                     </div>
 
@@ -82,10 +82,10 @@
     </div>
 
 
-    <script src="/theme_convert/public/js/jquery-3.3.1.min.js"></script>
-    <script src="/theme_convert/public/js/popper.min.js"></script>
-    <script src="/theme_convert/public/js/bootstrap.min.js"></script>
-    <script src="/theme_convert/public/js/main.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

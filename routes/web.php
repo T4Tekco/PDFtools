@@ -31,6 +31,8 @@ Route::get('/profile', [AccountController::class, 'Profile'])->name('profile');
 Route::get('/changepassword', [AccountController::class, 'ChangePass'])->name('change_pass');
 Route::get('/forgotpass', [AccountController::class, 'ForgotPass'])->name('forgotpas');
 
+Route::get('/aboutus', [AccountController::class, 'AboutUs'])->name('aboutus');
+Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
 // Page convert
 // Route::get('/main', [ConvertFilesController::class, 'main'])->name('main');
 Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');

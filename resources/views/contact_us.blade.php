@@ -1,34 +1,46 @@
 @extends('main')
 @section('body')
-<div class="content container shadow">
+<div class="content container shadow" style="margin-bottom: 50px;">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 order-md-2">
-                <img src="/assets/images/changepass.svg" alt="Image" class="img-fluid">
+            <div class="col-md-6 order-md-2" style="margin-top: 40px;">
+                <img src="/assets/images/contact-us.svg" alt="Image" class="img-fluid">
             </div>
             <div class="col-md-6 contents" style="padding-left: 50px;">
                 <div style="margin-top: 15%;" class=" row justify-content-center shadow p-3 bg-body rounded">
                     <div class="col-md-8">
                         <div class="mb-4">
-                            <h3>Change Password<strong> </strong></h3>
+                            <h3>Contacts Us<strong> </strong></h3>
                         </div>
                         <form action="#" method="post">
                             <div class="form-group last mb-4">
-                                <label for="password">Old Password</label>
-                                <input type="password" class="form-control" id="password">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name">
 
                             </div>
                             <div class="form-group last mb-4">
-                                <label for="password">New Password</label>
-                                <input type="password" class="form-control" id="password">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control" id="phone">
 
                             </div>
                             <div class="form-group last mb-4">
-                                <label for="password">Confirm Password</label>
-                                <input type="password" class="form-control" id="password">
+                                <label for="email">Email</label>
+                                <input disabled type="email" value="contact@t4tek.co" class="form-control" id="email">
+                            </div>
+                            <div class="form-group last mb-4">
+                                <label for="company">Company</label>
+                                <input type="text" class="form-control" id="company">
+                            </div>
+                            <div class="form-group last mb-4">
+                                <label for="sub">Subject</label>
+                                <input type="text" class="form-control" id="sub">
+                            </div>
+                            <div class="form-group last mb-4">
+                                <label for="ques">Question</label>
+                                <textarea type="text" class="form-control" id="ques"></textarea>
                             </div>
                             <!-- button -->
-                            <input type="submit" style="background-color: purple;border:1px solid purple;height: 45px;" value="Save" class="btn text-white btn-block btn-primary">
+                            <input type="submit" style="background-color: purple;border:1px solid purple;height: 45px;" value="submit" class="btn text-white btn-block btn-primary">
                         </form>
                     </div>
                 </div>

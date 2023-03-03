@@ -4,18 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
+class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function Login()
     {
         return view('login');
     }
-
+    public function SignUp()
+    {
+        return view('signup');
+    }
+    public function Profile()
+    {
+        return view('profile');
+    }
+    public function ChangePass()
+    {
+        return view('change_pass');
+    }
+    public function ForgotPass()
+    {
+        return view('forgot_pass');
+    }
     /**
      * Show the form for creating a new resource.
      *

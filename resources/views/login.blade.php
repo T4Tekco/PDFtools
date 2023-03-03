@@ -3,21 +3,20 @@
 
 <head>
     <!-- Required meta tags -->
+    <link rel="icon" href="/icons/iconpage.jpg" type="">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="fonts/icomoon/style.css">
-
     <link rel="stylesheet" href="css/owl.carousel.min.css">
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css">
-
-    <title>Login #8</title>
+    <link rel="stylesheet" href="css/styless.css">
+    <!-- dropdown -->
+    <title>Login</title>
 </head>
 
 <body>
@@ -87,5 +86,55 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+<footer class="" style="background-color: #333333;">
+
+    <div style="display: flex;justify-content: center;">
+        <div class="footer-left">
+
+            <img style="margin: 20px 0 0 40px ;" width="150px" height="130px" src="/images/logo.png" alt="">
+
+            <p class="" style="color:white">Copyright © Công ty TNHH T4TeK</p>
+        </div>
+
+        <div class="" style="color:white;margin: 30px 70px 0 70px;">
+            <div class="" style="margin-bottom: 20px;width: 500px;height: 50px;">
+
+                <p style="color:white"><i class="fa-solid fa-location-dot" style="margin-right: 5px;"></i>L18-11-13, Tầng 18 Tòa nhà Vincom Center Đồng Khởi, Số 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh</p>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <p style="color:white"> <i class="fa-solid fa-phone" style="margin-right: 5px;"></i> 0965643046</p>
+
+            </div>
+            <div>
+                <p style="color:white"><i class="fa-solid fa-envelope" style="margin-right: 5px;"></i>contact@t4tek.co</p>
+            </div>
+
+        </div>
+
+        <div class="" style="display: flex;">
+            <a href="">
+                <div style="margin:30px 10px 0 0;">
+                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="/images/fb.png" alt="">
+                </div>
+            </a>
+            <a href="http://zalo.me/518410350895218680?src=qr">
+                <div style="margin:30px 10px 0 0;">
+                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="https://cdn.haitrieu.com/wp-content/uploads/2022/01/Logo-Zalo-Arc.png" alt="">
+                </div>
+            </a>
+            <a href="">
+                <div style="margin:30px 10px 0 0;">
+                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png" alt="">
+                </div>
+            </a>
+            <a href="">
+                <div style="margin:30px 10px 0 0;">
+                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="/images/link.png" alt="">
+                </div>
+            </a>
+        </div>
+    </div>
+
+</footer>
 
 </html>

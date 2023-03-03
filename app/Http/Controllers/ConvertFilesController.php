@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 
-class SignUpController extends Controller
+class ConvertFilesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function Signup()
-    {
-       return view('signup');
-    }
-
+    // public function Convert()
+    // {
+    //     return view('Page_Convert.page1');
+    // }
     /**
      * Show the form for creating a new resource.
      *
@@ -24,6 +24,10 @@ class SignUpController extends Controller
     public function create()
     {
         //
+    }
+    public function Convert(Request $request)
+    {
+        return view('main');
     }
 
     /**

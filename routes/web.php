@@ -23,7 +23,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login', [LoginController::class, 'index']);
+// Page convert
+// Route::get('/main', [ConvertFilesController::class, 'main'])->name('main');
+Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
 
 
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);

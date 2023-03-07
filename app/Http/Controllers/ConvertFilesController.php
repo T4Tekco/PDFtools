@@ -2,43 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 
-class AccountController extends Controller
+class ConvertFilesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function Login()
-    {
-        return view('login');
-    }
-    public function SignUp()
-    {
-        return view('signup');
-    }
-    public function Profile()
-    {
-        return view('profile');
-    }
-    public function ChangePass()
-    {
-        return view('change_pass');
-    }
-    public function ForgotPass()
-    {
-        return view('forgot_pass');
-    }
-    public function AboutUs()
-    {
-        return view('about_us');
-    }
-    public function Contact()
-    {
-        return view('contact_us');
-    }
+    // public function Convert()
+    // {
+    //     return view('Page_Convert.page1');
+    // }
     /**
      * Show the form for creating a new resource.
      *
@@ -47,6 +24,10 @@ class AccountController extends Controller
     public function create()
     {
         //
+    }
+    public function Convert(Request $request)
+    {
+        return view('home');
     }
 
     /**

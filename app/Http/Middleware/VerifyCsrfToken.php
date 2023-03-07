@@ -14,7 +14,10 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         'auth/facebook/callback',
         'auth/google/callback',
-        '/api/process-file'
+        '/api/process-file',
+        '/api/pdf-to-word',
+        '/api/word-to-pdf',
+        '/api/pdf-to-txt'
     ];
     protected $addHttpCookie = true;
 

@@ -1,12 +1,12 @@
 @extends('main')
 @section('body')
-<div class="content container shadow" style="margin-bottom: 50px;">
+<div class="content container shadow" style="margin-bottom: 50px; position: relative;">
     <div class="container">
         <div class="row">
             <div class="col-md-6 order-md-2" style="margin-top: 40px;">
                 <img src="/assets/images/contact-us.svg" alt="Image" class="img-fluid">
             </div>
-            <div class="col-md-6 contents" style="padding-left: 50px;">
+            <div class="col-md-6 contents" style="padding-left: 50px; ">
                 <div style="margin-top: 15%;" class=" row justify-content-center shadow p-3 bg-body rounded">
                     <div class="col-md-8">
                         <div class="mb-4">
@@ -24,7 +24,7 @@
 
                             </div>
                             <div class="form-group last mb-4">
-                                <label for="email">Email</label>
+                                {{-- <label for="email">Email</label> --}}
                                 <input disabled type="email" value="contact@t4tek.co" class="form-control" id="email">
                             </div>
                             <div class="form-group last mb-4">

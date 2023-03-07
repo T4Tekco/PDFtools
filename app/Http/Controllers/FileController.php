@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Spatie\PdfToText\Pdf;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-// use setasign\Fpdi\Tcpdf\Fpdi;
 use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Support\Str;
@@ -452,7 +451,7 @@ class FileController extends Controller
                         }
                         // $data['owner_info']['full_name'] = trim(str_replace('Họ và tên:', '', $line));
                     } elseif (strpos($line, 'Giới tính') !== false) {
-                        $data['owner_info']['gender'] = trim(str_replace('Giới tính:', '', $line));
+                        $data['owner_info']['sex'] = trim(str_replace('Giới tính:', '', $line));
                     } elseif (strpos($line, 'Sinh ngày') !== false) {
                         $data['owner_info']['dayofbirthday'] = trim(str_replace('Sinh ngày:', '', $line));
                     } elseif (strpos($line, 'Dân tộc') !== false) {
@@ -524,7 +523,7 @@ class FileController extends Controller
             } elseif (strpos($line, 'Chức danh') !== false) {
                 $data['legal_representative']['position'] = trim(str_replace('Chức danh:', '', $line));
             } elseif (strpos($line, 'Giới tính') !== false) {
-                $data['legal_representative']['gender'] = trim(str_replace('Giới tính:', '', $line));
+                $data['legal_representative']['sex'] = trim(str_replace('Giới tính:', '', $line));
             } elseif (strpos($line, 'Sinh ngày') !== false) {
                 $parts = explode(':', $line);
                 if (sizeof($parts) >= 2) {

@@ -32,7 +32,7 @@ console.log(myHeaders);
                     headers: myHeaders,
                 });
                 const json = await response.json();
-                console.log(json);
+                console.log(json.output.data.company_name);
                 
             } catch (error) {
                 console.error(error);

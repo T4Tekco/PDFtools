@@ -61,7 +61,7 @@
     <div style="display: flex;justify-content: center;">
         <div class="footer-left">
 
-            <img style="margin: 20px 0 0 40px ;" width="150px" height="130px" src="/images/logo.png" alt="">
+            <img style="margin: 20px 0 0 40px ;" width="150px" height="130px" src="/assets/images/logo.png" alt="">
 
             <p class="" style="color:white">Copyright © Công ty TNHH T4TeK</p>
         </div>
@@ -84,7 +84,7 @@
         <div class="" style="display: flex;">
             <a href="">
                 <div style="margin:30px 10px 0 0;">
-                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="/images/fb.png" alt="">
+                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="/assets/images/fb.png" alt="">
                 </div>
             </a>
             <a href="http://zalo.me/518410350895218680?src=qr">
@@ -99,7 +99,7 @@
             </a>
             <a href="">
                 <div style="margin:30px 10px 0 0;">
-                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="/images/link.png" alt="">
+                    <img style="width: 50px;height: 50px;" class=" rounded-circle" src="/assets/images/link.png" alt="">
                 </div>
             </a>
         </div>

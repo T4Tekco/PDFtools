@@ -10,8 +10,10 @@ use Psr\Log\NullLogger;
 use Mpdf\Mpdf;
 
 // pdf to word
-use Spatie\PdfToText\Pdf;
-use PhpOffice\PhpWord\PhpWord;
+use Dompdf\Dompdf;
+use App;
+
+use App\htmltoword\HTML_TO_DOC;
 
 class PdfToWordController extends Controller
 {
@@ -23,7 +25,11 @@ class PdfToWordController extends Controller
     }
     public function index()
     {
-        return view('convertFile');
+        // return view('convertFile');
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid file format',
+        ], 422);
     }
     public function process(Request $request)
     {
@@ -82,53 +88,127 @@ class PdfToWordController extends Controller
 
     public function convertToPdf(Request $request)
     {
-        // Get the uploaded Word file
-        $wordFile = $request->file('file');
+        try {
+            // Validate the uploaded file
+            $request->validate([
+                'file' => 'required|max:2048',
+            ]);
 
-        // Load the Word document
-        $phpWord = IOFactory::load($wordFile);
+            // Get the uploaded Word file
+            $wordFile = $request->file('file');
 
-        // Save the Word document as HTML
-        $tempFile = tempnam(sys_get_temp_dir(), 'word');
-        $phpWord->save($tempFile . '.html', 'HTML');
+            // Load the Word document
+            $phpWord = IOFactory::load($wordFile);
 
-        // Load the HTML file
-        $html = file_get_contents($tempFile . '.html');
+            // Save the Word document as HTML
+            $tempFile = tempnam(sys_get_temp_dir(), 'word');
+            $phpWord->save($tempFile . '.html', 'HTML');
 
-        // Convert the HTML to PDF using mPDF
-        $mpdf = new Mpdf(['mode' => 'utf-8', 'tempDir' => sys_get_temp_dir()]);
-        $mpdf->setLogger($this->logger); // Set the logger
-        // $mpdf->WriteHTML($html, HTMLParserMode::HTML_BODY, true, false, '', true, 'Normal,Balloon Text');
-        $mpdf->WriteHTML($html);
-        $mpdf->Output($tempFile . '.pdf', 'F');
+            // Load the HTML file
+            $html = file_get_contents($tempFile . '.html');
+            // Convert the HTML to PDF using mPDF
+            $mpdf = new Mpdf(['mode' => 'utf-8', 'tempDir' => sys_get_temp_dir()]);
+            $mpdf->setLogger($this->logger); // Set the logger
+            $mpdf->WriteHTML($html);
+            $mpdf->Output($tempFile . '.pdf', 'F');
 
-        // Return the PDF file as a download
-        return response()->download($tempFile . '.pdf', $wordFile->getClientOriginalName() . '.pdf');
+            // Return the PDF file as a download
+            return response()->download($tempFile . '.pdf', $wordFile->getClientOriginalName() . '.pdf');
+        } catch (\Exception $e) {
+            // Return error message and status code in case of an error
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid file format',
+            ], 422);
+        }
     }
 
     // pdf to word 
 
-
-
     public function convertToWord(Request $request)
     {
-        // Get the uploaded PDF file
-        $pdfFile = $request->file('file');
+        try {
+            // Validate the uploaded file
+            $request->validate([
+                'file' => 'required|max:2048',
+            ]);
 
-        // Convert PDF to Word
+            // Get the uploaded PDF file
+            $pdfFile = $request->file('file');
+            // Convert PDF to Word
+            $phpWord = IOFactory::load($pdfFile);
 
-        $text =  (new Pdf(getenv('PDFTOTEXT_PATH')))->setPdf($pdfFile)->text();
-        $html = '<html><body>' . nl2br(e($text)) . '</body></html>';
-        $html = preg_replace('/[\x00-\x1F\x7F]/u', '', $html);
 
-        // Convert HTML to Word using PhpWord
-        $phpWord = new PhpWord();
-        $section = $phpWord->addSection();
-        \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
-        $tempFile = tempnam(sys_get_temp_dir(), 'word');
-        $phpWord->save($tempFile . '.docx', 'Word2007');
+            // Save the Word document as HTML
+            $tempFile = tempnam(sys_get_temp_dir(), 'word');
+            $phpWord->save($tempFile . '.html', 'HTML');
 
-        // Return the Word file as a download
-        return response()->download($tempFile . '.docx', $pdfFile->getClientOriginalName() . '.docx');
+            // Load the HTML file
+            $html = file_get_contents($tempFile . '.html');
+
+            // Convert HTML to Word using PhpWord
+            $htd = new HTML_TO_DOC();
+            // $htd -> createDoc($html ,  "my-document" ,  1 );
+            // $phpWord = new PhpWord();
+            // $section = $phpWord->addSection();
+            // \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
+            // $tempFile = tempnam(sys_get_temp_dir(), 'word');
+            // $phpWord->save($tempFile . '.docx', 'Word2007');
+
+            // // Return the Word file as a download
+            return response()->download($html . '.docx', $pdfFile->getClientOriginalName() . '.docx');
+        } catch (\Exception $e) {
+            // Return error message and status code in case of an error
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid file format',
+            ], 422);
+        }
     }
+
+    // public function txtToPdf(Request $request){
+    // try {
+    //     // Validate the uploaded file
+    //     $request->validate([
+    //         'file' => 'required|max:2048',
+    //     ]);
+
+    //     $txtFile = $request->file('file');
+    //     $filename = $txtFile->getClientOriginalName(); // Get the original filename
+
+    //     // Read the contents of the file
+    //     $content = file_get_contents($txtFile);
+    //     $content = iconv(mb_detect_encoding($content, mb_detect_order(), true), "UTF-8", $content);
+
+    //     // // Create a new Dompdf instance
+    //     // $dompdf = new Dompdf();
+
+    //     // // Load the contents of the file into Dompdf
+    //     // $dompdf->loadHtml($content);
+    //     // // Render the PDF
+    //     // $dompdf->render();
+
+    //     // // Save the PDF to a file
+    //     // $pdf = $dompdf->output();
+    //     $newPdfFile = ''.$filename.'.pdf';
+    //     // $dompdf->stream($newPdfFile);
+    //     // file_put_contents(  $newPdfFile, $pdf);
+    //     $pdf = App::make('dompdf.wrapper');
+    //     $pdf->loadHTML($content);
+
+    //     // Return the PDF as a response
+    //      $pdf->stream($newPdfFile);
+
+    //     // Return the new PDF file as a download with the original filename
+    //     return response()->download($newPdfFile, $filename);
+    // } catch (\Exception $e) {
+    //     // Return error message and status code in case of an error
+    //     return response()->json([
+    //         'status' => 'error',
+    //         'message' => 'Invalid file format',
+    //     ], 422);
+    // }
+    // }
+
+
 }

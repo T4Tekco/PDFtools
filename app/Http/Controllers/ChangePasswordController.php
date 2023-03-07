@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 
-class ConvertFilesController extends Controller
+class ChangePasswordController extends Controller
 {
     /**
      * Display a listing of the resource.

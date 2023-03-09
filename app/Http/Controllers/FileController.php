@@ -15,7 +15,7 @@ class FileController extends Controller
     public function index()
     {
         return response()->json([
-            'status' => 'error',
+            'status' => '100',
             'message' => 'INPUT_DATA_INCORRECT',
         ])->header('Content-Type', 'application/json; charset=utf-8');
     }
@@ -38,14 +38,14 @@ class FileController extends Controller
     
             // Return the output in JSON format
             return response()->json([
-                'status' => 'success',
+                'status' => '200',
                 'output' => $output,
-                'token' => Str::random(80)
+                // 'token' => Str::random(80)
             ]);
         } catch (\Exception $e) {
             // Return error message and status code in case of an error
             return response()->json([
-                'status' => 'error',
+                'status' => '100',
                 'message' => 'File pdf không đúng định dạng',
             ], 422);
         }

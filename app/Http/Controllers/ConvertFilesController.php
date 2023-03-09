@@ -25,7 +25,7 @@ class ConvertFilesController extends Controller
     {
         //
     }
-    public function Convert(Request $request)
+    public function Convert()
     {
         return view('home');
     }

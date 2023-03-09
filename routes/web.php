@@ -14,14 +14,14 @@ use App\Http\Controllers\ConvertFilesController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 // Page convert
 // Route::get('/main', [ConvertFilesController::class, 'main'])->name('main');
-Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
+// Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
 
 
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);

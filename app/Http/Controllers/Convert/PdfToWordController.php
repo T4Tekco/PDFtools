@@ -25,11 +25,11 @@ class PdfToWordController extends Controller
     }
     public function index()
     {
-        // return view('convertFile');
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Invalid file format',
-        ], 422);
+        return view('convertFile');
+        // return response()->json([
+        //     'status' => '100',
+        //     'message' => 'Invalid file format',
+        // ], 422);
     }
     public function process(Request $request)
     {
@@ -74,7 +74,7 @@ class PdfToWordController extends Controller
         } catch (\Exception $e) {
             // Return error message and status code in case of an error
             return response()->json([
-                'status' => 'error',
+                'status' => '100',
                 'message' => 'Invalid file format',
             ], 422);
         }
@@ -91,7 +91,7 @@ class PdfToWordController extends Controller
         try {
             // Validate the uploaded file
             $request->validate([
-                'file' => 'required|max:2048',
+                'file' => 'required|mimes:docx|max:2048',
             ]);
 
             // Get the uploaded Word file
@@ -117,7 +117,7 @@ class PdfToWordController extends Controller
         } catch (\Exception $e) {
             // Return error message and status code in case of an error
             return response()->json([
-                'status' => 'error',
+                'status' => '100',
                 'message' => 'Invalid file format',
             ], 422);
         }
@@ -130,7 +130,7 @@ class PdfToWordController extends Controller
         try {
             // Validate the uploaded file
             $request->validate([
-                'file' => 'required|max:2048',
+                'file' => 'required|mimes:pdf|max:2048',
             ]);
 
             // Get the uploaded PDF file
@@ -160,12 +160,13 @@ class PdfToWordController extends Controller
         } catch (\Exception $e) {
             // Return error message and status code in case of an error
             return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid file format',
+                'status' => '100',
+                'message' => 'Invalid file',
             ], 422);
         }
     }
 
+    
     // public function txtToPdf(Request $request){
     // try {
     //     // Validate the uploaded file

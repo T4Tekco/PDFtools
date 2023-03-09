@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,6 +18,9 @@
 </head>
 
 <body>
+   
+<header class="clearfix">
+
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #333333;">
         <div class="container-fluid" style="margin: 0 0 0 167px;">
             <a class="navbar-brand" href="{{route('convert')}}">
@@ -45,6 +48,7 @@
             </div>
         </div>
     </nav>
+</header>
     @yield('body')
 </body>
 

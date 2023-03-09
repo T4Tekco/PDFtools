@@ -1,9 +1,10 @@
 @extends('main')
 @section('body')
-<div style="text-align: center;">
-    <img style="margin:10px 0 0 0;" src="/assets/images/about-us.svg" alt="">
-</div>
-<div class="container shadow" style="margin-bottom: 200px;margin-top: 50px;">
+
+<div class="container shadow clearfix" style="margin-bottom: 200px;margin-top: 50px;">
+    <div style="text-align: center;">
+        <img style="margin:10px 0 0 0;" src="/assets/images/about-us.svg" alt="">
+    </div>
     <div style="display: flex;padding-top: 40px;">
         <div style="flex-basis: 40%;">
             <img width="420px" height="250px" style="margin-bottom: 10px; border-radius: 10px;" src="/assets/images/about-us.jpg" alt="">

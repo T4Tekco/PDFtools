@@ -31,6 +31,14 @@ class AccountController extends Controller
     {
         return view('forgot_pass');
     }
+    public function AboutUs()
+    {
+        return view('about_us');
+    }
+    public function Contact()
+    {
+        return view('contact_us');
+    }
     /**
      * Show the form for creating a new resource.
      *

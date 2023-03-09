@@ -17,7 +17,13 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
-
+    'guards' => [
+        'api' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
+   ],
+   
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

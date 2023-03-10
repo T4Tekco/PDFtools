@@ -39,6 +39,10 @@ class AccountController extends Controller
     {
         return view('contact_us');
     }
+    public function Tool()
+    {
+        return view('tool');
+    }
     /**
      * Show the form for creating a new resource.
      *

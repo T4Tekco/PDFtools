@@ -33,7 +33,8 @@ Route::get('/forgotpass', [AccountController::class, 'ForgotPass'])->name('forgo
 
 Route::get('/aboutus', [AccountController::class, 'AboutUs'])->name('aboutus');
 Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
+Route::get('/', [AccountController::class, 'Tool'])->name('tool');
 // Page convert
 // Route::get('/main', [ConvertFilesController::class, 'main'])->name('main');
-Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
+Route::get('/convert', [ConvertFilesController::class, 'Convert'])->name('convert');
 

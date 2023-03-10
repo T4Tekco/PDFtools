@@ -32,7 +32,15 @@
                         <a style="color: white;" class="nav-link" href="{{ route('profile')}}">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a style="position: absolute;text-align: start; right: 192px;color:white" class="nav-link" href="{{ route('login')}}">Log Out</a>
+                        <!-- <a style="position: absolute;text-align: start; right: 192px;color:white" class="nav-link" href="{{ route('login')}}">Log Out</a> -->
+                        <select id="" class="nav-link"  style="margin-top: 15px; border:2px solid grey ;border-radius: 5px;position: absolute;right: 180px;top: 0px;">
+                            <a href="">
+                                <option value="option1">Việt Nam</option>
+                            </a>
+                            <a href="">
+                                <option value="option2">English</option>
+                            </a>
+                        </select>
                     </li>
                     <li class="nav-item">
                         <a style="color: white;" class="nav-link" href="{{ route('contact')}}">Contact Us</a>

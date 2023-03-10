@@ -24,7 +24,7 @@
 
                             </div>
                             <div class="form-group last mb-4">
-                                <label for="email">Email</label>
+                                <!-- <label for="email">Email</label> -->
                                 <input disabled type="email" value="contact@t4tek.co" class="form-control" id="email">
                             </div>
                             <div class="form-group last mb-4">

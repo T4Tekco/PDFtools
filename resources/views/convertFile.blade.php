@@ -8,7 +8,7 @@
 
 	<form  method="post" enctype="multipart/form-data">
 		@csrf
-		<input type="file" accept=".pdf" name="pdf_file">
+		<input type="file" accept=".pdf" name="file">
 		<button type="submit">Convert to Text</button>
 	</form>
 	

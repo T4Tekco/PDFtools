@@ -39,7 +39,7 @@ Route::get('/pdf-to-txt', 'App\Http\Controllers\FileController@txtojson');
 Route::get('/api/pdf-to-word', [PdfToWordController::class, 'index']);
 Route::post('/api/pdf-to-word', [PdfToWordController::class, 'txtToPdf']);
 
-//covert file pdf to pdf
+//covert file word to pdf
 Route::get('/api/word-to-pdf', [PdfToWordController::class, 'index']);
 Route::post('/api/word-to-pdf', [PdfToWordController::class, 'convertToPdf']);
 //api 

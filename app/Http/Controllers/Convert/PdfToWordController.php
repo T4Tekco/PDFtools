@@ -91,7 +91,7 @@ class PdfToWordController extends Controller
         try {
             // Validate the uploaded file
             $request->validate([
-                'file' => 'required|mimes:docx|max:2048',
+                'file' => 'required|mimes:docx|max:1000048',
             ]);
 
             // Get the uploaded Word file
@@ -106,11 +106,24 @@ class PdfToWordController extends Controller
 
             // Load the HTML file
             $html = file_get_contents($tempFile . '.html');
+
+            // Convert the HTML to PDF using mPDF
+            // Load the HTML file
+            $html = file_get_contents($tempFile . '.html');
+
+            // Split the HTML code into smaller chunks
+            $htmlChunks = str_split($html, 1000000);
+
             // Convert the HTML to PDF using mPDF
             $mpdf = new Mpdf(['mode' => 'utf-8', 'tempDir' => sys_get_temp_dir()]);
             $mpdf->setLogger($this->logger); // Set the logger
-            $mpdf->WriteHTML($html);
+
+            foreach ($htmlChunks as $chunk) {
+                $mpdf->WriteHTML($chunk);
+            }
+
             $mpdf->Output($tempFile . '.pdf', 'F');
+
 
             // Return the PDF file as a download
             return response()->download($tempFile . '.pdf', $wordFile->getClientOriginalName() . '.pdf');
@@ -118,7 +131,7 @@ class PdfToWordController extends Controller
             // Return error message and status code in case of an error
             return response()->json([
                 'status' => '100',
-                'message' => 'Invalid file format',
+                'message' => 'Invalid file',
             ], 422);
         }
     }
@@ -166,7 +179,7 @@ class PdfToWordController extends Controller
         }
     }
 
-    
+
     // public function txtToPdf(Request $request){
     // try {
     //     // Validate the uploaded file

@@ -43,6 +43,10 @@ class AccountController extends Controller
     {
         return view('tool');
     }
+    public function main()
+    {
+        return view('main');
+    }
     /**
      * Show the form for creating a new resource.
      *

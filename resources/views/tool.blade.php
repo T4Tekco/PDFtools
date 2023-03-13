@@ -7,16 +7,17 @@
     <meta charset="utf-8">
     <meta name="keywords" content="INTUITIVE">
     <meta name="description" content="">
-    <title>Page 1</title>
+    <title>Convert</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/assets/fonts/icomoon/style.css">
-    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css">
+    <!-- <link rel="stylesheet" href="/assets/fonts/icomoon/style.css">
+    <link rel="stylesheet" href="/assets/css/owl.carousel.min.css"> -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
     <!-- Style -->
     <link rel="stylesheet" href="/assets/css/style.css">
-
     <link rel="stylesheet" href="/assets/css/nicepage.css" media="screen">
     <link rel="stylesheet" href="/assets/css/Page-1.css" media="screen">
     <script class="u-script" type="text/javascript" src="/assets/js/jquery.js" defer=""></script>
@@ -34,6 +35,11 @@
             "sameAs": []
         }
     </script>
+    <style>
+        #drop-area {
+            margin: 10px !important;
+        }
+    </style>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="Page 1">
     <meta property="og:type" content="website">
@@ -43,7 +49,7 @@
 <body class="u-body u-xl-mode" data-lang="en">
     <header style="background-color: #404040;" class="u-clearfix u-header u-sticky u-sticky-a44c u-header" id="sec-e290">
         <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
-            <a href="" class="u-enable-responsive u-image u-logo u-image-1" data-image-width="200" data-image-height="200">
+            <a href="{{route('convert')}}" class="u-enable-responsive u-image u-logo u-image-1" data-image-width="200" data-image-height="200">
                 <img src="/assets/images/logo.png" class="u-logo-image u-logo-image-1">
             </a>
             <nav class="u-align-left-lg u-align-left-xl u-menu u-menu-one-level u-offcanvas u-menu-1" data-responsive-from="MD">
@@ -63,15 +69,26 @@
                 </div>
                 <div class="u-custom-menu u-nav-container" style="color:white">
                     <ul class="u-nav u-unstyled u-nav-1">
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Home.html" style="padding: 10px 16px;">Home</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('convert')}}" style="padding: 10px 16px;">@lang('lang.home')</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="About.html" style="padding: 10px 16px;">About</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('contact')}}" style="padding: 10px 16px;">Contact Us</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Contact.html" style="padding: 10px 16px;">Contact</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('aboutus')}}" style="padding: 10px 16px;">About Us</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Page-1.html" style="padding: 10px 16px;">About Us</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="" style="padding: 10px 16px;">Blog</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="blog/blog.html" style="padding: 10px 16px;">Blog</a>
+                        <li class="u-nav-item">
+                            <div class="dropdown">
+                                <a style="background-color: #404040;" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Ngôn ngữ
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('language/en')}}">Tiếng Anh</a></li>
+                                    <li><a class="dropdown-item" href="{{url('language/vi')}}">Tiếng việt</a></li>
+                                </ul>
+                            </div>
+                            <!-- <a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="blog/blog.html" style="padding: 10px 16px;"></a> -->
                         </li>
                     </ul>
                 </div>
@@ -80,15 +97,25 @@
                         <div class="u-inner-container-layout u-sidenav-overflow">
                             <div class="u-menu-close"></div>
                             <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2" style="color:white">
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Home.html">Home</a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('convert')}}">@lang('lang.home')</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="About.html">About</a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('contact')}}">Contact Us </a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Contact.html">Contact</a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('aboutus')}}">About US</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="Page-1.html">About Us</a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="">Blog</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="blog/blog.html">Blog</a>
+                                <li class="u-nav-item">
+                                    <div class="dropdown">
+                                        <a style="background-color: #404040;" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Ngôn ngữ
+                                        </a>
+
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="{{url('language/en')}}">Tiếng Anh</a></li>
+                                            <li><a class="dropdown-item" href="{{url('language/vi')}}">Tiếng việt</a></li>
+                                        </ul>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -140,153 +167,15 @@
             }
         </style>
     </header>
-    <section class="u-clearfix u-section-1" id="sec-e85a">
-        <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-sm u-valign-middle-xs u-sheet-1">
-            <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
-                <div class="u-layout">
-                    <div class="u-layout-row shadow">
-                        <div class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-shape-rectangle u-size-23 u-layout-cell-1">
-                            <div class="u-container-layout u-valign-top-sm u-valign-top-xs u-container-layout-1">
-                                <img class="u-expanded-width-md u-image u-image-default u-image-1" src="/assets/images/logoconvert.svg" alt="" data-image-width="400" data-image-height="240">
-                                <!-- <p class="u-text u-text-1">Sample text. Click to select the Text Element.</p> -->
-                            </div>
-                        </div>
-                        <div class="u-align-center u-container-style u-layout-cell u-shape-rectangle u-size-37 u-layout-cell-2">
-                            <div class="u-container-layout u-container-layout-2">
-                                <form id="file-upload-form" action="" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div id="drop-area" class="u-align-center u-container-style u-group u-palette-1-base u-group-1" style="background-color: white;">
-                                        <div style="display:block;" class="u-container-layout u-valign-middle u-container-layout-3">
-                                            <h1 id="text" style="font-size: 25px;color: black;display: block;user-select: none;">Drag and Drop file here</h1>
-                                            <p style="display: block;user-select: none;" id="or">or</p>
-                                            <label style="display: block;user-select: none;" for="file-input" id="file-label">Select File</label>
-                                            <input style="visibility: visible;" type="file" id="file-input" name="file" accept=".pdf,.docx,.txt" />
-                                            <div style="visibility: hidden;" id="load" class="progress-bar-container">
-                                                <!-- <div class="progress-bar"></div> -->
-                                                <div class="loader">
-
-                                                    <div class="bar1"></div>
-                                                    <div class="bar2"></div>
-                                                    <div class="bar3"></div>
-                                                    <div class="bar4"></div>
-                                                    <div class="bar5"></div>
-                                                    <div class="bar6"></div>
-                                                    <div class="bar7"></div>
-                                                    <div class="bar8"></div>
-                                                    <div class="bar9"></div>
-                                                </div>
-
-                                            </div>
-                                            <style>
-                                                .loader {
-                                                    position: relative;
-                                                    width: 164px;
-                                                    height: 100px;
-                                                    margin: 50px auto;
-                                                }
-
-                                                .loader div {
-                                                    position: absolute;
-                                                    width: 10px;
-                                                    height: 30px;
-                                                    background-color: #ff6a00;
-                                                    border-radius: 5px;
-                                                    animation: loader_51899 1.5s ease-in-out infinite;
-                                                }
-
-                                                .loader .bar1 {
-                                                    left: 0px;
-                                                    animation-delay: 0s;
-                                                }
-
-                                                .loader .bar2 {
-                                                    left: 20px;
-                                                    animation-delay: 0.15s;
-                                                }
-
-                                                .loader .bar3 {
-                                                    left: 40px;
-                                                    animation-delay: 0.3s;
-                                                }
-
-                                                .loader .bar4 {
-                                                    left: 60px;
-                                                    animation-delay: 0.45s;
-                                                }
-
-                                                .loader .bar5 {
-                                                    left: 80px;
-                                                    animation-delay: 0.6s;
-                                                }
-
-                                                .loader .bar6 {
-                                                    left: 100px;
-                                                    animation-delay: 0.75s;
-                                                }
-
-                                                .loader .bar7 {
-                                                    left: 120px;
-                                                    animation-delay: 0.9s;
-                                                }
-
-                                                .loader .bar8 {
-                                                    left: 140px;
-                                                    animation-delay: 1.05s;
-                                                }
-
-                                                .loader .bar9 {
-                                                    left: 160px;
-                                                    animation-delay: 1.2s;
-                                                }
-
-                                                @keyframes loader_51899 {
-                                                    0% {
-                                                        height: 30px;
-                                                        transform: translate(0, 0);
-                                                    }
-
-                                                    50% {
-                                                        height: 70px;
-                                                        transform: translate(0, 35px);
-                                                    }
-
-                                                    100% {
-                                                        height: 30px;
-                                                        transform: translate(0, 0);
-                                                    }
-                                                }
-                                            </style>
-                                        </div>
-                                    </div>
-                                    <p class="u-text u-text-default u-text-3" style="color:black;user-select: none;"> Drop your file, select the format that you want to convert to, and then your dream file will be saved to your drive.</p>
-                                    <div id="flex">
-                                        <button disabled onclick="startProgress()" id="1" class="btn btn-light shadow-sm ds" type="submit">
-                                            <img class="size" src="/assets/icons/pdf.png" alt="">
-                                            PDF</a>
-                                        </button>
-                                        <button disabled onclick="startProgress()" id="2" class="btn btn-light shadow-sm ds" type="submit">
-                                            <img class="size" src="/assets/icons/word.png" alt="">
-                                            Word</a>
-                                        </button>
-                                        <button disabled onclick="startProgress()" id="3" class="btn btn-light shadow-sm ds" type="submit">
-                                            <img class="size" src="/assets/icons/txt.png" alt="">
-                                            TxT</a>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
+    @yield('body')
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/main.js"></script>
     <footer class="u-align-center-md u-align-center-sm u-align-center-xs u-clearfix u-footer u-grey-80" id="sec-7c63">
         <div class="u-clearfix u-sheet u-sheet-1">
             <div class="u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-md u-align-left-xl u-social-icons u-spacing-10 u-social-icons-1">
-                <a class="u-social-url" title="facebook" target="_blank" href=""><span class="u-icon u-social-facebook u-social-icon u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112" style="">
+                <a class="u-social-url" title="facebook" target="_blank" href=""><span class="u-icon u-social-facebook u-social-icon u-icon-1"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-3ffc"></use>
                         </svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-3ffc">
                             <circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle>
@@ -294,7 +183,7 @@
       c0-6.7,3.1-17,17-17h12.5v13.9H73.5z"></path>
                         </svg></span>
                 </a>
-                <a class="u-social-url" title="twitter" target="_blank" href=""><span class="u-icon u-social-icon u-social-twitter u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112" style="">
+                <a class="u-social-url" title="twitter" target="_blank" href=""><span class="u-icon u-social-icon u-social-twitter u-icon-2"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-11a3"></use>
                         </svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-11a3">
                             <circle fill="currentColor" class="st0" cx="56.1" cy="56.1" r="55"></circle>
@@ -305,7 +194,7 @@
       c2.7-0.3,5.3-1,7.7-2.1C88.7,43,86.4,45.4,83.8,47.3z"></path>
                         </svg></span>
                 </a>
-                <a class="u-social-url" title="instagram" target="_blank" href=""><span class="u-icon u-social-icon u-social-instagram u-icon-3"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112" style="">
+                <a class="u-social-url" title="instagram" target="_blank" href=""><span class="u-icon u-social-icon u-social-instagram u-icon-3"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-2da7"></use>
                         </svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-2da7">
                             <circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle>
@@ -317,7 +206,7 @@
       c5.5,0,9.9,4.5,9.9,9.9V73.3z"></path>
                         </svg></span>
                 </a>
-                <a class="u-social-url" title="linkedin" target="_blank" href=""><span class="u-icon u-social-icon u-social-linkedin u-icon-4"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112" style="">
+                <a class="u-social-url" title="linkedin" target="_blank" href=""><span class="u-icon u-social-icon u-social-linkedin u-icon-4"><svg class="u-svg-link" preserveAspectRatio="xMidYMin slice" viewBox="0 0 112 112">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#svg-8f35"></use>
                         </svg><svg class="u-svg-content" viewBox="0 0 112 112" x="0" y="0" id="svg-8f35">
                             <circle fill="currentColor" cx="56.1" cy="56.1" r="55"></circle>
@@ -343,197 +232,6 @@
             <p class="u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-md u-align-left-xl u-text u-text-4"> Copyright © Công ty TNHH T4TeK</p>
         </div>
     </footer>
-    <script>
-        function startProgress() {
-            $("#load").css({
-                "visibility": "visible"
-            });
-            $("#text,#or,#file-label").css({
-                "display": "none"
-            });
-            $("#file-input").css({
-                "visibility": "hidden"
-            });
-        }
-
-        const disable_button = () => {
-            document.getElementById("1").disabled = true;
-            document.getElementById("2").disabled = true;
-            document.getElementById("3").disabled = true;
-        }
-        const enable_button = () => {
-            document.getElementById("1").disabled = false;
-            document.getElementById("2").disabled = false;
-            document.getElementById("3").disabled = false;
-        }
-
-        const form = document.querySelector('#file-upload-form');
-        const file_input = document.getElementById('file-input');
-        const url = 'https://api.pdftools.t4tek.co/api/word-to-pdf';
-        const formData = new FormData()
-        const flex = document.getElementById('#flex');
-        form.onsubmit = (e) => {
-            e.preventDefault()
-            formData.append("file", e.target.file.files[0])
-            fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                }).then(response => {
-                    return response.blob()
-                }).then(b => {
-                    const pdfUrl = URL.createObjectURL(b);
-
-                    const downloadLink = document.createElement('a');
-                    downloadLink.href = pdfUrl;
-                    downloadLink.download = $('#file-input').val().replace(/^C:\\fakepath\\/i, '').split('.').slice(0, -1).join('.');
-                    document.body.appendChild(downloadLink);
-                    downloadLink.click();
-                    document.body.removeChild(downloadLink);
-
-                    $("#load").css({
-                        "visibility": "hidden"
-                    });
-                    $("#text,#or,#file-label").css({
-                        "display": "block"
-                    });
-                    $("#file-input").css({
-                        "visibility": "visible"
-                    });
-                    alert('chúc mừng')
-                    file_input.value = ''
-                    form.reset()
-                    // location.reload();
-                    document.getElementById('text').innerHTML = "Drag and Drop file here"
-
-                    disable_button()
-                    $("#1,#2,#3").css({
-                        "display": "block"
-                    });
-                    $("#flex").css({
-                        "display": "flex"
-                    })
-                })
-                .catch(err => {
-                    console.error(err)
-                })
-
-        }
-
-        //             // Embed the PDF in an iframe
-        //             // const pdfIframe = document.createElement('iframe');
-        //             // pdfIframe.src = pdfUrl;
-        //             // pdfIframe.width = '100%';
-        //             // pdfIframe.height = '600px';
-        //             // document.body.appendChild(pdfIframe);
-
-
-        const dropAreaa = document.getElementById('drop-area');
-        const fileInput = document.getElementById('file-input');
-        const fileLabel = document.getElementById('file-label');
-
-        document.getElementById('file-input').addEventListener('change', function() {
-            var file = this.files[0];
-            var fileName = file.name;
-            var filename = fileName.split('.').pop();
-            enable_button()
-            if (filename == 'pdf') {
-
-                $("#1").css({
-                    "display": "none"
-                });
-                $("#2,#3").css({
-                    "display": "block"
-                });
-            } else if (filename == 'docx' || filename == 'txt') {
-
-                $("#2,#3").css({
-                    "display": "none"
-                });
-                $("#1").css({
-                    "display": "block"
-                });
-            }
-        });
-        // Prevent default drag behaviors
-        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-            dropAreaa.addEventListener(eventName, preventDefaults, false);
-            document.body.addEventListener(eventName, preventDefaults, false);
-        });
-
-        // Highlight drop area when item is dragged over
-        ['dragenter', 'dragover'].forEach(eventName => {
-            dropAreaa.addEventListener(eventName, highlight, false);
-        });
-
-        // Unhighlight drop area when item is dragged out
-        ['dragleave', 'drop'].forEach(eventName => {
-            dropAreaa.addEventListener(eventName, unhighlight, false);
-        });
-
-        // Handle dropped files
-        dropAreaa.addEventListener('drop', handleDrop, false);
-        fileInput.addEventListener('change', handleFileSelect, false);
-
-        function preventDefaults(e) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        function highlight(e) {
-            dropAreaa.classList.add('highlight');
-        }
-
-        function unhighlight(e) {
-            dropAreaa.classList.remove('highlight');
-        }
-
-        function handleDrop(e) {
-            const files = e.dataTransfer.files;
-            handleFiles(files);
-        }
-
-        function handleFileSelect(e) {
-            const files = e.target.files;
-            handleFiles(files);
-        }
-
-        function handleFiles(files) {
-            if (files.length > 1) {
-                alert('Chỉ cho phép tải lên một tệp duy nhất.');
-                return;
-            }
-            var file = files[0];
-            var fileName = file.name;
-            var filename = fileName.split('.').pop();
-            if ((fileName.match('.txt')) || (fileName.match('.pdf')) || (fileName.match('.docx'))) {
-                var myname = document.getElementById('text'); // Tìm phần tử span trong HTML
-                myname.innerHTML = fileName;
-                if (filename == 'pdf') {
-                    $("#1").css({
-                        "display": "none"
-                    });
-                    enable_button()
-                    $("#2,#3").css({
-                        "display": "block"
-                    });
-                } else if (filename == 'docx' || filename == 'txt') {
-                    $("#2,#3").css({
-                        "display": "none"
-                    });
-                    enable_button()
-                    $("#1").css({
-                        "display": "block"
-                    });
-                }
-            } else {
-                alert('Chỉ cho phép tải lên các định dạng .pdf, .docx, .txt');
-            }
-        }
-    </script>
-    <script src="/assets/js/jquery-3.3.1.min.js"></script>
-    <script src="/assets/js/popper.min.js"></script>
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/main.js"></script>
 </body>
 
 </html>

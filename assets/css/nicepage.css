@@ -17115,10 +17115,20 @@ p {
   }
 }
 .u-align-center {
-  text-align: center;
+  text-align:left;
 }
 @media (min-width: 1400px) {
   .u-align-center-xxl {
+    text-align: center;
+  }
+}
+@media (min-width: 979px) and (max-width: 1473px){
+  .u-align-center {
+    text-align: left;
+  }
+}
+@media (max-width: 990px){
+  .u-align-center {
     text-align: center;
   }
 }

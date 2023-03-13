@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- <link rel="stylesheet" href="/assets/fonts/icomoon/style.css">
     <link rel="stylesheet" href="/assets/css/owl.carousel.min.css"> -->
+    <!-- Latest compiled and minified CSS -->
+
+    <!--===============================================================================================-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+
+    <!--===============================================================================================-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+
+    <!--===============================================================================================-->
+
+    <!-- end swal js -->
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
@@ -50,7 +63,7 @@
     <header style="background-color: #404040;" class="u-clearfix u-header u-sticky u-sticky-a44c u-header" id="sec-e290">
         <div class="u-clearfix u-sheet u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
             <a href="{{route('convert')}}" class="u-enable-responsive u-image u-logo u-image-1" data-image-width="200" data-image-height="200">
-                <img src="/assets/images/logo.png" class="u-logo-image u-logo-image-1">
+                <img src="/assets/images/logo3.png" class="u-logo-image u-logo-image-1">
             </a>
             <nav class="u-align-left-lg u-align-left-xl u-menu u-menu-one-level u-offcanvas u-menu-1" data-responsive-from="MD">
                 <div class="menu-collapse" style="font-size: 1rem; letter-spacing: 0px;">
@@ -71,16 +84,16 @@
                     <ul class="u-nav u-unstyled u-nav-1">
                         <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('convert')}}" style="padding: 10px 16px;">@lang('lang.home')</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('contact')}}" style="padding: 10px 16px;">Contact Us</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('contact')}}" style="padding: 10px 16px;">{{trans('lang.contact')}}</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('aboutus')}}" style="padding: 10px 16px;">About Us</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('aboutus')}}" style="padding: 10px 16px;">{{trans('lang.about')}}</a>
                         </li>
-                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="" style="padding: 10px 16px;">Blog</a>
+                        <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="" style="padding: 10px 16px;">{{trans('lang.blog')}}</a>
                         </li>
                         <li class="u-nav-item">
                             <div class="dropdown">
                                 <a style="background-color: #404040;" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Ngôn ngữ
+                                    {{trans('lang.eng')}}
                                 </a>
 
                                 <ul class="dropdown-menu">
@@ -99,16 +112,16 @@
                             <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2" style="color:white">
                                 <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('convert')}}">@lang('lang.home')</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('contact')}}">Contact Us </a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('contact')}}">{{trans('lang.contact')}}</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('aboutus')}}">About US</a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{route('aboutus')}}">{{trans('lang.about')}}</a>
                                 </li>
-                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="">Blog</a>
+                                <li class="u-nav-item"><a class="u-button-style u-nav-link" href="">{{trans('lang.blog')}}</a>
                                 </li>
                                 <li class="u-nav-item">
                                     <div class="dropdown">
                                         <a style="background-color: #404040;" class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Ngôn ngữ
+                                            {{trans('lang.eng')}}
                                         </a>
 
                                         <ul class="dropdown-menu">
@@ -223,7 +236,7 @@
                         <path d="M40.94,5.617C37.318,1.995,32.502,0,27.38,0c-5.123,0-9.938,1.995-13.56,5.617c-6.703,6.702-7.536,19.312-1.804,26.952
 	L27.38,54.757L42.721,32.6C48.476,24.929,47.643,12.319,40.94,5.617z M27.557,26c-3.859,0-7-3.141-7-7s3.141-7,7-7s7,3.141,7,7
 	S31.416,26,27.557,26z"></path>
-                    </svg><img></span>&nbsp;L18-11-13, Tầng 18 Tòa nhà Vincom Center Đồng Khởi,&nbsp;Số 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1,&nbsp;Thành phố Hồ Chí Minh
+                    </svg><img></span>{{trans('lang.add')}}
             </p>
             <p class="u-align-center-sm u-align-center-xs u-align-left-lg u-align-left-md u-align-left-xl u-text u-text-2"><span class="u-file-icon u-icon"><i class="fa-solid fa-phone"></i></span>&nbsp;&nbsp;0965643046
             </p>

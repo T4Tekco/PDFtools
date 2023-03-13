@@ -17,9 +17,9 @@
                                 @csrf
                                 <div id="drop-area" class="u-align-center u-container-style u-group u-palette-1-base u-group-1" style="background-color: white;">
                                     <div style="display:block;" class="u-container-layout u-valign-middle u-container-layout-3">
-                                        <h1 id="text" style="font-size: 25px;color: black;display: block;user-select: none;">Drag and Drop file here</h1>
+                                        <h1 id="text" style="font-size: 25px;color: black;display: block;user-select: none;">{{trans('lang.drag')}}</h1>
                                         <p style="display: block;user-select: none;" id="or">{{trans('lang.or')}}</p>
-                                        <label style="display: block;user-select: none;" for="file-input" id="file-label">Select File</label>
+                                        <label style="display: block;user-select: none;" for="file-input" id="file-label">{{trans('lang.choose')}}</label>
                                         <input style="visibility: visible;" type="file" id="file-input" name="file" accept=".pdf,.docx,.txt" />
                                         <div style="visibility: hidden;" id="load" class="progress-bar-container">
                                             <!-- <div class="progress-bar"></div> -->
@@ -118,7 +118,7 @@
                                         </style>
                                     </div>
                                 </div>
-                                <p class="u-text u-text-default u-text-3" style="color:black;user-select: none;"> Drop your file, select the format that you want to convert to, and then your dream file will be saved to your drive.</p>
+                                <p class="u-text u-text-default u-text-3" style="color:black;user-select: none;text-align: center;">{{trans('lang.title')}}</p>
                                 <div id="flex">
                                     <button disabled onclick="startProgress()" id="1" class="btn btn-light shadow-sm ds" type="submit">
                                         <img class="size" src="/assets/icons/pdf.png" alt="">
@@ -133,6 +133,10 @@
                                         TxT</a>
                                     </button>
                                 </div>
+                                <button disabled onclick="startProgress()" id="4" class="btn btn-light shadow-sm ds" type="submit">
+                                    <img class="size" src="/assets/images/json.png" alt="">
+                                    Json</a>
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -158,105 +162,75 @@
         document.getElementById("1").disabled = true;
         document.getElementById("2").disabled = true;
         document.getElementById("3").disabled = true;
+        document.getElementById("4").disabled = true;
     }
     const enable_button = () => {
         document.getElementById("1").disabled = false;
         document.getElementById("2").disabled = false;
         document.getElementById("3").disabled = false;
+        document.getElementById("4").disabled = false;
     }
 
-    const form = document.querySelector('#file-upload-form');
-    const file_input = document.getElementById('file-input');
-    const url = 'https://api.pdftools.t4tek.co/api/word-to-pdf';
-    const formData = new FormData()
-    const flex = document.getElementById('#flex');
+    function load(files) {
+        const form = document.querySelector('#file-upload-form');
+        const file_input = document.getElementById('file-input');
+        const url = 'https://api.pdftools.t4tek.co/api/word-to-pdf';
+        const formData = new FormData()
+        const flex = document.getElementById('#flex');
+        form.onsubmit = (e) => {
+            e.preventDefault()
+            formData.append("file", files[0])
+            fetch(url, {
+                    method: 'POST',
+                    body: formData
+                }).then(response => {
+                    if (response.status === 200) {
+                        return response.blob();
+                    } else {
+                        swal('File không đúng định dạng')
+                        location.reload();
+                    }
+                })
+                .then(blob => {
+                    const pdfUrl = URL.createObjectURL(blob);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = pdfUrl;
+                    downloadLink.download = $('#file-input').val().replace(/^C:\\fakepath\\/i, '').split('.') + '.pdf';
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
 
-    file_input.addEventListener('change', (event) => {
-        const selectedFile = event.target.files[0];
-        const fileSize = selectedFile.size; // fileSize sẽ chứa kích thước tệp đơn vị tính là byte
-        if (fileSize < 2097152) {
-            form.onsubmit = (e) => {
-                e.preventDefault()
-                formData.append("file", e.target.file.files[0])
-                fetch(url, {
-                        method: 'POST',
-                        body: formData
-                    }).then(response => response.json())
-                    .then(data => {
-                        if (data.status == 100) {
-                            alert('File không đúng định dạng')
-                            location.reload();
-                        }
-                    })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        const pdfUrl = URL.createObjectURL(blob);
-                        const downloadLink = document.createElement('a');
-                        downloadLink.href = pdfUrl;
-                        downloadLink.download = $('#file-input').val().replace(/^C:\\fakepath\\/i, '').split('.') + '.pdf';
-                        document.body.appendChild(downloadLink);
-                        downloadLink.click();
-                        document.body.removeChild(downloadLink);
-
-                        $("#load").css({
-                            "visibility": "hidden"
-                        });
-                        $("#text,#or,#file-label").css({
-                            "display": "block"
-                        });
-                        $("#file-input").css({
-                            "visibility": "visible"
-                        });
-                        alert('chúc mừng');
-                        file_input.value = '';
-                        form.reset();
-                        document.getElementById('text').innerHTML = "Drag and Drop file here";
-                        disable_button();
-                        $("#1,#2,#3").css({
-                            "display": "block"
-                        });
-                        $("#flex").css({
-                            "display": "flex"
-                        });
-                    })
-                //  .catch(error => console.error(error));
-            }
-        } else {
-            alert('Kích thước file quá lớn vui lòng chọn file khác')
-            location.reload();
+                    $("#load").css({
+                        "visibility": "hidden"
+                    });
+                    $("#text,#or,#file-label").css({
+                        "display": "block"
+                    });
+                    $("#file-input").css({
+                        "visibility": "visible"
+                    });
+                    swal('chúc mừng')
+                    file_input.value = '';
+                    form.reset();
+                    document.getElementById('text').innerHTML = "Drag and Drop file here";
+                    disable_button();
+                    $("#1,#2,#3,#4").css({
+                        "display": "block"
+                    });
+                    $("#flex").css({
+                        "display": "flex"
+                    });
+                })
+            //  .catch(error => console.error(error));
         }
-    });
+    }
     const dropAreaa = document.getElementById('drop-area');
     const fileInput = document.getElementById('file-input');
     const fileLabel = document.getElementById('file-label');
 
-    document.getElementById('file-input').addEventListener('change', function() {
-        var file = this.files[0];
-        var fileName = file.name;
-        var filename = fileName.split('.').pop();
-        enable_button()
-        if (filename == 'pdf') {
-
-            $("#1").css({
-                "display": "none"
-            });
-            $("#flex").css({
-                "display": "flex"
-            })
-            $("#2,#3").css({
-                "display": "block"
-            });
-        } else if (filename == 'docx' || filename == 'txt') {
-
-            $("#2,#3").css({
-                "display": "none"
-            });
-            $("#1").css({
-                "display": "block"
-            });
-        }
-
-    });
+    // document.getElementById('file-input').addEventListener('change', function() {
+    //     handleFiles(this.files);
+    // });
     // Prevent default drag behaviors
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropAreaa.addEventListener(eventName, preventDefaults, false);
@@ -301,35 +275,51 @@
     }
 
     function handleFiles(files) {
-        if (files.length > 1) {
-            alert('Chỉ cho phép tải lên một tệp duy nhất.');
-            return;
-        }
         var file = files[0];
         var fileName = file.name;
         var filename = fileName.split('.').pop();
-        if ((fileName.match('.txt')) || (fileName.match('.pdf')) || (fileName.match('.docx'))) {
-            var myname = document.getElementById('text'); // Tìm phần tử span trong HTML
-            myname.innerHTML = fileName;
-            if (filename == 'pdf') {
-                $("#1").css({
-                    "display": "none"
-                });
-                enable_button()
-                $("#2,#3").css({
-                    "display": "block"
-                });
-            } else if (filename == 'docx' || filename == 'txt') {
-                $("#2,#3").css({
-                    "display": "none"
-                });
-                enable_button()
-                $("#1").css({
-                    "display": "block"
-                });
-            }
+        if (files.length > 1) {
+            swal('Chỉ cho phép tải lên một tệp duy nhất.');
+            return;
+        }
+        if (file.size > 2097152) {
+            swal('Kích thước file quá lớn');
         } else {
-            alert('Chỉ cho phép tải lên các định dạng .pdf, .docx, .txt');
+            enable_button();
+            if ((fileName.match('.txt')) || (fileName.match('.pdf')) || (fileName.match('.docx'))) {
+                var myname = document.getElementById('text'); // Tìm phần tử span trong HTML
+                myname.innerHTML = fileName;
+                if (filename == 'pdf') {
+
+                    $("#1,#2,#4").css({
+                        "display": "none"
+                    });
+                    $("#flex").css({
+                        "display": "flex"
+                    })
+                    $("#3").css({
+                        "display": "block"
+                    });
+                } else if (filename == 'docx') {
+
+                    $("#2,#3,#4").css({
+                        "display": "none"
+                    });
+                    $("#1").css({
+                        "display": "block"
+                    });
+                } else if (filename == 'txt') {
+                    $("#1,#2,#3").css({
+                        "display": "none"
+                    });
+                    $("#4").css({
+                        "display": "block"
+                    });
+                }
+            } else {
+                swal('Chỉ cho phép tải lên các định dạng .pdf, .docx, .txt');
+            }
+            load(files);
         }
     }
 </script>

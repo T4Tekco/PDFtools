@@ -13,10 +13,10 @@
                         <img class="u-expanded-width-md u-image u-image-default u-image-1" width="420px" height="250px" style="margin-bottom: 10px; border-radius: 10px;" src="/assets/images/about-us.jpg" alt="">
                     </div>
                     <div class=" u-container-style u-layout-cell u-shape-rectangle u-size-37 u-layout-cell-2">
-                        <p style="color:black;font-size: 20px;user-select: none;"> T4Tek chính là nơi khởi đầu cho những thành công của các kỹ sư CNTT trong tương lai, cung cấp và đào tạo nguồn nhân lực IT chất lượng cao cho các dự án lớn trên toàn cầu.​
+                        <p style="color:black;font-size: 18px;user-select: none;"> {{trans('lang.about1')}}
                             <br>
                             <br>
-                            Chúng tôi luôn hướng tới giải pháp tối ưu cho doanh nghiệp của bạn. Đặc biệt tư vấn triển khai chuyển đổi số cho doanh nghiệp, mang đến tối ưu vận hành, tối đa lợi nhuận với chi phí hợp lý nhất.
+                            {{trans('lang.about2')}}
                         </p>
                     </div>
                 </div>

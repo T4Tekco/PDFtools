@@ -44,4 +44,5 @@ Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
 Route::get('/tool', [AccountController::class, 'Tool'])->name('tool');
 
 Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
-Route::get('/main', [AccountController::class, 'main'])->name('converter');
+Route::get('/policy', [AccountController::class, 'policy'])->name('policy');
+Route::get('/term', [AccountController::class, 'term'])->name('term');

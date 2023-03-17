@@ -5,7 +5,7 @@
         <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
             <div class="u-layout">
                 <div class="u-layout-row shadow">
-                    <div class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-shape-rectangle u-size-23 u-layout-cell-1">
+                    <div style="border-right: 2px dashed #bbb ;" class="u-align-center-md u-align-center-sm u-align-center-xs u-container-style u-layout-cell u-shape-rectangle u-size-23 u-layout-cell-1">
                         <div class="u-container-layout u-valign-top-sm u-valign-top-xs u-container-layout-1">
                             <img class="u-expanded-width-md u-image u-image-default u-image-1" src="/assets/images/logoconvert.svg" alt="" data-image-width="400" data-image-height="240">
                             <!-- <p class="u-text u-text-1">Sample text. Click to select the Text Element.</p> -->
@@ -24,7 +24,6 @@
                                         <div style="visibility: hidden;" id="load" class="progress-bar-container">
                                             <!-- <div class="progress-bar"></div> -->
                                             <div class="loader">
-
                                                 <div class="bar1"></div>
                                                 <div class="bar2"></div>
                                                 <div class="bar3"></div>
@@ -34,6 +33,7 @@
                                                 <div class="bar7"></div>
                                                 <div class="bar8"></div>
                                                 <div class="bar9"></div>
+                                                <p>Đang tải xuống ...</p>
                                             </div>
 
                                         </div>
@@ -49,7 +49,7 @@
                                                 position: absolute;
                                                 width: 10px;
                                                 height: 30px;
-                                                background-color: #ff6a00;
+                                                background-color: black;
                                                 border-radius: 5px;
                                                 animation: loader_51899 1.5s ease-in-out infinite;
                                             }
@@ -118,25 +118,25 @@
                                         </style>
                                     </div>
                                 </div>
-                                <p class="u-text u-text-default u-text-3" style="color:black;user-select: none;text-align: center;">{{trans('lang.title')}}</p>
+                                <p class="u-text u-text-default u-text-3" style="user-select: none;text-align: center;font-size: 1rem;color:black">{{trans('lang.title')}}</p>
                                 <div id="flex">
                                     <button disabled onclick="startProgress()" id="1" class="btn btn-light shadow-sm ds" type="submit">
-                                        <img class="size" src="/assets/icons/pdf.png" alt="">
-                                        PDF</a>
+                                        <img class="size border border-dark-subtle rounded-circle" src="/assets/images/pdf-cir.png" alt="">
+                                        </a>
                                     </button>
                                     <button disabled onclick="startProgress()" id="2" class="btn btn-light shadow-sm ds" type="submit">
-                                        <img class="size" src="/assets/icons/word.png" alt="">
-                                        Word</a>
+                                        <img class="border border-dark-subtle  size rounded-circle" src="/assets/images/word-cir.png" alt="">
+                                        </a>
                                     </button>
                                     <button disabled onclick="startProgress()" id="3" class="btn btn-light shadow-sm ds" type="submit">
-                                        <img class="size" src="/assets/icons/txt.png" alt="">
-                                        TxT</a>
+                                        <img class="border border-dark-subtle  size rounded-circle" src="/assets/images/txt-cir.png" alt="">
+                                        </a>
+                                    </button>
+                                    <button disabled onclick="startProgress()" id="4" class="btn btn-light shadow-sm ds" type="submit">
+                                        <img class="border border-dark-subtle size rounded-circle" src="/assets/images/json-cir.png" alt="">
+                                        </a>
                                     </button>
                                 </div>
-                                <button disabled onclick="startProgress()" id="4" class="btn btn-light shadow-sm ds" type="submit">
-                                    <img class="size" src="/assets/images/json.png" alt="">
-                                    Json</a>
-                                </button>
                             </form>
                         </div>
                     </div>
@@ -171,14 +171,41 @@
         document.getElementById("4").disabled = false;
     }
 
+    // function showText(event) {
+    //     var buttonId = event.target.id;
+    //     switch (buttonId) {
+    //         case "1":
+    //             load(files,urls)
+    //             break;
+    //         }
+    // }
+
     function load(files) {
         const form = document.querySelector('#file-upload-form');
         const file_input = document.getElementById('file-input');
-        const url = 'https://api.pdftools.t4tek.co/api/word-to-pdf';
+        let url = '';
         const formData = new FormData()
         const flex = document.getElementById('#flex');
         form.onsubmit = (e) => {
             e.preventDefault()
+            const idbutton = e.submitter.id;
+            switch (idbutton) {
+                case "1":
+                    url = 'http://apitools.t4tek.tk/api/word-to-pdf'
+                    break;
+                case "2":
+                    url = 'http://apitools.t4tek.tk/api/word-to-pdf' //tạm thời ch có
+                    break;
+                case "3":
+                    url = 'http://apitools.t4tek.tk/api/pdf-to-txt' //txt
+                    break;
+                case "4":
+                    url = 'http://apitools.t4tek.tk/api/txt-to-json'
+                    break;
+                default:
+                    location.reload();
+                    break;
+            }
             formData.append("file", files[0])
             fetch(url, {
                     method: 'POST',
@@ -187,15 +214,39 @@
                     if (response.status === 200) {
                         return response.blob();
                     } else {
-                        swal('File không đúng định dạng')
-                        location.reload();
+                        Swal.fire({
+                            title: 'Opps!!',
+                            text: 'The file is not in the correct format ',
+                            imageUrl: 'https://stories.freepiklabs.com/api/vectors/computer-troubleshooting/rafiki/render?color=&background=complete',
+                            imageWidth: 300,
+                            imageHeight: 300,
+                            imageAlt: 'Example image',
+                            confirmButtonText: 'OK'
+                        })
+                        document.getElementById('text').innerHTML = "Drag and Drop file here";
+                        $("#load").css({
+                            "visibility": "hidden"
+                        });
+                        $("#text,#or,#file-label").css({
+                            "display": "block"
+                        });
+                        $("#file-input").css({
+                            "visibility": "visible"
+                        });
+                        disable_button();
+                        $("#1,#2,#3,#4").css({
+                            "display": "block"
+                        });
+                        $("#flex").css({
+                            "display": "flex"
+                        });
                     }
                 })
                 .then(blob => {
                     const pdfUrl = URL.createObjectURL(blob);
                     const downloadLink = document.createElement('a');
                     downloadLink.href = pdfUrl;
-                    downloadLink.download = $('#file-input').val().replace(/^C:\\fakepath\\/i, '').split('.') + '.pdf';
+                    downloadLink.download = $('#file-input').val().replace(/^C:\\fakepath\\/i, '').split('.');
                     document.body.appendChild(downloadLink);
                     downloadLink.click();
                     document.body.removeChild(downloadLink);
@@ -209,7 +260,15 @@
                     $("#file-input").css({
                         "visibility": "visible"
                     });
-                    swal('chúc mừng')
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'File download successful',
+                        imageUrl: 'https://stories.freepiklabs.com/api/vectors/work-anniversary/rafiki/render?color=&background=complete',
+                        imageWidth: 150,
+                        imageHeight: 150,
+                        imageAlt: 'Example image',
+                        confirmButtonText: 'OK'
+                    })
                     file_input.value = '';
                     form.reset();
                     document.getElementById('text').innerHTML = "Drag and Drop file here";
@@ -224,6 +283,7 @@
             //  .catch(error => console.error(error));
         }
     }
+
     const dropAreaa = document.getElementById('drop-area');
     const fileInput = document.getElementById('file-input');
     const fileLabel = document.getElementById('file-label');
@@ -279,11 +339,27 @@
         var fileName = file.name;
         var filename = fileName.split('.').pop();
         if (files.length > 1) {
-            swal('Chỉ cho phép tải lên một tệp duy nhất.');
+            Swal.fire({
+                title: 'Opps!!',
+                text: 'Only 1 file is allowed to download ',
+                imageUrl: 'https://stories.freepiklabs.com/api/vectors/computer-troubleshooting/rafiki/render?color=&background=complete',
+                imageWidth: 300,
+                imageHeight: 300,
+                imageAlt: 'Example image',
+                confirmButtonText: 'OK'
+            })
             return;
         }
         if (file.size > 2097152) {
-            swal('Kích thước file quá lớn');
+            Swal.fire({
+                title: 'Opps!!',
+                text: 'File size exceeds 2 MB ',
+                imageUrl: 'https://stories.freepiklabs.com/api/vectors/computer-troubleshooting/rafiki/render?color=&background=complete',
+                imageWidth: 300,
+                imageHeight: 300,
+                imageAlt: 'Example image',
+                confirmButtonText: 'OK'
+            })
         } else {
             enable_button();
             if ((fileName.match('.txt')) || (fileName.match('.pdf')) || (fileName.match('.docx'))) {
@@ -317,9 +393,19 @@
                     });
                 }
             } else {
-                swal('Chỉ cho phép tải lên các định dạng .pdf, .docx, .txt');
+                Swal.fire({
+                    title: 'Opps!!',
+                    text: 'Only .pdf, .docx, .txt files are allowed to be uploaded',
+                    imageUrl: 'https://stories.freepiklabs.com/api/vectors/computer-troubleshooting/rafiki/render?color=&background=complete',
+                    imageWidth: 300,
+                    imageHeight: 300,
+                    imageAlt: 'Example image',
+                    confirmButtonText: 'OK'
+                })
+                disable_button();
             }
             load(files);
+            // showText(event);
         }
     }
 </script>

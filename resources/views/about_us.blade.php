@@ -1,6 +1,6 @@
 @extends('tool')
 @section('body')
-<section class="u-clearfix u-section-1" id="sec-e85a">
+<section class="u-clearfix u-section-1" id="sec-e85a" >
     <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <div class="u-clearfix u-expanded-width u-gutter-0 u-layout-wrap u-layout-wrap-1">
             <div class="u-layout">
@@ -13,7 +13,7 @@
                         <img class="u-expanded-width-md u-image u-image-default u-image-1" width="420px" height="250px" style="margin-bottom: 10px; border-radius: 10px;" src="/assets/images/about-us.jpg" alt="">
                     </div>
                     <div class=" u-container-style u-layout-cell u-shape-rectangle u-size-37 u-layout-cell-2">
-                        <p style="color:black;font-size: 18px;user-select: none;"> {{trans('lang.about1')}}
+                        <p style="color:black;font-size: 18px;user-select: none;padding-left: 10px;"> {{trans('lang.about1')}}
                             <br>
                             <br>
                             {{trans('lang.about2')}}

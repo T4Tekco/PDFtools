@@ -27,30 +27,29 @@ class FileController extends Controller
     // }
     public function process(Request $request)
     {
-        try {
+    //    try {
             // Validate the uploaded file
             $request->validate([
                 'file' => 'required|mimes:pdf|max:2048',
             ]);
-    
             // Process the file and generate the required output
             $output = $this->processFile1($request->file('file'));
-    
+
             // Return the output in JSON format
             return response()->json([
                 'status' => '200',
                 'output' => $output,
                 // 'token' => Str::random(80)
             ]);
-        } catch (\Exception $e) {
-            // Return error message and status code in case of an error
-            return response()->json([
-                'status' => '100',
-                'message' => 'File pdf không đúng định dạng',
-            ], 422);
-        }
+        // } catch (\Exception $e) {
+        //     // Return error message and status code in case of an error
+        //     return response()->json([
+        //         'status' => '100',
+        //         'message' => 'File pdf không đúng định dạng',
+        //     ], 422);
+        // }
     }
-    
+
 
 
     public function processFile($file)
@@ -250,11 +249,11 @@ class FileController extends Controller
         }
         //end data
 
-        $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+        $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 
         $newFilename =   $newName  . $today . '.json'; // your new JSON file name
-    //   Storage::put($newFilename, $jsonData);
+        //   Storage::put($newFilename, $jsonData);
         Storage::delete($newName  . $today . '.txt');
 
         // Return the processed data along with the file name
@@ -266,46 +265,31 @@ class FileController extends Controller
 
     public function processFile1($file)
     {
-        // Store the file in the storage folder
-        // $path = $file->store('public');
-
-        // Get the original file name
-        $fileName = $file->getClientOriginalName();
-
-        // Process the file using any third-party libraries or tools
-        $pdftotextPath = getenv('PDFTOTEXT_PATH');
-        $fileName = $file->getClientOriginalName();
-        // Get the path to the temporary file created by Laravel
-        $filePath = $file->getRealPath();
-        // Remove any special characters from the file name
-        $cleanName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME), '-');
-
-        // Get the file extension
-        $extension = $file->getClientOriginalExtension();
-
-        // Create the new file name
-        $newName = $cleanName . '.' . $extension;
-
-        $process = new Process([$pdftotextPath, $filePath]);
+        $pdfFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $textFile = $pdfFileName . ".txt";
+        // create file
+        // Storage::put($textFile, '  not found');
+        $txtPath = storage_path('app/' . $textFile . '');
+        $javaPath = 'C:\Program Files\Java\jre1.8.0_361\bin\java.exe';
+        $pdftotextPath = base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar';
+        // Set the command to convert the PDF to text using pdfboxXXX
+        // $command = $javaPath . ' -jar ' . base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar export:text -sort -i ' . $pdfFile->getRealPath() . ' -o ' . storage_path('app/' . $textFile);
+        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $file, '-o', $txtPath]);
+        // Run the command using the Symfony Process component
         $process->run();
-
+        // Check if the command was successful, and handle any errors
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-        $texts = (new Pdf(getenv('PDFTOTEXT_PATH')))->setPdf($filePath)->text();
+
+        // Save text to file
+        // $text = $process->getOutput();
 
         // end xu ly file
 
-        date_default_timezone_set("Asia/Ho_Chi_Minh");
-        $mydate = getdate(date("U"));
-        $today = "$mydate[year]$mydate[mon]$mydate[mday]$mydate[hours]$mydate[minutes]$mydate[seconds]";
-
-        //   echo Pdf::getText($pdfPath, $pdftotextPath);
-        $files = storage_path('app/' .  $newName  . $today . '.txt');
-        file_put_contents($files, $texts);
         // txt to json
-        $filePath = storage_path('app/' . $newName  . $today . '.txt');
-        $text = file_get_contents($filePath);
+
+        $text = file_get_contents($txtPath);
         $encoding = mb_detect_encoding($text);
         // set utf 8
         $utf8Text = iconv($encoding, 'UTF-8', $text);
@@ -325,7 +309,7 @@ class FileController extends Controller
                 "ward" => "",
                 "district" => "",
                 "city" => "",
-                "country" => "Vietnam",
+                "country" => "",
                 "phone" => "",
                 "fax" => "",
                 "Email" => "",
@@ -341,7 +325,7 @@ class FileController extends Controller
                 "sex" => "",
                 "dayofbirthday" => "",
                 "ethnicity" => "",
-                "nationality" => "Vietnam",
+                "nationality" => "",
                 "legal_document_type" => "",
                 "legal_document_number" => "",
                 "legal_document_date" => "",
@@ -353,7 +337,7 @@ class FileController extends Controller
                 "full_name" =>  "",
                 "sex" => "",
                 "position" =>  "",
-                "birthday" =>  "",
+                "dayofbirthday" =>  "",
                 "ethnicity" =>  "",
                 "nationality" =>  "",
                 "legal_document_type" =>  "",
@@ -367,7 +351,7 @@ class FileController extends Controller
         ];
         // xu ly mục 1 -4 and 6 
         for ($i = 0; $i < sizeof($dataArray); $i++) {
-            $line = trim($dataArray[$i]);
+            $line = $dataArray[$i];
             if (!empty($line)) {
                 // Split the line by the colon
                 $parts = explode(':', $line, 2);
@@ -375,8 +359,18 @@ class FileController extends Controller
                     continue;
                 }
                 if (strpos($line, 'Mã số doanh nghiệp') !== false) {
-
-                    $data['tax_code'] = trim($dataArray[$i - 1]);
+                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
+                    } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
+                    } else {
+                        $value = trim($dataArray[$i]);
+                    }
+                    $legal_representative = explode(':', $value);
+                    if (sizeof($legal_representative) >= 2) {
+                        $data['tax_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
+                    }
+                    // $data['tax_code'] = trim($dataArray[$i]);
                     //    trim(str_replace('Mã số doanh nghiệp:', '', $line));
                 } elseif (strpos($line, 'Tên công ty viết bằng tiếng Việt') !== false) {
                     $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
@@ -385,52 +379,100 @@ class FileController extends Controller
                 } elseif (strpos($line, 'Tên công ty viết tắt') !== false) {
                     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
                 } elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
-                    $address = trim($dataArray[$i + 1]) . trim($dataArray[$i + 2]);
+                    $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
                     $address_parts = explode(',', $address);
-                    if (sizeof($address_parts) >= 4) {
+                    if (sizeof($address_parts) >= 5) {
                         $data['headquarters_address']['street'] = trim($address_parts[0]);
                         $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($address_parts[2]);
-                        $data['headquarters_address']['city'] = trim($address_parts[3]); # code...
+                        $data['headquarters_address']['city'] = " " . trim($address_parts[3]);
+                        $data['headquarters_address']['country'] = trim($address_parts[4]);
                     }
                 } elseif (strpos($line, 'Điện thoại') !== false) {
-                    $data['headquarters_address']['phone'] = trim(str_replace('Điện thoại:', '', $line));
-                } elseif (strpos($line, 'Fax') !== false) {
-                    $data['headquarters_address']['fax'] = trim(str_replace('Fax:', '', $line));
+
+                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
+                    } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
+                    } else {
+                        $value = trim($dataArray[$i]);
+                    }
+                    $legal_representative = explode(':', $value);
+                    if (sizeof($legal_representative) >= 2) {
+                        $data['headquarters_address']['phone'] =  trim(str_replace('Fax', '', $legal_representative[1]));
+                    }
+                    // $data['headquarters_address']['phone'] = trim(str_replace('fax', '', $line));
+                }
+                if (preg_match('/Fax:(\d+)/', $line, $matches)) {
+                    $data['headquarters_address']['fax'] = trim(str_replace('Fax:', '', $matches[1]));
                 } elseif (strpos($line, 'Email') !== false) {
-                    $data['headquarters_address']['Email'] = trim(str_replace('Email:', '', $line));
-                } elseif (strpos($line, 'Điện thoại') !== false) {
-                    $data['headquarters_address']['website'] = trim(str_replace('Website:', '', $line));
+                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
+                    } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
+                    } else {
+                        $value = trim($dataArray[$i]);
+                    }
+                    $legal_representative = explode(':', $dataArray[$i]);
+                    if (sizeof($legal_representative) >= 2) {
+                        print_r($line);
+                        $data['headquarters_address']['Email'] =  trim(str_replace('', '', $legal_representative[1]));
+                    }
+                    // $data['headquarters_address']['Email'] = trim(str_replace('Email:', '', $line));
+                }
+                if (preg_match('/Website:(\S+)/', $line, $matches)) {
+                    $data['headquarters_address']['website'] = trim($matches[1]);
                 } elseif (strpos($line, 'Ngày thành lập') !== false) {
-                    $data['establishment_date'] = trim($dataArray[$i - 1]);
+
+                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
+                    } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
+                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
+                    } else {
+                        $value = trim($dataArray[$i]);
+                    }
+                    $legal_representative = explode(':', $value);
+                    if (sizeof($legal_representative) >= 2) {
+                        $data['establishment_date'] =  trim(str_replace('4. Địa chỉ trụ sở chính', '', $legal_representative[1]));
+                    }
 
                     //trim(str_replace('Ngày; thành lập:', '', $line));
                 } elseif (strpos($line, 'Ngành, nghề kinh doanh') !== false) {
                     continue;
                 } elseif (strpos($line, ' VNĐ') !== false) {
-                    $data['charter_capital'] = trim($line);
+                    $charter_capital = explode(':', $line);
+                    if (sizeof($charter_capital) >= 2) {
+                        $data['charter_capital'] = trim($charter_capital[1]);
+                    }
                 }
             }
         }
         // table
         for ($i =  0; $i < sizeof($dataArray); $i++) {
             $line = trim($dataArray[$i]);
-            if (strpos($line, 'Chi tiết:') !== false) {
+            if (strpos($line, 'STT Tên ngành Mã ngành') !== false) {
                 $position = $i;
                 for ($i =  $position; $i < sizeof($dataArray); $i++) {
                     $arr = trim($dataArray[$i]);
-                    if (is_numeric($dataArray[$i])) {
-                        if (strpos($arr, '.') === false) {
-                            $data['business_lines'][] = [
-                                'industry_code' => $dataArray[$i]
-                            ];
-                        }
-                    }
-                    if (strpos($arr, '(Chính)') !== false) {
-                        $data['business_lines']['main_industry_code'] = trim(str_replace('(Chính)', '', $arr));
-                    }
-                    if (strpos($arr, 'Thông tin về chủ sở hữu') !== false) {
+                    if (strpos($arr, 'Vốn điều lệ') !== false) {
                         break;
+                    } else {
+
+
+                        if (strpos($arr, 'Thời gian đăng') !== false) {
+                            continue;
+                        } else {
+                            if (preg_match('/\s(\d+)/', $arr, $matches)) {
+                                $data['business_lines'][] = [
+                                    'industry_code' =>  $matches[1]
+                                ];
+                            }
+
+                            if (strpos($arr, '(Chính)') !== false) {
+                                preg_match('/\s(\d+)\D/', $arr, $matches);
+                                $data['business_lines']['main_industry_code'] = trim(str_replace('(Chính)', '', $matches[1]));
+                            }
+                        }
                     }
                 }
             }
@@ -447,17 +489,21 @@ class FileController extends Controller
                     if (strpos($line, 'Họ và tên') !== false && strpos($line, '* Họ và tên') == false) {
                         $parts = explode(':', $line);
                         if (sizeof($parts) >= 2) {
-                            $data['owner_info']['full_name'] = $parts[1];
+                            $data['owner_info']['full_name'] = trim(str_replace('Giới tính', '', $parts[1]));;
                         }
                         // $data['owner_info']['full_name'] = trim(str_replace('Họ và tên:', '', $line));
-                    } elseif (strpos($line, 'Giới tính') !== false) {
-                        $data['owner_info']['sex'] = trim(str_replace('Giới tính:', '', $line));
-                    } elseif (strpos($line, 'Sinh ngày') !== false) {
-                        $data['owner_info']['dayofbirthday'] = trim(str_replace('Sinh ngày:', '', $line));
-                    } elseif (strpos($line, 'Dân tộc') !== false) {
-                        $data['owner_info']['ethnicity'] = trim(str_replace('Dân tộc:', '', $line));
-                    } elseif (strpos($line, 'Quốc tịch') !== false) {
-                        $data['owner_info']['nationality'] = trim(str_replace('Quốc tịch:', '', $line));
+                    }
+                    if (preg_match('/Giới tính:\s*([^\n:]+)/', $line, $matches)) {
+                        $data['owner_info']['sex'] = trim(str_replace('Giới tính:', '', $matches[1]));
+                    }
+                    if (preg_match('/Sinh ngày: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
+                        $data['owner_info']['dayofbirthday'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
+                    }
+                    if (preg_match('/Dân tộc:\s*(\w+)/', $line, $matches)) {
+                        $data['owner_info']['ethnicity'] = trim(str_replace('Dân tộc:', '', $matches[1]));
+                    }
+                    if (preg_match('/Quốc tịch:\s*([\p{L}\s]+)/u', $line, $matches)) {
+                        $data['owner_info']['nationality'] = trim(str_replace('Quốc tịch:', '', $matches[1]));
                     } elseif (strpos($line, 'Loại giấy tờ pháp lý của cá nhân') !== false) {
                         $parts = explode(':', $line);
                         if (sizeof($parts) >= 2) {
@@ -469,18 +515,12 @@ class FileController extends Controller
                             $data['owner_info']['legal_document_number'] = $parts[1];
                         }
                         $data['owner_info']['legal_document_number'] = trim(str_replace('Số giấy tờ pháp lý của cá nhân: ', ' ', $line));
-                    } elseif (strpos($line, 'Ngày cấp') !== false) {
-                        $data['owner_info']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $line));
-                    } elseif (strpos($line, 'Nơi cấp') !== false) {
-                        if (strpos($dataArray[$i + 1], ':') !== false) {
-                            $legal = trim($dataArray[$i]);
-                        } else {
-                            $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
-                        }
-                        $legal_representative = explode(':', $legal);
-                        if (sizeof($legal_representative) >= 2) {
-                            $data['owner_info']['legal_document_place'] = trim($legal_representative[1]);
-                        }
+                    }
+                    if (preg_match('/Ngày cấp: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
+                        $data['owner_info']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $matches[1]));
+                    }
+                    if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
+                        $data['owner_info']['legal_document_place'] = trim($matches[1]);
                     } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
                         if (strpos($dataArray[$i + 1], ':') !== false) {
                             $legal = trim($dataArray[$i]);
@@ -514,55 +554,36 @@ class FileController extends Controller
         // legal representative 
         for ($i =  0; $i < sizeof($dataArray); $i++) {
             $line = trim($dataArray[$i]);
-            if (strpos($line, '* Họ và tên') !== false) {
-                $parts = explode(':', $line);
-                if (sizeof($parts) >= 2) {
-                    $data['legal_representative']['full_name'] = $parts[1];
-                }
-                // $data['legal_representative']['full_name'] = trim(str_replace('* Họ và tên:', '', $line));
+            if (preg_match('/Họ và tên:\s*([^\n:]+)/', $line, $matches)) {
+                $data['legal_representative']['full_name'] = trim(str_replace('Giới tính', '', $matches[1]));
             } elseif (strpos($line, 'Chức danh') !== false) {
                 $data['legal_representative']['position'] = trim(str_replace('Chức danh:', '', $line));
-            } elseif (strpos($line, 'Giới tính') !== false) {
-                $data['legal_representative']['sex'] = trim(str_replace('Giới tính:', '', $line));
-            } elseif (strpos($line, 'Sinh ngày') !== false) {
-                $parts = explode(':', $line);
-                if (sizeof($parts) >= 2) {
-
-                    $data['legal_representative']['birthday'] = $parts[1];
-                }
-                //    $data['legal_representative']['birthday'] = trim(str_replace('Sinh ngày:', '', $line));
-            } elseif (strpos($line, 'Dân tộc') !== false) {
-                $data['legal_representative']['ethnicity'] = trim(str_replace('Dân tộc:', '', $line));
-            } elseif (strpos($line, 'Quốc tịch') !== false) {
-                $data['legal_representative']['nationality'] = trim(str_replace('Quốc tịch:', '', $line));
+            }
+            if (preg_match('/Giới tính:\s*([^\n:]+)/', $line, $matches)) {
+                $data['legal_representative']['sex'] = trim(str_replace('Giới tính:', '', $matches[1]));
+            }
+            if (preg_match('/Sinh ngày: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
+                $data['legal_representative']['dayofbirthday'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
+            }
+            if (preg_match('/Dân tộc:\s*(\w+)/', $line, $matches)) {
+                $data['legal_representative']['ethnicity'] = trim(str_replace('Dân tộc:', '', $matches[1]));
+            }
+            if (preg_match('/Quốc tịch:\s*([\p{L}\s]+)/u', $line, $matches)) {
+                $data['legal_representative']['nationality'] = trim(str_replace('Quốc tịch:', '', $matches[1]));
             } elseif (strpos($line, 'Loại giấy tờ pháp lý của cá nhân') !== false) {
                 $data['legal_representative']['legal_document_type'] = trim(str_replace('Loại giấy tờ pháp lý của cá nhân: ', '', $line));
             } elseif (strpos($line, 'Số giấy tờ pháp lý của cá nhân') !== false) {
-                if ($dataArray[$i + 1] != "") {
-                    $data['legal_representative']['legal_document_number'] = trim($dataArray[$i + 1]);
-                } else   if ($dataArray[$i + 2] != "") {
-                    $data['legal_representative']['legal_document_number'] = trim($dataArray[$i + 2]);
-                } else {
-                    $data['legal_representative']['legal_document_number'] = trim(str_replace('Số giấy tờ pháp lý của cá nhân: ', '', $line));
-                }
-            } elseif (strpos($line, 'Ngày cấp') !== false) {
-                if ($dataArray[$i + 1] != "") {
-                    $data['legal_representative']['legal_document_date'] = trim($dataArray[$i + 1]);
-                } else   if ($dataArray[$i + 2] != "") {
-                    $data['legal_representative']['legal_document_date'] = trim($dataArray[$i + 2]);
-                } else {
-                    $data['legal_representative']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $line));
-                }
-            } elseif (strpos($line, 'Nơi cấp') !== false) {
-                if (strpos($dataArray[$i + 1], ':') !== false) {
-                    $legal = trim($dataArray[$i]);
-                } else {
-                    $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
-                }
-                $legal_representative = explode(':', $legal);
+                $legal_representative = explode(':', $line);
                 if (sizeof($legal_representative) >= 2) {
-                    $data['legal_representative']['legal_document_place'] = trim($legal_representative[1]);
+                    $data['legal_representative']['legal_document_number'] = trim($legal_representative[1]);
                 }
+                // $data['legal_representative']['legal_document_number'] = trim($line);
+            }
+            if (preg_match('/Ngày cấp: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
+                $data['legal_representative']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $matches[1]));
+            }
+            if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
+                $data['legal_representative']['legal_document_place'] = trim($matches[1]);
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);
@@ -588,15 +609,14 @@ class FileController extends Controller
                 break;
             }
         }
-        
+
         //end owner info legal representative
         for ($i =  0; $i < sizeof($dataArray); $i++) {
             $line = trim($dataArray[$i]);
             if (strpos($line, 'Nơi đăng ký') !== false) {
-                if ($dataArray[$i + 1] != "") {
-                    $data['registration_office'] = trim($dataArray[$i + 1]);
-                } else   if ($dataArray[$i + 2] != "") {
-                    $data['registration_office'] = trim($dataArray[$i + 2]);
+                $legal_representative = explode(':', $line);
+                if (sizeof($legal_representative) >= 2) {
+                    $data['registration_office'] = $legal_representative[1];
                 }
             }
         }
@@ -605,8 +625,9 @@ class FileController extends Controller
 
         // $newFilename =   $newName  . $today . '.json'; // your new JSON file name
         // // Storage::put($newFilename, $jsonData);
-        Storage::delete($newName  . $today . '.txt');
-
+        // Storage::delete($newName  . $today . '.txt');
+        // echo '<pre>';
+        // print_r($data);
         // Return the processed data along with the file name
         return [
             'data' => $data,

@@ -25,11 +25,11 @@ class PdfToWordController extends Controller
     }
     public function index()
     {
-        return view('convertFile');
-        // return response()->json([
-        //     'status' => '100',
-        //     'message' => 'Invalid file format',
-        // ], 422);
+        // return view('convertFile');
+        return response()->json([
+            'status' => '100',
+            'message' => 'Invalid file format',
+        ], 422);
     }
     public function process(Request $request)
     {
@@ -135,7 +135,7 @@ class PdfToWordController extends Controller
             ], 422);
         }
     }
-
+ 
     // pdf to word 
 
     public function convertToWord(Request $request)

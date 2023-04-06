@@ -2,19 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function Login()
     {
-        return view('login');
+        if (session()->has('role')) {
+            $redirectUrl = (session()->get('role') === 'admin') ? '/admin' : '/home';
+            return redirect($redirectUrl);
+        } else {
+        
+            return view('login');
+        }
     }
+
+    public function postlogin(Request $request)
+{
+    $user = new User();
+    $username = $request->post('username');
+    $password = $request->post('password');
+    $checkUser = $user->login($username, $password);
+
+    foreach ($checkUser as $row) {
+        extract(get_object_vars($row));
+
+        if ($username === $userName && $password === $password) {
+
+            $request->session()->put('ID', $UserID);
+            $request->session()->put('fullname', $FistName . " " . $LastName);
+            $request->session()->put('role', $role);
+            $redirectUrl = ($role === 'admin') ? '/admin' : '/';
+            return redirect($redirectUrl);
+        } else {
+            echo 'Invalid credentials.';
+        }
+    }
+}
+
+
     public function SignUp()
     {
         return view('signup');
@@ -39,69 +67,16 @@ class AccountController extends Controller
     {
         return view('contact_us');
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function Tool()
     {
-        //
+        return view('tool');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function policy()
     {
-        //
+        return view('policy');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function term()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('term');
     }
 }

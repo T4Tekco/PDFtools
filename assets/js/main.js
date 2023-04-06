@@ -12,3 +12,14 @@ $(function() {
 	});
 
 });
+
+app = angular.module("b1", []);
+app.controller("hienthi", xuly);
+function xuly($scope) {
+	$scope.agl = "AngularJS";
+	$scope.hoten = "phan nhựt Giàu";
+	$scope.email = "Email@example.com";
+	$scope.phone = "0123456789";
+	$scope.tile = "Lập trình gaio diện với AngularJS";
+	$scope.web = 'www.example.com';
+}

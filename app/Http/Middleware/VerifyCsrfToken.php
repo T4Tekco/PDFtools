@@ -17,7 +17,9 @@ class VerifyCsrfToken extends Middleware
         '/api/process-file',
         '/api/pdf-to-word',
         '/api/word-to-pdf',
-        '/api/pdf-to-txt'
+        '/api/txt-to-json',
+        '/api/pdf-to-txt',
+        '/login'
     ];
     protected $addHttpCookie = true;
 

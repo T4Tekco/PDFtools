@@ -1,14 +1,20 @@
-$(function() {
-	'use strict';
+const colorInputs = document.querySelectorAll('.color_qr');
+const foreColorInput = document.querySelector('input[name="foreColor"]');
 
+colorInputs.forEach(colorInput => {
 	
-  $('.form-control').on('input', function() {
-	  var $field = $(this).closest('.form-group');
-	  if (this.value) {
-	    $field.addClass('field--not-empty');
-	  } else {
-	    $field.removeClass('field--not-empty');
-	  }
-	});
+  colorInput.addEventListener('click', event => {
+	//  colorInput.style.border = '2px solid green';
+	colorInputs.forEach(input => {
+		if (input === colorInput) {
+		  input.style.border = '2px solid green';
+		} else {
+		  input.style.border = 'none';
+		}
+	  });
+    const selectedColor = event.target.value;
+    foreColorInput.value = selectedColor;
+	// selectedColor.style.border = '2px solid green';
+  });
 
 });

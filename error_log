@@ -1,0 +1,55 @@
+[16-Apr-2023 22:52:23 America/New_York] PHP Warning:  require(/home/t4tek/bcdnscanner.bizinfo.one/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/t4tek/bcdnscanner.bizinfo.one/index.php on line 34
+[16-Apr-2023 22:52:23 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/t4tek/bcdnscanner.bizinfo.one/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/t4tek/bcdnscanner.bizinfo.one/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/index.php on line 34
+[16-Apr-2023 22:54:34 America/New_York] PHP Warning:  require(/home/t4tek/bcdnscanner.bizinfo.one/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/t4tek/bcdnscanner.bizinfo.one/index.php on line 34
+[16-Apr-2023 22:54:34 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/t4tek/bcdnscanner.bizinfo.one/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/t4tek/bcdnscanner.bizinfo.one/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/index.php on line 34
+[16-Apr-2023 22:54:35 America/New_York] PHP Warning:  require(/home/t4tek/bcdnscanner.bizinfo.one/../vendor/autoload.php): Failed to open stream: No such file or directory in /home/t4tek/bcdnscanner.bizinfo.one/index.php on line 34
+[16-Apr-2023 22:54:35 America/New_York] PHP Fatal error:  Uncaught Error: Failed opening required '/home/t4tek/bcdnscanner.bizinfo.one/../vendor/autoload.php' (include_path='.:/opt/alt/php81/usr/share/pear:/opt/alt/php81/usr/share/php:/usr/share/pear:/usr/share/php') in /home/t4tek/bcdnscanner.bizinfo.one/index.php:34
+Stack trace:
+#0 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/index.php on line 34
+[16-Apr-2023 23:14:23 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdnn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:15:52 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdnn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:15:53 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdnn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:18:14 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:52:51 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:52:54 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:54:33 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdnn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8
+[16-Apr-2023 23:55:29 America/New_York] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 't4tek_bcdnn_01'@'premium161-2.web-hosting.com' (using password: YES) in /home/t4tek/bcdnscanner.bizinfo.one/test.php:8
+Stack trace:
+#0 /home/t4tek/bcdnscanner.bizinfo.one/test.php(8): mysqli_connect()
+#1 {main}
+  thrown in /home/t4tek/bcdnscanner.bizinfo.one/test.php on line 8

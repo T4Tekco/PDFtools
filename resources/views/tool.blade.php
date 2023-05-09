@@ -49,9 +49,10 @@
         }
     </script>
     <style>
-        /* #drop-area {
-            margin: 10px !important;
-        } */
+       #showqr{
+                width: 50%;
+    height: auto;
+            }
     </style>
     <meta name="theme-color" content="#478ac9">
     <meta property="og:title" content="PDFTools">
@@ -87,6 +88,10 @@
                     <div class="u-custom-menu u-nav-container" style="color:white">
                         <ul class="u-nav u-unstyled u-nav-1">
                             <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('convert')}}" style="padding: 10px 16px;">@lang('lang.home')</a>
+                            </li>
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('QR_Code_url')}}" style="padding: 10px 16px;">QR code Url</a>
+                            </li>
+                            <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('QR_Code')}}" style="padding: 10px 16px;">QR code vcrad</a>
                             </li>
                             <li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="{{route('aboutus')}}" style="padding: 10px 16px;">{{trans('lang.about')}}</a>
                             </li>

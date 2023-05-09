@@ -46,3 +46,6 @@ Route::get('/tool', [AccountController::class, 'Tool'])->name('tool');
 Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
 Route::get('/policy', [AccountController::class, 'policy'])->name('policy');
 Route::get('/term', [AccountController::class, 'term'])->name('term');
+
+Route::get('/QRURL', [AccountController::class, 'QR_Code_url'])->name('QR_Code_url');
+Route::get('/QRVcrad', [AccountController::class, 'QR_Code'])->name('QR_Code');

@@ -319,3 +319,10 @@ h2 {
 .control--checkbox input:disabled:checked ~ .control__indicator {
   background-color: #7e0cf5;
   opacity: .2; }
+/* css page gen qr */
+.color_qr{
+border: none;
+}
+/* .act{
+  border: 2px solid green;
+} */

@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SignUpController;
 use App\Http\Controllers\WordtoPDFController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('language/{locate}', function ($locate) {
+    if (!in_array($locate, ['en', 'vi'])) {
+        abort(404);
+    }
+    session()->put('locate', $locate);
+    return redirect()->back();
+});
 // account
 Route::get('/login', [AccountController::class, 'Login'])->name('login');
 Route::get('/signup', [AccountController::class, 'Signup'])->name('signup');
@@ -33,8 +41,8 @@ Route::get('/forgotpass', [AccountController::class, 'ForgotPass'])->name('forgo
 
 Route::get('/aboutus', [AccountController::class, 'AboutUs'])->name('aboutus');
 Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
-Route::get('/', [AccountController::class, 'Tool'])->name('tool');
-// Page convert
-// Route::get('/main', [ConvertFilesController::class, 'main'])->name('main');
-Route::get('/convert', [ConvertFilesController::class, 'Convert'])->name('convert');
+Route::get('/tool', [AccountController::class, 'Tool'])->name('tool');
 
+Route::get('/', [ConvertFilesController::class, 'Convert'])->name('convert');
+Route::get('/policy', [AccountController::class, 'policy'])->name('policy');
+Route::get('/term', [AccountController::class, 'term'])->name('term');

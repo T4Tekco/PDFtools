@@ -27,20 +27,20 @@ class FileController extends Controller
     // }
     public function process(Request $request)
     {
-    //    try {
-            // Validate the uploaded file
-            $request->validate([
-                'file' => 'required|mimes:pdf|max:2048',
-            ]);
-            // Process the file and generate the required output
-            $output = $this->processFile1($request->file('file'));
+        //    try {
+        // Validate the uploaded file
+        $request->validate([
+            'file' => 'required|mimes:pdf|max:2048',
+        ]);
+        // Process the file and generate the required output
+        $output = $this->processFile1($request->file('file'));
 
-            // Return the output in JSON format
-            return response()->json([
-                'status' => '200',
-                'output' => $output,
-                // 'token' => Str::random(80)
-            ]);
+        // Return the output in JSON format
+        return response()->json([
+            'status' => '200',
+            'output' => $output,
+            // 'token' => Str::random(80)
+        ]);
         // } catch (\Exception $e) {
         //     // Return error message and status code in case of an error
         //     return response()->json([
@@ -268,29 +268,27 @@ class FileController extends Controller
         $pdfFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $textFile = $pdfFileName . ".txt";
         // create file
+putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         // Storage::put($textFile, '  not found');
         $txtPath = storage_path('app/' . $textFile . '');
-        $javaPath = 'C:\Program Files\Java\jre1.8.0_361\bin\java.exe';
-        $pdftotextPath = base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar';
-        // Set the command to convert the PDF to text using pdfboxXXX
-        // $command = $javaPath . ' -jar ' . base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar export:text -sort -i ' . $pdfFile->getRealPath() . ' -o ' . storage_path('app/' . $textFile);
-        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $file, '-o', $txtPath]);
+        $javaPath = '/usr/lib/jvm/java-17-openjdk-amd64/bin/java';
+        $pdftotextPath = '/pdfbox-app-3.0.0-alpha3.jar';
+        $process = new Process([        $javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
         // Run the command using the Symfony Process component
         $process->run();
         // Check if the command was successful, and handle any errors
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-
-        // Save text to file
-        // $text = $process->getOutput();
+        $text = $process->getOutput();
 
         // end xu ly file
-
+        Storage::put($textFile, $text);
         // txt to json
-
-        $text = file_get_contents($txtPath);
+        $texts = storage_path('app/' . $textFile . '');
+        $text = file_get_contents($texts);
         $encoding = mb_detect_encoding($text);
+        
         // set utf 8
         $utf8Text = iconv($encoding, 'UTF-8', $text);
         $dataArray = explode("\n", $utf8Text);
@@ -302,7 +300,7 @@ class FileController extends Controller
                 "foreign" => "",
                 "abbreviation" => ""
             ],
-            "tax_code" => "",
+            "business_code" => "",
             "establishment_date" => "",
             "headquarters_address" => [
                 "street" => "",
@@ -323,7 +321,7 @@ class FileController extends Controller
             "owner_info" => [
                 "full_name" => "",
                 "sex" => "",
-                "dayofbirthday" => "",
+                "dateofbirth" => "",
                 "ethnicity" => "",
                 "nationality" => "",
                 "legal_document_type" => "",
@@ -337,7 +335,7 @@ class FileController extends Controller
                 "full_name" =>  "",
                 "sex" => "",
                 "position" =>  "",
-                "dayofbirthday" =>  "",
+                "dateofbirth" =>  "",
                 "ethnicity" =>  "",
                 "nationality" =>  "",
                 "legal_document_type" =>  "",
@@ -368,11 +366,9 @@ class FileController extends Controller
                     }
                     $legal_representative = explode(':', $value);
                     if (sizeof($legal_representative) >= 2) {
-                        $data['tax_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
+                        $data['business_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
                     }
-                    // $data['tax_code'] = trim($dataArray[$i]);
-                    //    trim(str_replace('Mã số doanh nghiệp:', '', $line));
-                } elseif (strpos($line, 'Tên công ty viết bằng tiếng Việt') !== false) {
+                                    } elseif (strpos($line, 'Tên công ty viết bằng tiếng Việt') !== false) {
                     $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
                 } elseif (strpos($line, 'Tên công ty viết bằng tiếng nước ngoài') !== false) {
                     $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
@@ -415,10 +411,9 @@ class FileController extends Controller
                     }
                     $legal_representative = explode(':', $dataArray[$i]);
                     if (sizeof($legal_representative) >= 2) {
-                        print_r($line);
-                        $data['headquarters_address']['Email'] =  trim(str_replace('', '', $legal_representative[1]));
+                                              $data['headquarters_address']['Email'] =  trim(str_replace('Website', '', $legal_representative[1]));
                     }
-                    // $data['headquarters_address']['Email'] = trim(str_replace('Email:', '', $line));
+                    // $data['headquarters_address']['Email'] = trim(str_replace('Email', '', $line));
                 }
                 if (preg_match('/Website:(\S+)/', $line, $matches)) {
                     $data['headquarters_address']['website'] = trim($matches[1]);
@@ -482,10 +477,10 @@ class FileController extends Controller
         // owner info
         for ($i =  0; $i < sizeof($dataArray); $i++) {
             $line = trim($dataArray[$i]);
-            if (strpos($line, 'Thông tin về chủ sở hữu') !== false) {
-                $position = $i;
-                for ($i =  $position; $i < sizeof($dataArray); $i++) {
-                    $line = trim($dataArray[$i]);
+            //if (strpos($line, 'Thông tin về chủ sở hữu') !== false) {
+                //$position = $i;
+               // for ($i =  $position; $i < sizeof($dataArray); $i++) {
+                  //  $line = trim($dataArray[$i]);
                     if (strpos($line, 'Họ và tên') !== false && strpos($line, '* Họ và tên') == false) {
                         $parts = explode(':', $line);
                         if (sizeof($parts) >= 2) {
@@ -497,7 +492,7 @@ class FileController extends Controller
                         $data['owner_info']['sex'] = trim(str_replace('Giới tính:', '', $matches[1]));
                     }
                     if (preg_match('/Sinh ngày: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
-                        $data['owner_info']['dayofbirthday'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
+                        $data['owner_info']['dateofbirth'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
                     }
                     if (preg_match('/Dân tộc:\s*(\w+)/', $line, $matches)) {
                         $data['owner_info']['ethnicity'] = trim(str_replace('Dân tộc:', '', $matches[1]));
@@ -547,8 +542,8 @@ class FileController extends Controller
                     if (strpos($line, 'Người đại diện theo pháp luật') !== false) {
                         break;
                     }
-                }
-            }
+            //    }
+          //  }
         }
         //end owner info
         // legal representative 
@@ -563,7 +558,7 @@ class FileController extends Controller
                 $data['legal_representative']['sex'] = trim(str_replace('Giới tính:', '', $matches[1]));
             }
             if (preg_match('/Sinh ngày: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
-                $data['legal_representative']['dayofbirthday'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
+                $data['legal_representative']['dateofbirth'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
             }
             if (preg_match('/Dân tộc:\s*(\w+)/', $line, $matches)) {
                 $data['legal_representative']['ethnicity'] = trim(str_replace('Dân tộc:', '', $matches[1]));

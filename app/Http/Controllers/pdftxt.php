@@ -251,11 +251,11 @@ class pdftxt extends Controller
         // create file
         // Storage::put($textFile, '  not found');
         $txtPath = storage_path('app/' . $textFile . '');
-        $javaPath = 'C:\Program Files\Java\jre1.8.0_361\bin\java.exe';
-        $pdftotextPath = base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar';
+        $javaPath = '/usr/bin/java';
+        $pdftotextPath = '/var/www/PDFtools/vendor/pdfbox-app-3.0.0-alpha3.jar';
         // Set the command to convert the PDF to text using pdfboxXXX
-        // $command = $javaPath . ' -jar ' . base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar export:text -sort -i ' . $pdfFile->getRealPath() . ' -o ' . storage_path('app/' . $textFile);
-        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $pdfFile, '-o', $txtPath]);
+        // $command = $javaPath . ' -jar $pdftotextPath export:text -sort -i ' . $pdfFile->getRealPath() . ' -o ' . storage_path('app/' . $textFile);
+        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $pdfFile->getRealPath(), '-o', $txtPath]);
         // Run the command using the Symfony Process component
         $process->run();
         // Check if the command was successful, and handle any errors

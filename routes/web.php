@@ -83,7 +83,7 @@ Route::get('/pdf-to-json', 'App\Http\Controllers\FileController@index');
 Route::post('/pdf-to-json', 'App\Http\Controllers\FileController@pdfToJson');
 
 //convert pdf to txt
-Route::post('/api/pdf-to-txt', [pdftxt::class, 'convertToTxt']);
+Route::post('/api/pdf-to-txt', [pdftxt::class, 'convertPdfToText']);
 Route::get('/api/pdf-to-txt', [pdftxt::class, 'index']);
 //convert txt to json
 Route::post('/api/txt-to-json', [pdftxt::class, 'convertToJson']);

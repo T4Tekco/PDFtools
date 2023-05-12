@@ -12,7 +12,7 @@ class homeapge extends Controller
             $redirectUrl = (session()->get('role') === 'admin') ? '/admin' : '/home';
             return redirect($redirectUrl);
         } else {
-            return view('Homepage');
+            return view('login');
         }
     }
 }

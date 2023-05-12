@@ -372,10 +372,7 @@ class FileController extends Controller
                     "district" => "",
                     "city" => "",
                     "country" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "Email" => "",
-                    "website" => ""
+                  
                 ],
                 "contact_address" => [
                     "street" => "",
@@ -383,10 +380,7 @@ class FileController extends Controller
                     "district" => "",
                     "city" => "",
                     "country" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "Email" => "",
-                    "website" => ""
+                   
                 ],
             ],
             "registration_office" =>  ""

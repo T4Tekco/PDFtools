@@ -370,10 +370,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                     "district" => "",
                     "city" => "",
                     "country" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "Email" => "",
-                    "website" => ""
+                  
                 ],
                 "contact_address" => [
                     "street" => "",
@@ -381,10 +378,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                     "district" => "",
                     "city" => "",
                     "country" => "",
-                    "phone" => "",
-                    "fax" => "",
-                    "Email" => "",
-                    "website" => ""
+                   
                 ],
             ],
             "registration_office" =>  ""

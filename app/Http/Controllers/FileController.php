@@ -574,11 +574,11 @@ class FileController extends Controller
                           
                             $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
-                                $data['headquarters_address']['street'] = trim($address_parts[0]);
-                                $data['headquarters_address']['ward'] = trim($address_parts[1]);
-                                $data['headquarters_address']['district'] = trim($address_parts[2]);
-                                $data['headquarters_address']['city'] = " " . trim($address_parts[3]);
-                                $data['headquarters_address']['country'] = trim($address_parts[4]);
+                                $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
+                                $data['owner_info']['permanent_address']['ward'] = trim($address_parts[1]);
+                                $data['owner_info']['permanent_address']['district'] = trim($address_parts[2]);
+                                $data['owner_info']['permanent_address']['city'] = " " . trim($address_parts[3]);
+                                $data['owner_info']['permanent_address']['country'] = trim($address_parts[4]);
                             }
                          //   $data['owner_info']['permanent_address'] = $legal_representative[1];
                         }
@@ -592,11 +592,11 @@ class FileController extends Controller
                         if (sizeof($legal_representative) >= 2) {
                             $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
-                                $data['headquarters_address']['street'] = trim($address_parts[0]);
-                                $data['headquarters_address']['ward'] = trim($address_parts[1]);
-                                $data['headquarters_address']['district'] = trim($address_parts[2]);
-                                $data['headquarters_address']['city'] = " " . trim($address_parts[3]);
-                                $data['headquarters_address']['country'] = trim($address_parts[4]);
+                                $data['owner_info']['contact_address']['street'] = trim($address_parts[0]);
+                                $data['owner_info']['contact_address']['ward'] = trim($address_parts[1]);
+                                $data['contact_address']['district'] = trim($address_parts[2]);
+                                $data['owner_info']['contact_address']['city'] = " " . trim($address_parts[3]);
+                                $data['owner_info']['contact_address']['country'] = trim($address_parts[4]);
                             }
                         }
                     }
@@ -652,11 +652,11 @@ class FileController extends Controller
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
-                                $data['headquarters_address']['street'] = trim($address_parts[0]);
-                                $data['headquarters_address']['ward'] = trim($address_parts[1]);
-                                $data['headquarters_address']['district'] = trim($address_parts[2]);
-                                $data['headquarters_address']['city'] = " " . trim($address_parts[3]);
-                                $data['headquarters_address']['country'] = trim($address_parts[4]);
+                                $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
+                                $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
+                                $data['permanent_address']['district'] = trim($address_parts[2]);
+                                $data['legal_representative']['permanent_address']['city'] = " " . trim($address_parts[3]);
+                                $data['legal_representative']['permanent_address']['country'] = trim($address_parts[4]);
                             }
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
@@ -669,11 +669,11 @@ class FileController extends Controller
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
-                                $data['headquarters_address']['street'] = trim($address_parts[0]);
-                                $data['headquarters_address']['ward'] = trim($address_parts[1]);
-                                $data['headquarters_address']['district'] = trim($address_parts[2]);
-                                $data['headquarters_address']['city'] = " " . trim($address_parts[3]);
-                                $data['headquarters_address']['country'] = trim($address_parts[4]);
+                                $data['contact_address']['street'] = trim($address_parts[0]);
+                                $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
+                                $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
+                                $data['legal_representative']['contact_address']['city'] = " " . trim($address_parts[3]);
+                                $data['legal_representative']['contact_address']['country'] = trim($address_parts[4]);
                             }
                 }
             }

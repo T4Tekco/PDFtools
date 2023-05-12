@@ -583,7 +583,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                             if (sizeof($address_parts) >= 5) {
                                 $data['owner_info']['contact_address']['street'] = trim($address_parts[0]);
                                 $data['owner_info']['contact_address']['ward'] = trim($address_parts[1]);
-                                $data['contact_address']['district'] = trim($address_parts[2]);
+                                $data['owner_info']['contact_address']['district'] = trim($address_parts[2]);
                                 $data['owner_info']['contact_address']['city'] = " " . trim($address_parts[3]);
                                 $data['owner_info']['contact_address']['country'] = trim($address_parts[4]);
                             }
@@ -643,7 +643,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                             if (sizeof($address_parts) >= 5) {
                                 $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
                                 $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
-                                $data['permanent_address']['district'] = trim($address_parts[2]);
+                                $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
                                 $data['legal_representative']['permanent_address']['city'] = " " . trim($address_parts[3]);
                                 $data['legal_representative']['permanent_address']['country'] = trim($address_parts[4]);
                             }
@@ -658,7 +658,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
-                                $data['contact_address']['street'] = trim($address_parts[0]);
+                                $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
                                 $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
                                 $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
                                 $data['legal_representative']['contact_address']['city'] = " " . trim($address_parts[3]);

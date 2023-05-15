@@ -9,22 +9,22 @@
             @csrf
             <div class="row">
                 <div class="col-md-2 mb-3" >
-                    <input type="color" name="firstName" value="#9E6F21" class="color_qr act" id="cb1" placeholder="First name"  >
+                    <input type="color" name="color" value="#9E6F21" class="color_qr act" id="cb1" placeholder="First name"  >
                 </div>
                 <div class="col-md-2 mb-3">
-                    <input type="color" name="firstName" value="#7C96AB" class="color_qr" id="cb1" placeholder="First name"  >
+                    <input type="color" name="color" value="#7C96AB" class="color_qr" id="cb1" placeholder="First name"  >
                 </div>
                 <div class="col-md-2 mb-3">
-                    <input type="color" name="firstName" value="#917FB3" class="color_qr" id="cb1" placeholder="First name"  >
+                    <input type="color" name="color" value="#917FB3" class="color_qr" id="cb1" placeholder="First name"  >
                 </div>
                 <div class="col-md-2 mb-3">
-                    <input type="color" name="firstName" value="#917FB3" class="color_qr" id="cb1" placeholder="First name"  >
+                    <input type="color" name="color" value="#917FB3" class="color_qr" id="cb1" placeholder="First name"  >
                 </div>
                 <div class="col-md-2 mb-3">
-                    <input type="color" name="firstName" value="#D4ADFC"  class="color_qr"id="cb1" placeholder="First name"  >
+                    <input type="color" name="color" value="#D4ADFC"  class="color_qr"id="cb1" placeholder="First name"  >
                 </div>
                 <div class="col-md-2 mb-3">
-                    <input type="color" name="firstName" value="#83764F" class="color_qr" id="cb1" placeholder="First name"  >
+                    <input type="color" name="color" value="#83764F" class="color_qr" id="cb1" placeholder="First name"  >
                 </div>
             </div>
             <div class="row">

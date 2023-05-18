@@ -53,3 +53,4 @@ Merge các thay đổi từ nhánh mới vào nhánh chính với lệnh
 ```
 git merge <branch_name>
 ```
+Các bước pull 

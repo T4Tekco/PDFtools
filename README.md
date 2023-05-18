@@ -53,4 +53,33 @@ Merge các thay đổi từ nhánh mới vào nhánh chính với lệnh
 ```
 git merge <branch_name>
 ```
-Các bước pull 
+# Các bước pull 
+
+Save your changes to a temporary place using git stash save command:
+
+``
+git stash save "saving changes before pulling"
+``
+Perform a git pull to update your local branch with the changes from the remote branch:
+
+``
+git pull origin <branch_name>
+``
+Apply your changes using the git stash apply command:
+
+``
+git stash apply
+``
+Add the changes to the staging area using the git add command:
+
+``
+git add .
+``
+Commit the changes with a commit message:
+``
+git commit -m "Commit message"
+``
+Push the changes to the remote branch using the git push command:
+``
+git push
+``

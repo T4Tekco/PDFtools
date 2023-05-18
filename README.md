@@ -57,9 +57,9 @@ git merge <branch_name>
 
 Save your changes to a temporary place using git stash save command:
 
-``
+```
 git stash save "saving changes before pulling"
-``
+```
 Perform a git pull to update your local branch with the changes from the remote branch:
 
 ```

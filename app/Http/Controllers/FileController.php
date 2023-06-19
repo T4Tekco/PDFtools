@@ -380,7 +380,6 @@ class FileController extends Controller
                     "district" => "",
                     "city" => "",
                     "country" => "",
-
                 ],
             ],
             "registration_office" =>  ""
@@ -417,10 +416,11 @@ class FileController extends Controller
                 } elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
                     if (strpos($dataArray[$i + 2], ':') !== false) {
                         $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
-                    } else {
+                    } else  if (strpos($dataArray[$i + 1], ':') !== false) {
                         $address = trim($dataArray[$i + 1]);
+                    }else{
+                        $address = trim($dataArray[$i]);
                     }
-
                     $address_parts = explode(',', $address);
                     if (sizeof($address_parts) >= 5) {
                         $data['headquarters_address']['street'] = trim($address_parts[0]);

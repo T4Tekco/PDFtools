@@ -328,7 +328,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 "legal_document_number" => "",
                 "legal_document_date" => "",
                 "legal_document_place" => "",
-           
+
                 "permanent_address" => [
                     "street" => "",
                     "ward" => "",
@@ -370,7 +370,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                     "district" => "",
                     "city" => "",
                     "country" => "",
-                  
+
                 ],
                 "contact_address" => [
                     "street" => "",
@@ -378,7 +378,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                     "district" => "",
                     "city" => "",
                     "country" => "",
-                   
+
                 ],
             ],
             "registration_office" =>  ""
@@ -411,7 +411,12 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 } elseif (strpos($line, 'Tên công ty viết tắt') !== false) {
                     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
                 } elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
-                    $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
+                    if (strpos($dataArray[$i + 2], ':') !== false) {
+                        $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
+                    } else {
+                        $address = trim($dataArray[$i + 1]);
+                    }
+
                     $address_parts = explode(',', $address);
                     if (sizeof($address_parts) >= 5) {
                         $data['headquarters_address']['street'] = trim($address_parts[0]);
@@ -559,8 +564,8 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                             $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                         }
                         $legal_representative = explode(':', $legal);
-                        if (sizeof($legal_representative) >= 2) { 
-                          
+                        if (sizeof($legal_representative) >= 2) {
+
                             $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
                                 $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
@@ -569,7 +574,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                                 $data['owner_info']['permanent_address']['city'] = " " . trim($address_parts[3]);
                                 $data['owner_info']['permanent_address']['country'] = trim($address_parts[4]);
                             }
-                         //   $data['owner_info']['permanent_address'] = $legal_representative[1];
+                            //   $data['owner_info']['permanent_address'] = $legal_representative[1];
                         }
                     } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                         if (strpos($dataArray[$i + 1], ':') !== false) {
@@ -640,13 +645,13 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
-                            if (sizeof($address_parts) >= 5) {
-                                $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
-                                $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
-                                $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
-                                $data['legal_representative']['permanent_address']['city'] = " " . trim($address_parts[3]);
-                                $data['legal_representative']['permanent_address']['country'] = trim($address_parts[4]);
-                            }
+                    if (sizeof($address_parts) >= 5) {
+                        $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
+                        $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
+                        $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
+                        $data['legal_representative']['permanent_address']['city'] = " " . trim($address_parts[3]);
+                        $data['legal_representative']['permanent_address']['country'] = trim($address_parts[4]);
+                    }
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
@@ -657,13 +662,13 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
-                            if (sizeof($address_parts) >= 5) {
-                                $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
-                                $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
-                                $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
-                                $data['legal_representative']['contact_address']['city'] = " " . trim($address_parts[3]);
-                                $data['legal_representative']['contact_address']['country'] = trim($address_parts[4]);
-                            }
+                    if (sizeof($address_parts) >= 5) {
+                        $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
+                        $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
+                        $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
+                        $data['legal_representative']['contact_address']['city'] = " " . trim($address_parts[3]);
+                        $data['legal_representative']['contact_address']['country'] = trim($address_parts[4]);
+                    }
                 }
             }
             if (strpos($arr, 'Người đại diện theo pháp luật') !== false) {

@@ -410,7 +410,9 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 } elseif (strpos($line, 'Tên công ty viết tắt') !== false) {
                     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
                 } elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
-                  if (strpos($dataArray[$i + 1], ':') !== false) {
+                    if (strpos($dataArray[$i + 2], ':') !== false) {
+                        $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
+                    } else  if (strpos($dataArray[$i + 1], ':') !== false) {
                         $address = trim($dataArray[$i + 1]);
                     }else{
                         $address = trim($dataArray[$i]);

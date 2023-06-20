@@ -696,7 +696,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
 
         // $newFilename =   $newName  . $today . '.json'; // your new JSON file name
         // // Storage::put($newFilename, $jsonData);
-        // Storage::delete($newName  . $today . '.txt');
+         Storage::delete($textFile. '.txt');
         // echo '<pre>';
         // print_r($data);
         // Return the processed data along with the file name

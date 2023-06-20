@@ -249,6 +249,7 @@ class pdftxt extends Controller
         $pdfFileName = pathinfo($pdfFile->getClientOriginalName(), PATHINFO_FILENAME);
         $textFile = $pdfFileName . ".txt";
         // create file
+        putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         // Storage::put($textFile, '  not found');
         $txtPath = storage_path('app/' . $textFile . '');
         $javaPath = '/usr/bin/java';

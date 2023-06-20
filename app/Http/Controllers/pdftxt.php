@@ -245,15 +245,16 @@ class pdftxt extends Controller
     }
     public function convertPdfToText(Request $request)
     {
+        $file = $request->file('file');
         $pdfFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $textFile = $pdfFileName . ".txt";
         // create file
-        putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
+putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         // Storage::put($textFile, '  not found');
         $txtPath = storage_path('app/' . $textFile . '');
         $javaPath = '/usr/lib/jvm/java-17-openjdk-amd64/bin/java';
         $pdftotextPath = '/pdfbox-app-3.0.0-alpha3.jar';
-        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
+        $process = new Process([        $javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
         // Run the command using the Symfony Process component
         $process->run();
         // Check if the command was successful, and handle any errors
@@ -261,10 +262,9 @@ class pdftxt extends Controller
             throw new ProcessFailedException($process);
         }
         $text = $process->getOutput();
-
         $filePath = storage_path('app/' . $textFile);
         file_put_contents($filePath, $text);
-
+        
         // Return the text file as a downloadable response and delete it after sending
         return response()->download($filePath)->deleteFileAfterSend(true);
     }

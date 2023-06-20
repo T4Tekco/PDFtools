@@ -245,26 +245,28 @@ class pdftxt extends Controller
     }
     public function convertPdfToText(Request $request)
     {
-        $pdfFile = $request->file('file');
-        $pdfFileName = pathinfo($pdfFile->getClientOriginalName(), PATHINFO_FILENAME);
+        $pdfFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $textFile = $pdfFileName . ".txt";
         // create file
         putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         // Storage::put($textFile, '  not found');
         $txtPath = storage_path('app/' . $textFile . '');
-        $javaPath = '/usr/bin/java';
-        $pdftotextPath = '/var/www/PDFtools/vendor/pdfbox-app-3.0.0-alpha3.jar';
-        // Set the command to convert the PDF to text using pdfboxXXX
-        // $command = $javaPath . ' -jar $pdftotextPath export:text -sort -i ' . $pdfFile->getRealPath() . ' -o ' . storage_path('app/' . $textFile);
-        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $pdfFile->getRealPath(), '-o', $txtPath]);
+        $javaPath = '/usr/lib/jvm/java-17-openjdk-amd64/bin/java';
+        $pdftotextPath = '/pdfbox-app-3.0.0-alpha3.jar';
+        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
         // Run the command using the Symfony Process component
         $process->run();
         // Check if the command was successful, and handle any errors
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-        // Return the converted text as a downloadable file
-        return response()->download(storage_path('app/' . $textFile))->deleteFileAfterSend(true);
+        $text = $process->getOutput();
+
+        $filePath = storage_path('app/' . $textFile);
+        file_put_contents($filePath, $text);
+
+        // Return the text file as a downloadable response and delete it after sending
+        return response()->download($filePath)->deleteFileAfterSend(true);
     }
 
     public function test(Request $request)

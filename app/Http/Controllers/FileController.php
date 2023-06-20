@@ -422,7 +422,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                         $data['headquarters_address']['street'] = trim($address_parts[0]);
                         $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($address_parts[2]);
-                        $data['headquarters_address']['city'] = " " . trim($address_parts[3]);
+                        $data['headquarters_address']['city'] = trim($address_parts[3]);
                         $data['headquarters_address']['country'] = trim($address_parts[4]);
                     }
                 } elseif (strpos($line, 'Điện thoại') !== false) {

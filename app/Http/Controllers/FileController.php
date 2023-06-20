@@ -417,9 +417,10 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                     } else {
                         $address = trim($dataArray[$i]);
                     }
+                     $data['headquarters_address']['street'] = $address;
                     $address_parts = explode(',', $address);
                     if (sizeof($address_parts) >= 5) {
-                        $data['headquarters_address']['street'] = trim($address_parts[0]);
+                        //= trim($address_parts[0]);
                         $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($address_parts[2]);
                         $data['headquarters_address']['city'] = trim($address_parts[3]);
@@ -563,12 +564,13 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                         } else {
                             $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                         }
+                          $data['owner_info']['permanent_address']['street'] = trim($legal);
                         $legal_representative = explode(':', $legal);
                         if (sizeof($legal_representative) >= 2) {
-
+   
                             $address_parts = explode(',',  $legal_representative[1]);
                             if (sizeof($address_parts) >= 5) {
-                                $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
+                              //  $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
                                 $data['owner_info']['permanent_address']['ward'] = trim($address_parts[1]);
                                 $data['owner_info']['permanent_address']['district'] = trim($address_parts[2]);
                                 $data['owner_info']['permanent_address']['city'] = trim($address_parts[3]);
@@ -582,6 +584,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                         } else {
                             $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                         }
+                        $data['owner_info']['contact_address']['street'] = trim($legal);
                         $legal_representative = explode(':', $legal);
                         if (sizeof($legal_representative) >= 2) {
                             $address_parts = explode(',',  $legal_representative[1]);
@@ -642,11 +645,12 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
+                $data['legal_representative']['permanent_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                        $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
+                     //   $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
                         $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
                         $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
                         $data['legal_representative']['permanent_address']['city'] =  trim($address_parts[3]);
@@ -659,11 +663,12 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
+                $data['legal_representative']['contact_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                        $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
+                        //$data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
                         $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
                         $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
                         $data['legal_representative']['contact_address']['city'] = trim($address_parts[3]);

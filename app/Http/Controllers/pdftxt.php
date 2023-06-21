@@ -252,7 +252,7 @@ class pdftxt extends Controller
 putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         // Storage::put($textFile, '  not found');
         $javaPath = '/usr/lib/jvm/java-17-openjdk-amd64/bin/java';
-        $pdftotextPath = '/pdfbox-app-3.0.0-alpha3.jar';
+        $pdftotextPath = '/var/pdfbox-app-3.0.0-alpha3.jar';
         $process = new Process([        $javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
         // Run the command using the Symfony Process component
         $process->run();

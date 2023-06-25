@@ -1,17 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-// require_once '/vendor/pdfbox-app-3.0.0-alpha3.jar';
 use Exception;
 use Illuminate\Http\Request;
-use SGH\PdfBox\PdfBox;
+
 use Spatie\PdfToText\Pdf;
 use Illuminate\Support\Facades\Storage;
-
-use org\apache\pdfbox\pdfparser\PDFParser;
-use org\apache\pdfbox\pdmodel\PDDocument;
-use org\apache\pdfbox\text\PDFTextStripper;
-
 use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -20,7 +14,6 @@ class pdftxt extends Controller
 {
     public function index()
     {
-
         return response()->json([
             'status' => '422',
             'message' => 'Invalid file',
@@ -30,23 +23,19 @@ class pdftxt extends Controller
     {
         try {
             // Validate the uploaded file
-            $validatedData = $request->validate([
+            $request->validate([
                 'file' => 'required|mimes:pdf|max:2048',
             ]);
-
-            // Get the uploaded PDF file
+    
             $pdfFile = $request->file('file');
-
-            // Convert PDF to text using pdftotext utility with WinAnsi encoding
             $pdfToText = (new Pdf(getenv('PDFTOTEXT_PATH')))
                 ->setPdf($pdfFile)
-                // ->setOptions(['enc' => 'WinAnsiEncoding'])
                 ->text();
-
+    
             // Save text data to a file
             $fileName = $pdfFile->getClientOriginalName() . '.txt';
             Storage::put($fileName, $pdfToText);
-
+    
             // Download the text file
             return response()->download(storage_path('app/' . $fileName))->deleteFileAfterSend(true);
         } catch (Exception $e) {
@@ -57,9 +46,7 @@ class pdftxt extends Controller
             ], 422);
         }
     }
-
-
-
+    
     public function convertToJson(Request $request)
     {
         try {
@@ -190,30 +177,7 @@ class pdftxt extends Controller
 
         //   Return a view with the JSON data
     }
-    // public function convertPdfToTextda(Request $request)
-    // {
-    //     $pdfFile = $request->file('file');
-    //     // create PDF parser object
-    //     $parser = new PDFParser(new \SplFileObject($pdfFile));
 
-    //     // parse PDF file
-    //     $parser->parse();
-
-    //     // get the document object
-    //     $document = $parser->getPDDocument();
-
-    //     // create PDF text stripper object
-    //     $textStripper = new PDFTextStripper();
-
-    //     // extract text from PDF
-    //     $text = $textStripper->getText($document);
-
-    //     // close the document
-    //     $document->close();
-
-    //     // return the extracted text
-    //     return $text;
-    // }
     public function convertfilepdfencode(Request $request)
     {
         // Validate the uploaded file
@@ -224,22 +188,14 @@ class pdftxt extends Controller
         // Get the uploaded PDF file
         $pdfFile = $request->file('file');
 
-        // Convert PDF to text using pdftotext utility with WinAnsi encoding
-        // $pdfToText = (new Pdf(getenv('PDFTOTEXT_PATH')))
-        //     ->setOptions(['-enc', 'ISO-8859-1', '-raw', '-q'])
-        //     ->setPdf($pdfFile)
-        //     ->text();
         $pdfToText = (new Pdf(getenv('PDFTOTEXT_PATH')))
             ->setOptions(['-enc' => 'MacRoman'])
             ->setPdf($pdfFile)
 
             ->text();
-
-
         // Save text data to a file
         $fileName = $pdfFile->getClientOriginalName() . '.txt';
         Storage::put($fileName, $pdfToText);
-
         // Download the text file
         return response()->download(storage_path('app/' . $fileName))->deleteFileAfterSend(true);
     }
@@ -249,11 +205,11 @@ class pdftxt extends Controller
         $pdfFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $textFile = $pdfFileName . ".txt";
         // create file
-putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
+        putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         // Storage::put($textFile, '  not found');
         $javaPath = '/usr/lib/jvm/java-17-openjdk-amd64/bin/java';
         $pdftotextPath = '/var/pdfbox-app-3.0.0-alpha3.jar';
-        $process = new Process([        $javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
+        $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
         // Run the command using the Symfony Process component
         $process->run();
         // Check if the command was successful, and handle any errors
@@ -263,7 +219,7 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         $text = $process->getOutput();
         $filePath = storage_path('app/' . $textFile);
         file_put_contents($filePath, $text);
-        
+
         // Return the text file as a downloadable response and delete it after sending
         return response()->download($filePath)->deleteFileAfterSend(true);
     }
@@ -609,52 +565,8 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
             }
         }
         $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE || JSON_PRETTY_PRINT);
-        // echo '<pre>';
-        // print_r($data);
-        // print_r($dataArray);
-        // $newFilename =   $newName  . $today . '.json'; // your new JSON file name
-        // // Storage::put($newFilename, $jsonData);
-        // Storage::delete($newName  . $today . '.txt');
-
-        // // Return the processed data along with the file name
-        // return [
-        //     'data' => $data,
-        // ];
     }
 
-    //     public function pro(Request $request)
-    //     {
-    //         $file = $request->file('file');
-    //         $fileName = $file->getClientOriginalName();
-    //         $cleanName = Str::slug(pathinfo($fileName, PATHINFO_FILENAME), '-');
-    //         $extension = $file->getClientOriginalExtension();
-    //         $newName = $cleanName . '.' . $extension;
-
-    //         // Extract text from PDF
-    //         $pdfPath = $file->getRealPath();
-    //         $txtPath = storage_path('app/' . $newName . '.txt');
-    //         // $pdftotextPath = base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar';
-    //         // $process = new Process(['java', '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $pdfPath, '-o', $txtPath]);
-    //         $javaPath = 'C:\Program Files\Java\jre1.8.0_361\bin\java.exe';
-    // $pdftotextPath = base_path() . '/vendor/pdfbox-app-3.0.0-alpha3.jar';
-    // $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-i', $pdfPath, '-o', $txtPath]);
-    //         $process->run();
-
-    //         // Check if text extraction was successful
-    //         if (!$process->isSuccessful()) {
-    //             throw new ProcessFailedException($process);
-    //         }
-
-    //         // Save text to file
-    //         $text = file_get_contents($txtPath);
-
-    //         // Convert to UTF-8 encoding
-    //         $encoding = mb_detect_encoding($text);
-    //         $utf8Text = iconv($encoding, 'UTF-8', $text);
-
-    //         // Return JSON response
-    //         return response()->json(['text' => $utf8Text]);
-    //     }
 
     public function processFile1(Request $request)
     {
@@ -677,14 +589,6 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
-
-        // Save text to file
-        // $text = $process->getOutput();
-
-        // end xu ly file
-
-        // txt to json
-
         $text = file_get_contents($txtPath);
         $encoding = mb_detect_encoding($text);
         // set utf 8
@@ -1016,12 +920,6 @@ putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
                 }
             }
         }
-        // $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE);
-
-
-        // $newFilename =   $newName  . $today . '.json'; // your new JSON file name
-        // // Storage::put($newFilename, $jsonData);
-        // Storage::delete($newName  . $today . '.txt');
         echo '<pre>';
         print_r($data);
         // Return the processed data along with the file name

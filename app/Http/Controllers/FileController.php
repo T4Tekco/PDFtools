@@ -367,12 +367,12 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
-                $data['owner_info']['permanent_address']['street'] = trim($legal);
+             //   $data['owner_info']['permanent_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                        //  $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
+                          $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
                         $data['owner_info']['permanent_address']['ward'] = trim($address_parts[1]);
                         $data['owner_info']['permanent_address']['district'] = trim($address_parts[2]);
                         $data['owner_info']['permanent_address']['city'] = trim($address_parts[3]);
@@ -386,9 +386,9 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
-                if (strpos($legal_representative[1], ',') !== false) {
-                    $data['owner_info']['contact_address']['street'] = trim($legal);
-                }
+                // if (strpos($legal_representative[1], ',') !== false) {
+                //     $data['owner_info']['contact_address']['street'] = trim($legal);
+                // }
 
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
@@ -450,12 +450,12 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
-                $data['legal_representative']['permanent_address']['street'] = trim($legal);
+            //    $data['legal_representative']['permanent_address']['street'] = trim(str_replace('Địa chỉ thường trú: ', '',$legal));
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                        //   $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
+                         $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
                         $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
                         $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
                         $data['legal_representative']['permanent_address']['city'] =  trim($address_parts[3]);
@@ -468,12 +468,12 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
-                $data['legal_representative']['contact_address']['street'] = trim($legal);
+               // $data['legal_representative']['contact_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                        //$data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
+                        $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
                         $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
                         $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
                         $data['legal_representative']['contact_address']['city'] = trim($address_parts[3]);

@@ -185,12 +185,17 @@ class FileController extends Controller
                         $data['business_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
                     }
                 } elseif (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
+                    $currentName = '';
                     $type = strtolower($matches[2]);
                     $name = trim($matches[3]);
-
+                    if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $dataArray[$i + 1], $matches) == 0) {
+                        $currentName .= ' ' .  $dataArray[$i + 1];
+                    } else {
+                        $currentName = $name;
+                    }
                     switch ($type) {
                         case 'bằng tiếng việt':
-                            $data['company_name']['vietnamese'] = $name ." ". $dataArray[$i + 1];
+                            $data['company_name']['vietnamese'] = $currentName;
                             break;
                         case 'bằng tiếng nước ngoài':
                             $data['company_name']['foreign'] = $name;

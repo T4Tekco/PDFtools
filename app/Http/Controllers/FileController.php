@@ -220,10 +220,10 @@ class FileController extends Controller
                     } else {
                         $address = trim($dataArray[$i]);
                     }
-                    $data['headquarters_address']['street'] = $address;
+                   // = $address;
                     $address_parts = explode(',', $address);
                     if (sizeof($address_parts) >= 5) {
-                        //= trim($address_parts[0]);
+                        $data['headquarters_address']['street']= trim($address_parts[0]);
                         $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($address_parts[2]);
                         $data['headquarters_address']['city'] = trim($address_parts[3]);

@@ -386,9 +386,12 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
-                $data['owner_info']['contact_address']['street'] = trim($legal);
+                if (strpos($legal_representative[1], ',') !== false) {
+                    $data['owner_info']['contact_address']['street'] = trim($legal);
+                }
+
                 $legal_representative = explode(':', $legal);
-                if (sizeof($legal_representative) >= 2 && strpos($legal_representative[1], ',') !== false) {
+                if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
                         $data['owner_info']['contact_address']['street'] = trim($address_parts[0]);

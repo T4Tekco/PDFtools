@@ -61,19 +61,38 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  // $str = "Họ và tên: NGUYỄN THỪA QUYỀN Giới tính: Nam";
-  // $fieldName = "Họ và tên";
-  
-  // if (preg_match('/Họ và tên:\s*([^\n:]+)/', $str, $matches)) {
-  //     $fieldValue = trim($matches[1]);
-  //     echo $fieldValue; // output: NGUYỄN THỪA QUYỀN
-  // } else {
-  //     echo "Field not found";
+  // $lines = [
+  //   'tên doanh nghiệp viết bằng tiếng việt: công cty abc',
+  //   'tên doanh nghiệp viết bằng tiếng nước ngoài: công cty abc',
+  //   'tên doanh nghiệp viết tắt: công cty abc',
+  // ];
+
+  // $data['company_name'] = [];
+
+  // foreach ($lines as $line) {
+   
+  //   if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
+  //     $type = strtolower($matches[2]);
+  //     $name = trim($matches[3]);
+
+  //     switch ($type) {
+  //       case 'bằng tiếng việt':
+  //         $data['company_name']['vietnamese'] = $name;
+  //         break;
+  //       case 'bằng tiếng nước ngoài':
+  //         $data['company_name']['foreign'] = $name;
+  //         break;
+  //       case 'tắt':
+  //         $data['company_name']['abbreviation'] = $name;
+  //         break;
+  //     }
+  //   }
   // }
-  
-  
-  
-   return view('formtest');
+
+  // // Output the result
+
+  // dd($data['company_name']); // Get the first value in the array
+
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);

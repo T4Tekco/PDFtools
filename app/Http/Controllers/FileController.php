@@ -184,13 +184,30 @@ class FileController extends Controller
                     if (sizeof($legal_representative) >= 2) {
                         $data['business_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
                     }
-                } elseif (strpos($line, 'Tên công ty viết bằng tiếng Việt') !== false) {
-                    $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
-                } elseif (strpos($line, 'Tên công ty viết bằng tiếng nước ngoài') !== false) {
-                    $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
-                } elseif (strpos($line, 'Tên công ty viết tắt') !== false) {
-                    $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
-                } elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
+                } elseif (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
+                    $type = strtolower($matches[2]);
+                    $name = trim($matches[3]);
+
+                    switch ($type) {
+                        case 'bằng tiếng việt':
+                            $data['company_name']['vietnamese'] = $name;
+                            break;
+                        case 'bằng tiếng nước ngoài':
+                            $data['company_name']['foreign'] = $name;
+                            break;
+                        case 'tắt':
+                            $data['company_name']['abbreviation'] = $name;
+                            break;
+                    }
+                }
+                //   elseif (strpos($line, 'Tên công ty viết bằng tiếng Việt') !== false) {
+                //     $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
+                // } elseif (strpos($line, 'Tên công ty viết bằng tiếng nước ngoài') !== false) {
+                //     $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
+                // } elseif (strpos($line, 'Tên công ty viết tắt') !== false) {
+                //     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
+                // }
+                elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
                     if (strpos($dataArray[$i + 2], ':') == false) {
                         $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
                     } else  if (strpos($dataArray[$i + 1], ':') == false) {

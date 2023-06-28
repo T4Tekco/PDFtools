@@ -61,6 +61,7 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
+
   $lines = [
     'tên doanh nghiệp viết bằng tiếng việt: công cty abc- 
     lang son',
@@ -72,7 +73,9 @@ Route::get('/testform', function () {
   $currentType = '';
   $currentName = '';
   foreach ($lines as $line) {
-dd(preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches));
+
+    dd(strpos($line, ':') !== false);
+    dd(preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches));
     if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
       $type = strtolower($matches[2]);
       $name = trim($matches[3]);

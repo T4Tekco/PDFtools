@@ -370,7 +370,6 @@ class FileController extends Controller
                 $data['owner_info']['permanent_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
-
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
                         //  $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
@@ -389,7 +388,7 @@ class FileController extends Controller
                 }
                 $data['owner_info']['contact_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
-                if (sizeof($legal_representative) >= 2) {
+                if (sizeof($legal_representative) >= 2 && strpos($legal_representative[1], ',') !== false) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
                         $data['owner_info']['contact_address']['street'] = trim($address_parts[0]);

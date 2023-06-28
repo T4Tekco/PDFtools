@@ -190,7 +190,7 @@ class FileController extends Controller
 
                     switch ($type) {
                         case 'bằng tiếng việt':
-                            $data['company_name']['vietnamese'] = $name;
+                            $data['company_name']['vietnamese'] = $name . $dataArray[$i + 1];
                             break;
                         case 'bằng tiếng nước ngoài':
                             $data['company_name']['foreign'] = $name;

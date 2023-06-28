@@ -61,37 +61,51 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  // $lines = [
-  //   'tên doanh nghiệp viết bằng tiếng việt: công cty abc',
-  //   'tên doanh nghiệp viết bằng tiếng nước ngoài: công cty abc',
-  //   'tên doanh nghiệp viết tắt: công cty abc',
-  // ];
+  $lines = [
+    'tên công ty viết bằng tiếng việt: công cty abc -',
+    'lang sonw',
+];
 
-  // $data['company_name'] = [];
+$data['company_name'] = [];
 
-  // foreach ($lines as $line) {
-   
-  //   if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
-  //     $type = strtolower($matches[2]);
-  //     $name = trim($matches[3]);
+$currentType = '';
+$currentName = '';
 
-  //     switch ($type) {
-  //       case 'bằng tiếng việt':
-  //         $data['company_name']['vietnamese'] = $name;
-  //         break;
-  //       case 'bằng tiếng nước ngoài':
-  //         $data['company_name']['foreign'] = $name;
-  //         break;
-  //       case 'tắt':
-  //         $data['company_name']['abbreviation'] = $name;
-  //         break;
-  //     }
-  //   }
-  // }
+foreach ($lines as $line) {
+    $pattern = '/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|viết tắt):\s*(.*)/iu';
+    if (preg_match($pattern, $line, $matches)) {
+        $type = strtolower($matches[2]);
+        $name = trim($matches[3]);
 
-  // // Output the result
+        // If previous type is 'bằng tiếng việt', concatenate the name with current line
+        if ($currentType === 'bằng tiếng việt') {
+            $currentName .= ' ' . $name;
+        } else {
+            $currentType = $type;
+            $currentName = $name;
+        }
 
-  // dd($data['company_name']); // Get the first value in the array
+        switch ($type) {
+            case 'bằng tiếng việt':
+                $data['company_name']['vietnamese'] = $currentName;
+                break;
+            case 'bằng tiếng nước ngoài':
+                $data['company_name']['foreign'] = $name;
+                break;
+            case 'viết tắt':
+                $data['company_name']['abbreviation'] = $name;
+                break;
+        }
+    }
+}
+
+// Remove trailing hyphen from the Vietnamese company name
+if (isset($data['company_name']['vietnamese'])) {
+    $data['company_name']['vietnamese'] = rtrim($data['company_name']['vietnamese'], '-');
+}
+
+// Output the result
+dd($data['company_name']);
 
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);

@@ -205,7 +205,7 @@ class FileController extends Controller
                     // = $address;
                     $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                     if (preg_match($pattern, $address, $matches)) {
-                        $data['headquarters_address']['street'] = trim($address);
+                        $data['headquarters_address']['street'] = trim($matches[1]);
                         // $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($matches[2]);
                         $data['headquarters_address']['city'] = trim($matches[3]);

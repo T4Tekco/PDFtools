@@ -173,14 +173,14 @@ class FileController extends Controller
                     continue;
                 }
                 if (strpos($line, 'Mã số doanh nghiệp') !== false) {
-                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
-                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
-                    } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
-                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
-                    } else {
-                        $value = trim($dataArray[$i]);
-                    }
-                    $legal_representative = explode(':', $value);
+                    // if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
+                    //     $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
+                    // } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
+                    //     $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
+                    // } else {
+                    //     $value = trim($dataArray[$i]);
+                    // }
+                    $legal_representative = explode(':', $line);
                     if (sizeof($legal_representative) >= 2) {
                         $data['business_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
                     }

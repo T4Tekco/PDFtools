@@ -431,7 +431,7 @@ class FileController extends Controller
                 $data['legal_representative']['dateofbirth'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
             }
             if (preg_match('/Dân tộc:\s*(\w+)/', $line, $matches)) {
-                $data['legal_representative']['ethnicity'] = trim($matches[1]);
+                $data['legal_representative']['ethnicity'] = trim($line);
             }
             if (preg_match('/Quốc tịch:\s*([\p{L}\s]+)/u', $line, $matches)) {
                 $data['legal_representative']['nationality'] = trim(str_replace('Quốc tịch:', '', $matches[1]));

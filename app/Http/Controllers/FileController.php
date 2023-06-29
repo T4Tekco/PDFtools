@@ -451,7 +451,7 @@ class FileController extends Controller
                 if (strpos($dataArray[$i + 1], 'Địa chỉ thường trú') === false) {
                     $cus_legal_document_place .= " " . trim($dataArray[$i + 1]);
                 }
-                $data['legal_representative']['legal_document_place'] = trim($matches[1]);
+                $data['legal_representative']['legal_document_place'] = $cus_legal_document_place;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);

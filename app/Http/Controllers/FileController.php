@@ -431,7 +431,7 @@ class FileController extends Controller
                 $data['legal_representative']['dateofbirth'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
             }
             if (preg_match('/Dân tộc:\s*(\w+)/', $line, $matches)) {
-                $data['legal_representative']['ethnicity'] = trim(str_replace('Dân tộc:', '', $matches[1]));
+                $data['legal_representative']['ethnicity'] = trim(str_replace('Qu', '',str_replace('Dân tộc:', '', $matches[1])));
             }
             if (preg_match('/Quốc tịch:\s*([\p{L}\s]+)/u', $line, $matches)) {
                 $data['legal_representative']['nationality'] = trim(str_replace('Quốc tịch:', '', $matches[1]));
@@ -442,7 +442,6 @@ class FileController extends Controller
                 if (sizeof($legal_representative) >= 2) {
                     $data['legal_representative']['legal_document_number'] = trim($legal_representative[1]);
                 }
-                // $data['legal_representative']['legal_document_number'] = trim($line);
             }
             if (preg_match('/Ngày cấp: (\d{2}\/\d{2}\/\d{4})/', $line, $matches)) {
                 $data['legal_representative']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $matches[1]));

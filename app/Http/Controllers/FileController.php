@@ -180,7 +180,7 @@ class FileController extends Controller
                     // } else {
                     //     $value = trim($dataArray[$i]);
                     // }
-                    $data['business_code'] =    trim( $matches[1]);
+                    $data['business_code'] =    trim($matches[1]);
                     // $legal_representative = explode(':', $line);
                     // if (sizeof($legal_representative) > 0) {
                     //     $data['business_code'] =  trim( $legal_representative[1]);
@@ -431,7 +431,7 @@ class FileController extends Controller
                 $data['legal_representative']['dateofbirth'] = trim(str_replace('Sinh ngày:', '', $matches[1]));
             }
             if (preg_match('/Dân tộc:\s(.*?)(?=\s(?:Quốc tịch|Sinh ngày|$))/', $text, $matches)) {
-                $data['legal_representative']['ethnicity'] = trim( $matches[1]);
+                $data['legal_representative']['ethnicity'] = trim($matches[1]);
             }
             if (preg_match('/Quốc tịch:\s*([\p{L}\s]+)/u', $line, $matches)) {
                 $data['legal_representative']['nationality'] = trim(str_replace('Quốc tịch:', '', $matches[1]));
@@ -447,7 +447,11 @@ class FileController extends Controller
                 $data['legal_representative']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $matches[1]));
             }
             if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
-                $data['legal_representative']['legal_document_place'] = trim($matches[1]);
+                $cus_legal_document_place =   $line;
+                if (strpos($dataArray[$i + 1], 'Địa chỉ thường trú') === false) {
+                    $cus_legal_document_place =   $dataArray[$i + 1];
+                }
+                $data['legal_representative']['legal_document_place'] =   $cus_legal_document_place;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);

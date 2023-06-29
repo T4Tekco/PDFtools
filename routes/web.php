@@ -61,15 +61,6 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  $text = "Sinh ngày: 15/12/1962 Dân tộc: kinh Quốc tịch: Việt Nam";
-
-  if (preg_match('/Dân tộc:\s(.*?)(?=\s(?:Quốc tịch|Sinh ngày|$))/', $text, $matches)) {
-      $ethnicity = trim($matches[1]);
-      dd($ethnicity);
-  }
-  
-
-  
 
   $lines = [
     'tên doanh nghiệp viết bằng tiếng việt: công cty abc -',

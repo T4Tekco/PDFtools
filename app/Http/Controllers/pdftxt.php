@@ -205,10 +205,10 @@ class pdftxt extends Controller
         $pdfFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $textFile = $pdfFileName . ".txt";
         // create file
-        putenv("JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java");
+        putenv("JAVA_HOME=/usr/bin/java");
         // Storage::put($textFile, '  not found');
-        $javaPath = '/usr/lib/jvm/java-17-openjdk-amd64/bin/java';
-        $pdftotextPath = '/var/pdfbox-app-3.0.0-alpha3.jar';
+        $javaPath = '/usr/bin/java';
+        $pdftotextPath = '/opt/pdfbox/pdfbox-app-3.0.0-alpha3.jar';
         $process = new Process([$javaPath, '-jar', $pdftotextPath, 'export:text', '-sort', '-console', '-i', $file]);
         // Run the command using the Symfony Process component
         $process->run();

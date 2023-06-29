@@ -449,7 +449,7 @@ class FileController extends Controller
             if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
                 $cus_legal_document_place =   $line;
                 if (strpos($dataArray[$i + 1], 'Địa chỉ thường trú') === false) {
-                    $cus_legal_document_place =   $dataArray[$i + 1];
+                    $cus_legal_document_place .= "".  $dataArray[$i + 1];
                 }
                 $data['legal_representative']['legal_document_place'] =   $cus_legal_document_place;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {

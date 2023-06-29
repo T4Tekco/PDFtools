@@ -357,7 +357,7 @@ class FileController extends Controller
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                     if (preg_match($pattern, $address, $matches)) {
-                        $data['owner_info']['permanent_address']['street'] = trim($matches[0]);
+                        $data['owner_info']['permanent_address']['street'] = trim($matches[1]);
                         $data['owner_info']['permanent_address']['district'] = trim($matches[2]);
                         $data['owner_info']['permanent_address']['city'] = trim($matches[3]);
                         $data['owner_info']['permanent_address']['country'] = trim($matches[4]);
@@ -371,7 +371,7 @@ class FileController extends Controller
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
-                    $data['owner_info']['contact_address']['street'] = trim($matches[0]);
+                    $data['owner_info']['contact_address']['street'] = trim($matches[1]);
                     $data['owner_info']['contact_address']['district'] = trim($matches[2]);
                     $data['owner_info']['contact_address']['city'] = trim($matches[3]);
                     $data['owner_info']['contact_address']['country'] = trim($matches[4]);
@@ -433,7 +433,7 @@ class FileController extends Controller
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
-                    $data['legal_representative']['permanent_address']['street'] = trim($matches[0]);
+                    $data['legal_representative']['permanent_address']['street'] = trim($matches[1]);
                     $data['legal_representative']['permanent_address']['district'] = trim($matches[2]);
                     $data['legal_representative']['permanent_address']['city'] = trim($matches[3]);
                     $data['legal_representative']['permanent_address']['country'] = trim($matches[4]);
@@ -447,7 +447,7 @@ class FileController extends Controller
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
-                    $data['legal_representative']['contact_address']['street'] = trim($matches[0]);
+                    $data['legal_representative']['contact_address']['street'] = trim($matches[1]);
                     $data['legal_representative']['contact_address']['district'] = trim($matches[2]);
                     $data['legal_representative']['contact_address']['city'] = trim($matches[3]);
                     $data['legal_representative']['contact_address']['country'] = trim($matches[4]);

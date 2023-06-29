@@ -191,7 +191,6 @@ class FileController extends Controller
                     $currentName =   $line;
                     if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $dataArray[$i + 1], $matches) == 0) {
                         $currentName .= ' ' .  $dataArray[$i + 1];
-                        break;
                     }
                     switch ($type) {
                         case 'bằng tiếng việt':

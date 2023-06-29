@@ -61,49 +61,32 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
+  $text1 = 'Số 86 Nguyễn Tri Phương, Khu Phố Tân Long, Phường Tân Hiệp, Thành phố Tân Uyên, Tỉnh Bình Dương, Việt Nam';
+  $text2 = 'Số 34 Ngõ 2/114 phố Tân Phong, Phường Thụy Phương, Quận Bắc Từ Liêm, Thành phố Hà, Việt Nam';
 
-  $lines = [
-    'tên doanh nghiệp viết bằng tiếng việt: công cty abc- 
-    lang son',
-    'tên doanh nghiệp viết bằng tiếng nước ngoài: công cty abc',
-    'tên doanh nghiệp viết tắt: abc',
+  $address_parts = explode(',', $text1);
+  $data = [
+    'headquarters_address' => [
+      'street' => '',
+      'district' => '',
+      'city' => ''
+    ]
   ];
-
-  $data['company_name'] = [];
-  $currentType = '';
-  $currentName = '';
-  foreach ($lines as $line) {
-
-    dd(strpos($line, ':') !== false);
-    dd(preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches));
-    if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
-      $type = strtolower($matches[2]);
-      $name = trim($matches[3]);
-      // If previous type is 'bằng tiếng việt', concatenate the name with current line
-      if ($currentType === 'bằng tiếng việt') {
-        $currentName .= ' ' . $name;
-      } else {
-        $currentType = $type;
-        $currentName = $name;
-      }
-      switch ($type) {
-        case 'bằng tiếng việt':
-          $data['company_name']['vietnamese'] = $currentName;
-          break;
-        case 'bằng tiếng nước ngoài':
-          $data['company_name']['foreign'] = $name;
-          break;
-        case 'tắt':
-          $data['company_name']['abbreviation'] = $name;
-          break;
-      }
+  for ($i = 0; $i < sizeof($address_parts); $i++) {
+    if (strpos($address_parts[$i], 'Thành phố') !== false) {
+      $data['headquarters_address']['city'] = trim($address_parts[$i]);
+    } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
+      $data['headquarters_address']['district'] = trim($address_parts[$i]);
+    } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
+      $data['headquarters_address']['district'] = trim($address_parts[$i]);
+    } else {
+      $data['headquarters_address']['street'] .= trim($address_parts[$i]);
     }
+    # code...
   }
 
-  // Output the result
-
-  dd($data['company_name']); // Get the first value in the array
-
+  // Output the results
+  dd($data);
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);

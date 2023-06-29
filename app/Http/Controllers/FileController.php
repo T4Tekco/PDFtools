@@ -205,13 +205,13 @@ class FileController extends Controller
                             break;
                     }
                 }
-                //   elseif (strpos($line, 'Tên công ty viết bằng tiếng Việt') !== false) {
-                //     $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
-                // } elseif (strpos($line, 'Tên công ty viết bằng tiếng nước ngoài') !== false) {
-                //     $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
-                // } elseif (strpos($line, 'Tên công ty viết tắt') !== false) {
-                //     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
-                // }
+                  elseif (strpos($line, 'viết bằng tiếng Việt') !== false) {
+                    $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
+                } elseif (strpos($line, 'viết bằng tiếng nước ngoài') !== false) {
+                    $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
+                } elseif (strpos($line, 'viết tắt') !== false) {
+                    $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
+                }
                 elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
                     if (strpos($dataArray[$i + 2], ':') == false) {
                         $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
@@ -220,10 +220,10 @@ class FileController extends Controller
                     } else {
                         $address = trim($dataArray[$i]);
                     }
-                   // = $address;
+                    // = $address;
                     $address_parts = explode(',', $address);
                     if (sizeof($address_parts) >= 5) {
-                        $data['headquarters_address']['street']= trim($address_parts[0]);
+                        $data['headquarters_address']['street'] = trim($address_parts[0]);
                         $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($address_parts[2]);
                         $data['headquarters_address']['city'] = trim($address_parts[3]);
@@ -367,12 +367,12 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
-             //   $data['owner_info']['permanent_address']['street'] = trim($legal);
+                //   $data['owner_info']['permanent_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                          $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
+                        $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
                         $data['owner_info']['permanent_address']['ward'] = trim($address_parts[1]);
                         $data['owner_info']['permanent_address']['district'] = trim($address_parts[2]);
                         $data['owner_info']['permanent_address']['city'] = trim($address_parts[3]);
@@ -450,12 +450,12 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
-            //    $data['legal_representative']['permanent_address']['street'] = trim(str_replace('Địa chỉ thường trú: ', '',$legal));
+                //    $data['legal_representative']['permanent_address']['street'] = trim(str_replace('Địa chỉ thường trú: ', '',$legal));
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
                     if (sizeof($address_parts) >= 5) {
-                         $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
+                        $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
                         $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
                         $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
                         $data['legal_representative']['permanent_address']['city'] =  trim($address_parts[3]);
@@ -468,7 +468,7 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
-               // $data['legal_representative']['contact_address']['street'] = trim($legal);
+                // $data['legal_representative']['contact_address']['street'] = trim($legal);
                 $legal_representative = explode(':', $legal);
                 if (sizeof($legal_representative) >= 2) {
                     $address_parts = explode(',',  $legal_representative[1]);
@@ -507,6 +507,33 @@ class FileController extends Controller
         // Return the processed data along with the file name
         return [
             'data' => $data,
+        ];
+    }
+    public function extractAddressComponents($text)
+    {
+        $pattern = '/^Số (\d+)\s+(.*?),\s*Phường\s+(.*?),\s*Quận\s+(.*?),\s*Thành phố\s+(.*?),\s*Tỉnh\s+(.*?),\s*Việt Nam$/iu';
+        $matches = [];
+
+        if (preg_match($pattern, $text, $matches)) {
+            $street = $matches[2];
+            $city = $matches[5];
+            $province = $matches[6];
+            $country = $matches[7];
+
+            return [
+                "street" => $street,
+                "city" => $city,
+                "province" => $province,
+                "country" => $country
+            ];
+        }
+
+        // If the pattern doesn't match, you can return a default value or throw an exception
+        return [
+            "street" => "",
+            "city" => "",
+            "province" => "",
+            "country" => ""
         ];
     }
 }

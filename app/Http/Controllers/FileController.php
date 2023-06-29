@@ -447,11 +447,11 @@ class FileController extends Controller
                 $data['legal_representative']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $matches[1]));
             }
             if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
-                $cus_legal_document_place =   $line;
+                $cus_legal_document_place = trim($matches[1]);
                 if (strpos($dataArray[$i + 1], 'Địa chỉ thường trú') === false) {
-                    $cus_legal_document_place .= "".  $dataArray[$i + 1];
+                    $cus_legal_document_place .= " " . trim($dataArray[$i + 1]);
                 }
-                $data['legal_representative']['legal_document_place'] =   $cus_legal_document_place;
+                $data['legal_representative']['legal_document_place'] = trim($matches[1]);
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);

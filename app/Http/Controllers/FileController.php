@@ -188,10 +188,10 @@ class FileController extends Controller
                     $currentName = '';
                     $type = strtolower($matches[2]);
                     $name = trim($matches[3]);
-                    if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $dataArray[$i + 1], $matches) == 0) {
+                    $currentName =   $line;
+                    if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $dataArray[$i + 1], $matches) == 0) {
                         $currentName .= ' ' .  $dataArray[$i + 1];
-                    } else {
-                        $currentName = $name;
+                        break;
                     }
                     switch ($type) {
                         case 'bằng tiếng việt':
@@ -205,13 +205,13 @@ class FileController extends Controller
                             break;
                     }
                 }
-                  elseif (strpos($line, 'viết bằng tiếng Việt') !== false) {
-                    $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
-                } elseif (strpos($line, 'viết bằng tiếng nước ngoài') !== false) {
-                    $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
-                } elseif (strpos($line, 'viết tắt') !== false) {
-                    $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
-                }
+                //   elseif (strpos($line, 'viết bằng tiếng Việt') !== false) {
+                //     $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
+                // } elseif (strpos($line, 'viết bằng tiếng nước ngoài') !== false) {
+                //     $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
+                // } elseif (strpos($line, 'viết tắt') !== false) {
+                //     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
+                // }
                 elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
                     if (strpos($dataArray[$i + 2], ':') == false) {
                         $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);

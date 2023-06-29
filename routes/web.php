@@ -61,32 +61,51 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  $text1 = 'Số 86 Nguyễn Tri Phương, Khu Phố Tân Long, Phường Tân Hiệp, Thành phố Tân Uyên, Tỉnh Bình Dương, Việt Nam';
-  $text2 = 'Số 34 Ngõ 2/114 phố Tân Phong, Phường Thụy Phương, Quận Bắc Từ Liêm, Thành phố Hà, Việt Nam';
-
-  $address_parts = explode(',', $text1);
-  $data = [
-    'headquarters_address' => [
-      'street' => '',
-      'district' => '',
-      'city' => ''
-    ]
+  $lines = [
+    'tên công ty viết bằng tiếng việt: công cty abc -',
+    'lang sonw',
   ];
-  for ($i = 0; $i < sizeof($address_parts); $i++) {
-    if (strpos($address_parts[$i], 'Thành phố') !== false) {
-      $data['headquarters_address']['city'] = trim($address_parts[$i]);
-    } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
-      $data['headquarters_address']['district'] = trim($address_parts[$i]);
-    } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
-      $data['headquarters_address']['district'] = trim($address_parts[$i]);
-    } else {
-      $data['headquarters_address']['street'] .= trim($address_parts[$i]);
-    }
-    # code...
-  }
+  $currentType = '';
+  $currentName = '';
 
-  // Output the results
-  dd($data);
+
+  for ($i = 0; $i < sizeof($lines); $i++) {
+
+    if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $lines[$i], $matches)) {
+      $currentName =  $lines[$i];
+      if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $lines[$i + 1], $matches) == 0) {
+        $currentName .= ' ' .  $lines[$i + 1];
+        break;
+      }
+    }
+  }
+  dd($currentName);
+  // $text1 = 'Số 86 Nguyễn Tri Phương, Khu Phố Tân Long, Phường Tân Hiệp, Thành phố Tân Uyên, Tỉnh Bình Dương, Việt Nam';
+  // $text2 = 'Số 34 Ngõ 2/114 phố Tân Phong, Phường Thụy Phương, Quận Bắc Từ Liêm, Thành phố Hà, Việt Nam';
+
+  // $address_parts = explode(',', $text1);
+  // $data = [
+  //   'headquarters_address' => [
+  //     'street' => '',
+  //     'district' => '',
+  //     'city' => ''
+  //   ]
+  // ];
+  // for ($i = 0; $i < sizeof($address_parts); $i++) {
+  //   if (strpos($address_parts[$i], 'Thành phố') !== false) {
+  //     $data['headquarters_address']['city'] = trim($address_parts[$i]);
+  //   } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
+  //     $data['headquarters_address']['district'] = trim($address_parts[$i]);
+  //   } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
+  //     $data['headquarters_address']['district'] = trim($address_parts[$i]);
+  //   } else {
+  //     $data['headquarters_address']['street'] .= trim($address_parts[$i]);
+  //   }
+  //   # code...
+  // }
+
+  // // Output the results
+  // dd($data);
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);

@@ -81,14 +81,12 @@ for ($i=0; $i <sizeof($lines) ; $i++) {
     if (preg_match($pattern,  $lines[$i], $matches)) {
         $type = strtolower($matches[2]);
         $name = trim($matches[3]);
+        $currentName =   $name;
         // If previous type is 'bằng tiếng việt', concatenate the name with current line
         if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $lines[$i + 1], $matches) == 0) {
           $currentName .= ' ' .  $lines[$i + 1];
-          break;
-        } else {
-            $currentType = $type;
-            $currentName = $name;
-        }
+  
+        } 
         switch ($type) {
             case 'bằng tiếng việt':
                 $data['company_name']['vietnamese'] = $currentName;

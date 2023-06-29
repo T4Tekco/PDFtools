@@ -195,13 +195,13 @@ class FileController extends Controller
                     }
                     switch ($type) {
                         case 'bằng tiếng việt':
-                            $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '',$currentName));
+                            $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $currentName));
                             break;
                         case 'bằng tiếng nước ngoài':
-                            $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '',$name));
+                            $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $name));
                             break;
                         case 'tắt':
-                            $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '',$name));
+                            $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $name));
                             break;
                     }
                 }
@@ -360,7 +360,12 @@ class FileController extends Controller
                 $data['owner_info']['legal_document_date'] = trim(str_replace('Ngày cấp: ', '', $matches[1]));
             }
             if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
-                $data['owner_info']['legal_document_place'] = trim($matches[1]);
+
+                $currentName   = trim($matches[1]);
+                if (strpos($line, ':') === false) {
+                    $currentName .= ' ' .  $dataArray[$i + 1];
+                }
+                $data['owner_info']['legal_document_place'] = $currentName;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);

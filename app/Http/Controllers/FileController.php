@@ -362,7 +362,7 @@ class FileController extends Controller
             if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
 
                 $currentName   = trim($matches[1]);
-                if (strpos($line, ':') === false) {
+                if (strpos($line, 'Địa chỉ thường trú') === false) {
                     $currentName .= ' ' .  $dataArray[$i + 1];
                 }
                 $data['owner_info']['legal_document_place'] = $currentName;

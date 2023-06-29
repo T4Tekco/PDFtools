@@ -194,13 +194,13 @@ class FileController extends Controller
                     }
                     switch ($type) {
                         case 'bằng tiếng việt':
-                            $data['company_name']['vietnamese'] = $currentName;
+                            $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '',$currentName));
                             break;
                         case 'bằng tiếng nước ngoài':
-                            $data['company_name']['foreign'] = $name;
+                            $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '',$name));
                             break;
                         case 'tắt':
-                            $data['company_name']['abbreviation'] = $name;
+                            $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '',$name));
                             break;
                     }
                 }

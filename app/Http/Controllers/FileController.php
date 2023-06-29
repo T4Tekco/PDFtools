@@ -211,14 +211,7 @@ class FileController extends Controller
                         $data['headquarters_address']['city'] = trim($matches[3]);
                         $data['headquarters_address']['country'] = trim($matches[4]);
                     }
-                    // $address_parts = explode(',', $address);
-                    // if (sizeof($address_parts) >= 5) {
-                    //     $data['headquarters_address']['street'] = trim($address_parts[0]);
-                    //     $data['headquarters_address']['ward'] = trim($address_parts[1]);
-                    //     $data['headquarters_address']['district'] = trim($address_parts[2]);
-                    //     $data['headquarters_address']['city'] = trim($address_parts[3]);
-                    //     $data['headquarters_address']['country'] = trim($address_parts[4]);
-                    // }
+                  
                 } elseif (strpos($line, 'Điện thoại') !== false) {
 
                     if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
@@ -362,40 +355,29 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
-                //   $data['owner_info']['permanent_address']['street'] = trim($legal);
-                $legal_representative = explode(':', $legal);
-                if (sizeof($legal_representative) >= 2) {
-                    $address_parts = explode(',',  $legal_representative[1]);
-                    if (sizeof($address_parts) >= 5) {
-                        $data['owner_info']['permanent_address']['street'] = trim($address_parts[0]);
-                        $data['owner_info']['permanent_address']['ward'] = trim($address_parts[1]);
-                        $data['owner_info']['permanent_address']['district'] = trim($address_parts[2]);
-                        $data['owner_info']['permanent_address']['city'] = trim($address_parts[3]);
-                        $data['owner_info']['permanent_address']['country'] = trim($address_parts[4]);
+                $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
+                    if (preg_match($pattern, $address, $matches)) {
+                        $data['owner_info']['permanent_address']['street'] = trim($matches[0]);
+                        $data['owner_info']['permanent_address']['district'] = trim($matches[2]);
+                        $data['owner_info']['permanent_address']['city'] = trim($matches[3]);
+                        $data['owner_info']['permanent_address']['country'] = trim($matches[4]);
                     }
-                    //   $data['owner_info']['permanent_address'] = $legal_representative[1];
-                }
+               
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
-                // if (strpos($legal_representative[1], ',') !== false) {
-                //     $data['owner_info']['contact_address']['street'] = trim($legal);
-                // }
-
-                $legal_representative = explode(':', $legal);
-                if (sizeof($legal_representative) >= 2) {
-                    $address_parts = explode(',',  $legal_representative[1]);
-                    if (sizeof($address_parts) >= 5) {
-                        $data['owner_info']['contact_address']['street'] = trim($address_parts[0]);
-                        $data['owner_info']['contact_address']['ward'] = trim($address_parts[1]);
-                        $data['owner_info']['contact_address']['district'] = trim($address_parts[2]);
-                        $data['owner_info']['contact_address']['city'] =  trim($address_parts[3]);
-                        $data['owner_info']['contact_address']['country'] = trim($address_parts[4]);
-                    }
+                $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
+                if (preg_match($pattern, $address, $matches)) {
+                    $data['owner_info']['contact_address']['street'] = trim($matches[0]);
+                    $data['owner_info']['contact_address']['district'] = trim($matches[2]);
+                    $data['owner_info']['contact_address']['city'] = trim($matches[3]);
+                    $data['owner_info']['contact_address']['country'] = trim($matches[4]);
                 }
+
+               
             }
             // echo '<pre>';
             // print_r($dataArray[$i]);
@@ -449,36 +431,38 @@ class FileController extends Controller
                 } else {
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
-                //    $data['legal_representative']['permanent_address']['street'] = trim(str_replace('Địa chỉ thường trú: ', '',$legal));
-                $legal_representative = explode(':', $legal);
-                if (sizeof($legal_representative) >= 2) {
-                    $address_parts = explode(',',  $legal_representative[1]);
-                    if (sizeof($address_parts) >= 5) {
-                        $data['legal_representative']['permanent_address']['street'] = trim($address_parts[0]);
-                        $data['legal_representative']['permanent_address']['ward'] = trim($address_parts[1]);
-                        $data['legal_representative']['permanent_address']['district'] = trim($address_parts[2]);
-                        $data['legal_representative']['permanent_address']['city'] =  trim($address_parts[3]);
-                        $data['legal_representative']['permanent_address']['country'] = trim($address_parts[4]);
-                    }
+                $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
+                if (preg_match($pattern, $address, $matches)) {
+                    $data['legal_representative']['permanent_address']['street'] = trim($matches[0]);
+                    $data['legal_representative']['permanent_address']['district'] = trim($matches[2]);
+                    $data['legal_representative']['permanent_address']['city'] = trim($matches[3]);
+                    $data['legal_representative']['permanent_address']['country'] = trim($matches[4]);
                 }
+               
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);
                 } else {
                     $legal = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                 }
-                // $data['legal_representative']['contact_address']['street'] = trim($legal);
-                $legal_representative = explode(':', $legal);
-                if (sizeof($legal_representative) >= 2) {
-                    $address_parts = explode(',',  $legal_representative[1]);
-                    if (sizeof($address_parts) >= 5) {
-                        $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
-                        $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
-                        $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
-                        $data['legal_representative']['contact_address']['city'] = trim($address_parts[3]);
-                        $data['legal_representative']['contact_address']['country'] = trim($address_parts[4]);
-                    }
+                $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
+                if (preg_match($pattern, $address, $matches)) {
+                    $data['legal_representative']['contact_address']['street'] = trim($matches[0]);
+                    $data['legal_representative']['contact_address']['district'] = trim($matches[2]);
+                    $data['legal_representative']['contact_address']['city'] = trim($matches[3]);
+                    $data['legal_representative']['contact_address']['country'] = trim($matches[4]);
                 }
+                // $legal_representative = explode(':', $legal);
+                // if (sizeof($legal_representative) >= 2) {
+                //     $address_parts = explode(',',  $legal_representative[1]);
+                //     if (sizeof($address_parts) >= 5) {
+                //         $data['legal_representative']['contact_address']['street'] = trim($address_parts[0]);
+                //         $data['legal_representative']['contact_address']['ward'] = trim($address_parts[1]);
+                //         $data['legal_representative']['contact_address']['district'] = trim($address_parts[2]);
+                //         $data['legal_representative']['contact_address']['city'] = trim($address_parts[3]);
+                //         $data['legal_representative']['contact_address']['country'] = trim($address_parts[4]);
+                //     }
+                // }
             }
             if (strpos($arr, 'Người đại diện theo pháp luật') !== false) {
                 break;

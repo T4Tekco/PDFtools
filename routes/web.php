@@ -61,29 +61,12 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  $text = 'Nhà xưởng FA7-3 & FA7-4 lô 7, KCN Cẩm Điền - Lương Điền, Xã Lương Điền, Huyện Cẩm Giàng, tỉnh Hải Dương, Việt Nam';
-  $address2 = 'Số 21, ngõ 3, đường Phan Bá Vành, Phường Cổ Nhuế 2, Quận Bắc Từ Liêm, Thành phố Hà nội, Việt Nam';
+$currentName =null ;
+  if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', 'Tên công ty viết tắt: LAC HONG INVESTMENT CONSULTING CO., LTD', $matches) == 0) {
+    $currentName .=  1;
+}
 
-  $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
-  $matches = [];
-
-  if (preg_match($pattern, $address2, $matches)) {
-    $stree= trim($matches[1]);
-    $country = trim($matches[4]);
-    $city = trim($matches[3]);
-    $district = trim($matches[2]);
-
-  }
- 
-
-  // Output the results
-  dd([
-    'stree' => $stree,
-    'country' => $country,
-    'city' => $city,
-    'district' => $district,
-  ]);
-
+dd($currentName );
 
   $lines = [
     'tên doanh nghiệp viết bằng tiếng việt: công cty abc -',

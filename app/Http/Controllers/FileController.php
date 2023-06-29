@@ -181,8 +181,8 @@ class FileController extends Controller
                     //     $value = trim($dataArray[$i]);
                     // }
                     $legal_representative = explode(':', $line);
-                    if (sizeof($legal_representative) >= 2) {
-                        $data['business_code'] =  trim(str_replace('3. Ngày thành lập', '', $legal_representative[1]));
+                    if (sizeof($legal_representative) > 0) {
+                        $data['business_code'] =  trim( $legal_representative[1]);
                     }
                 } elseif (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
                     $currentName = '';

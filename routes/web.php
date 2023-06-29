@@ -61,14 +61,15 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
+  if (preg_match('/^Mã số doanh nghiệp:\s(.*)/', 'Mã số doanh nghiệp: 01243737645', $matches)) {
+    dd($matches[1]);
+}
+
   $lines = [
     'tên doanh nghiệp viết bằng tiếng việt: công cty abc -',
     'lang sonw',
   ];
-  $lines = [
-    'tên công ty viết bằng tiếng việt: công cty abc -',
-    'lang sonw',
-];
+  
 
 $data['company_name'] = [];
 

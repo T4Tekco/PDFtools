@@ -172,7 +172,7 @@ class FileController extends Controller
                 if (strpos($line, 'CÔNG BỐ NỘI DUNG ĐĂNG KÝ THÀNH LẬP MỚI') !== false) {
                     continue;
                 }
-                if (preg_match('/^Mã số doanh nghiệp:\s/', $line, $matches)){
+                if (preg_match('/^Mã số doanh nghiệp:\s(.*)/', 'Mã số doanh nghiệp: 01243737645', $matches)) {
                     // if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
                     //     $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
                     // } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
@@ -180,7 +180,7 @@ class FileController extends Controller
                     // } else {
                     //     $value = trim($dataArray[$i]);
                     // }
-                    $data['business_code'] =    trim(str_replace('2. Mã số doanh nghiệp:', '', $line));
+                    $data['business_code'] =    trim( $matches[1]);
                     // $legal_representative = explode(':', $line);
                     // if (sizeof($legal_representative) > 0) {
                     //     $data['business_code'] =  trim( $legal_representative[1]);

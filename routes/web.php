@@ -61,51 +61,73 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
+  $text = 'Nhà xưởng FA7-3 & FA7-4 lô 7, KCN Cẩm Điền - Lương Điền, Xã Lương Điền, Huyện Cẩm Giàng, tỉnh Hải Dương, Việt Nam';
+  $address2 = 'Số 21, ngõ 3, đường Phan Bá Vành, Phường Cổ Nhuế 2, Quận Bắc Từ Liêm, Thành phố Hà nội, Việt Nam';
+
+  $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
+  $matches = [];
+
+  if (preg_match($pattern, $address2, $matches)) {
+    $stree= trim($matches[1]);
+    $country = trim($matches[4]);
+    $city = trim($matches[3]);
+    $district = trim($matches[2]);
+
+  }
+ 
+
+  // Output the results
+  dd([
+    'stree' => $stree,
+    'country' => $country,
+    'city' => $city,
+    'district' => $district,
+  ]);
+
 
   $lines = [
     'tên doanh nghiệp viết bằng tiếng việt: công cty abc -',
     'lang sonw',
   ];
-  
 
-$data['company_name'] = [];
 
-$currentType = '';
-$currentName = '';
+  $data['company_name'] = [];
 
-for ($i=0; $i <sizeof($lines) ; $i++) { 
+  $currentType = '';
+  $currentName = '';
+
+  for ($i = 0; $i < sizeof($lines); $i++) {
 
     $pattern = '/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|viết tắt):\s*(.*)/iu';
     if (preg_match($pattern,  $lines[$i], $matches)) {
-        $type = strtolower($matches[2]);
-        $name = trim($matches[3]);
-        $currentName =   $name;
-        // If previous type is 'bằng tiếng việt', concatenate the name with current line
-        if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $lines[$i + 1], $matches) == 0) {
-          $currentName .= ' ' .  $lines[$i + 1];
-  
-        } 
-        switch ($type) {
-            case 'bằng tiếng việt':
-                $data['company_name']['vietnamese'] = $currentName;
-                break;
-            case 'bằng tiếng nước ngoài':
-                $data['company_name']['foreign'] = $name;
-                break;
-            case 'viết tắt':
-                $data['company_name']['abbreviation'] = $name;
-                break;
-        }
+      $type = strtolower($matches[2]);
+      $name = trim($matches[3]);
+      $currentName =   $name;
+      // If previous type is 'bằng tiếng việt', concatenate the name with current line
+      if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $lines[$i + 1], $matches) == 0) {
+        $currentName .= ' ' .  $lines[$i + 1];
+      }
+      switch ($type) {
+        case 'bằng tiếng việt':
+          $data['company_name']['vietnamese'] = $currentName;
+          break;
+        case 'bằng tiếng nước ngoài':
+          $data['company_name']['foreign'] = $name;
+          break;
+        case 'viết tắt':
+          $data['company_name']['abbreviation'] = $name;
+          break;
+      }
     }
-}
+  }
 
-// Remove trailing hyphen and extra spaces from the Vietnamese company name
-if (isset($data['company_name']['vietnamese'])) {
+  // Remove trailing hyphen and extra spaces from the Vietnamese company name
+  if (isset($data['company_name']['vietnamese'])) {
     $data['company_name']['vietnamese'] = rtrim($data['company_name']['vietnamese'], '- ');
-}
+  }
 
-// Output the result
-dd($data['company_name']);
+  // Output the result
+  dd($data['company_name']);
 
   // $text1 = 'Số 86 Nguyễn Tri Phương, Khu Phố Tân Long, Phường Tân Hiệp, Thành phố Tân Uyên, Tỉnh Bình Dương, Việt Nam';
   // $text2 = 'Số 34 Ngõ 2/114 phố Tân Phong, Phường Thụy Phương, Quận Bắc Từ Liêm, Thành phố Hà, Việt Nam';

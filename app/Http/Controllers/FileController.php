@@ -221,14 +221,22 @@ class FileController extends Controller
                         $address = trim($dataArray[$i]);
                     }
                     // = $address;
-                    $address_parts = explode(',', $address);
-                    if (sizeof($address_parts) >= 5) {
-                        $data['headquarters_address']['street'] = trim($address_parts[0]);
-                        $data['headquarters_address']['ward'] = trim($address_parts[1]);
-                        $data['headquarters_address']['district'] = trim($address_parts[2]);
-                        $data['headquarters_address']['city'] = trim($address_parts[3]);
-                        $data['headquarters_address']['country'] = trim($address_parts[4]);
+                    $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
+                    if (preg_match($pattern, $address, $matches)) {
+                        $data['headquarters_address']['street'] = trim($matches[1]);
+                        // $data['headquarters_address']['ward'] = trim($address_parts[1]);
+                        $data['headquarters_address']['district'] = trim($matches[2]);
+                        $data['headquarters_address']['city'] = trim($matches[3]);
+                        $data['headquarters_address']['country'] = trim($matches[4]);
                     }
+                    // $address_parts = explode(',', $address);
+                    // if (sizeof($address_parts) >= 5) {
+                    //     $data['headquarters_address']['street'] = trim($address_parts[0]);
+                    //     $data['headquarters_address']['ward'] = trim($address_parts[1]);
+                    //     $data['headquarters_address']['district'] = trim($address_parts[2]);
+                    //     $data['headquarters_address']['city'] = trim($address_parts[3]);
+                    //     $data['headquarters_address']['country'] = trim($address_parts[4]);
+                    // }
                 } elseif (strpos($line, 'Điện thoại') !== false) {
 
                     if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
@@ -453,6 +461,7 @@ class FileController extends Controller
                 }
                 $data['legal_representative']['legal_document_place'] = $cus_legal_document_place;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
+
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);
                 } else {

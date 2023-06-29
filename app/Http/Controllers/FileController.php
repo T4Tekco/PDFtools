@@ -173,18 +173,7 @@ class FileController extends Controller
                     continue;
                 }
                 if (preg_match('/^2. Mã số doanh nghiệp:\s(.*)/',  $line, $matches)) {
-                    // if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
-                    //     $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
-                    // } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
-                    //     $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
-                    // } else {
-                    //     $value = trim($dataArray[$i]);
-                    // }
                     $data['business_code'] =    trim($matches[1]);
-                    // $legal_representative = explode(':', $line);
-                    // if (sizeof($legal_representative) > 0) {
-                    //     $data['business_code'] =  trim( $legal_representative[1]);
-                    // }
                 } elseif (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $line, $matches)) {
                     $currentName = '';
                     $type = strtolower($matches[2]);
@@ -205,13 +194,6 @@ class FileController extends Controller
                             break;
                     }
                 }
-                //   elseif (strpos($line, 'viết bằng tiếng Việt') !== false) {
-                //     $data['company_name']['vietnamese'] = trim(str_replace('Tên công ty viết bằng tiếng Việt:', '', $line));
-                // } elseif (strpos($line, 'viết bằng tiếng nước ngoài') !== false) {
-                //     $data['company_name']['foreign'] = trim(str_replace('Tên công ty viết bằng tiếng nước ngoài:', '', $line));
-                // } elseif (strpos($line, 'viết tắt') !== false) {
-                //     $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $line));
-                // }
                 elseif (strpos($line, 'Địa chỉ trụ sở chính') !== false) {
                     if (strpos($dataArray[$i + 2], ':') == false) {
                         $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
@@ -222,7 +204,7 @@ class FileController extends Controller
                     }
                     // = $address;
                     $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
-                    if (preg_match($pattern, $address, $matches)) {
+                    if (preg_match($pattern, $line, $matches)) {
                         $data['headquarters_address']['street'] = trim($matches[1]);
                         // $data['headquarters_address']['ward'] = trim($address_parts[1]);
                         $data['headquarters_address']['district'] = trim($matches[2]);

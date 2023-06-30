@@ -180,7 +180,7 @@ class FileController extends Controller
                     $name = trim($matches[3]);
                     $currentName =   $name;
                     if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $dataArray[$i + 1], $matches) == 0) {
-                        $currentName .=  $dataArray[$i + 1];
+                        $currentName .= ' '. $dataArray[$i + 1];
                     }
                     switch ($type) {
                         case 'bằng tiếng việt':

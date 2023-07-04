@@ -364,13 +364,13 @@ class FileController extends Controller
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 $address = trim($dataArray[$i]);
-                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ',') === true) {
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], '/') === false) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }
-                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ',') === true) {
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], '/') === false) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ',') === true) {
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], '/') === false) {
                     $address .= " " . trim($dataArray[$i + 3]);
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
@@ -447,13 +447,13 @@ class FileController extends Controller
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 $address = trim($dataArray[$i]);
-                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ',') === true) {
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], '/') === false) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }
-                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ',') === true) {
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], '/') === false) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ',') === true) {
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], '/') === false) {
                     $address .= " " . trim($dataArray[$i + 3]);
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';

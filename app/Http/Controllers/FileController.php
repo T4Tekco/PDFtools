@@ -426,7 +426,7 @@ class FileController extends Controller
                 if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false ) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }
-                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false ) {
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 1], ':') === false && strpos($dataArray[$i + 1], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
                 

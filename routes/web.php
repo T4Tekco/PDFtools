@@ -61,22 +61,23 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  
+
 
 
   // email
   $lines = [
-    'Email: phattriengiaoducthehetrasasde@gma Website:',
-    'il.com',
+    "Email: mayminhquang.2023@gmail.co Website:",
+    "m",
     '5. Ngành, nghề kinh doanh:'
   ];
   $email = null;
 
   for ($i = 0; $i < sizeof($lines); $i++) {
     $matches = [];
-   dd( preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
-    if (isset($matches[1])) {
+   // (preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
+    if ((preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches))) {
       $email = trim($matches[1]);
+     
       if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
         $email .=  trim($lines[$i + 1]);
       }

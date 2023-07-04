@@ -224,14 +224,13 @@ class FileController extends Controller
                 }
                 if (preg_match('/Fax:(\d+)/', $line, $matches)) {
                     $data['headquarters_address']['fax'] = trim(str_replace('Fax:', '', $matches[1]));
-                } elseif ( preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $dataArray[$i], $matches)) {
-                    $email = null;
-                    if (isset($matches[1])) {
-                        $email = trim($matches[1]);
-                        if (isset($lines[$i + 1]) && strpos($dataArray[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
-                            $email .=  trim($dataArray[$i + 1]);
-                        }
+                } else if ((preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $dataArray[$i], $matches))) {
+                    $email = trim($matches[1]);
+                   
+                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
+                      $email .=  trim($dataArray[$i + 1]);
                     }
+                  
                     $data['headquarters_address']['Email'] =  $email;
 
                     // $data['headquarters_address']['Email'] = trim(str_replace('Email', '', $line));

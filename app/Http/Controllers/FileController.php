@@ -431,9 +431,7 @@ class FileController extends Controller
                 if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false ) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 3], ':') === false) {
-                    $address .= " " . trim($dataArray[$i + 3]);
-                }
+                
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
                     $data['legal_representative']['permanent_address']['street'] = trim($matches[1]);

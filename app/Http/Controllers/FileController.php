@@ -207,7 +207,7 @@ class FileController extends Controller
                         $data['headquarters_address']['city'] = trim($matches[3]);
                         $data['headquarters_address']['country'] = trim($matches[4]);
                     }
-                } elseif (strpos($line, 'Điện thoại') !== false) {
+                } elseif (strpos($line, 'Điện thoại:') !== false) {
                     $value = trim($dataArray[$i]);
                     if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
                         $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);

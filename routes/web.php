@@ -61,37 +61,12 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  $line = [
-    "4. Địa chỉ trụ sở chính:18 - MANOR 1 STR - SUNRISE A - Khu đô thị The Manor Central Park – Khu đô",
-    "thị Nam đường vành đai 3, Phường Đại Kim, Quận Hoàng Mai, Thành phố Hà Nội,",
-    "Việt Nam",
-    "Điện thoại: 0706888818 Fax:",
-];
-
-$address = null;
-
-foreach ($line as $key => $value) {
-    if (strpos($value, '4. Địa chỉ trụ sở chính') !== false) {
-        $address = trim($value);
-        if (isset($line[$key + 1]) && strpos($line[$key + 1], ':') === false) {
-            $address .= " " . trim($line[$key + 1]);
-        }
-        if (isset($line[$key + 2]) && strpos($line[$key + 2], ':') === false) {
-            $address .= " " . trim($line[$key + 2]);
-        }
-        if (isset($line[$key + 3]) && strpos($line[$key + 2], ':') === false) {
-          $address .= " " . trim($line[$key + 3]);
-      }
-        break;
-    }
-}
-
-dd($address);
+  
 
 
   // email
   $lines = [
-    'Email: phattriengiaoducthehetre@gma Website:',
+    'Email: phattriengiaoducthehetrasasde@gma Website:',
     'il.com',
     '5. Ngành, nghề kinh doanh:'
   ];
@@ -99,7 +74,7 @@ dd($address);
 
   for ($i = 0; $i < sizeof($lines); $i++) {
     $matches = [];
-    preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches);
+   dd( preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
     if (isset($matches[1])) {
       $email = trim($matches[1]);
       if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {

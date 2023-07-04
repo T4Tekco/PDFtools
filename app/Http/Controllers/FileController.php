@@ -224,8 +224,7 @@ class FileController extends Controller
                 }
                 if (preg_match('/Fax:(\d+)/', $line, $matches)) {
                     $data['headquarters_address']['fax'] = trim(str_replace('Fax:', '', $matches[1]));
-                } elseif (strpos($line, 'Email') !== false) {
-                    preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $dataArray[$i], $matches);
+                } elseif ( preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $dataArray[$i], $matches)) {
                     $email = null;
                     if (isset($matches[1])) {
                         $email = trim($matches[1]);
@@ -336,7 +335,7 @@ class FileController extends Controller
             if (preg_match('/Nơi cấp:\s*(.*)(\n|$)/', $line, $matches)) {
 
                 $currentName   = trim($matches[1]);
-                if (strpos($line, 'Địa chỉ thường trú') === false) {
+                if (strpos($dataArray[$i + 1], ':') === false) {
                     $currentName .= ' ' .  $dataArray[$i + 1];
                 }
                 $data['owner_info']['legal_document_place'] = $currentName;

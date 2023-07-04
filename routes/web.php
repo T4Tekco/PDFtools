@@ -62,8 +62,7 @@ Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
   $line = [
-    "4. Địa chỉ trụ sở chính:",
-    "18 - MANOR 1 STR - SUNRISE A - Khu đô thị The Manor Central Park – Khu đô",
+    "4. Địa chỉ trụ sở chính:18 - MANOR 1 STR - SUNRISE A - Khu đô thị The Manor Central Park – Khu đô",
     "thị Nam đường vành đai 3, Phường Đại Kim, Quận Hoàng Mai, Thành phố Hà Nội,",
     "Việt Nam",
     "Điện thoại: 0706888818 Fax:",

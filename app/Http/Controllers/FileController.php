@@ -188,14 +188,14 @@ class FileController extends Controller
                             break;
                     }
                 } elseif (strpos($line, '4. Địa chỉ trụ sở chính') !== false) {
-                    $address = trim($dataArray[$i]);
+                    $address = trim(str_replace("4. Địa chỉ trụ sở chính: ","",$dataArray[$i]));
                     if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false) {
                         $address .= " " . trim($dataArray[$i + 1]);
                     }
                     if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false) {
                         $address .= " " . trim($dataArray[$i + 2]);
                     }
-                    if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ':') === false) {
+                    if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 3], ':') === false) {
                         $address .= " " . trim($dataArray[$i + 3]);
                     }
                     // = $address;
@@ -299,10 +299,7 @@ class FileController extends Controller
         // owner info
         for ($i =  0; $i < sizeof($dataArray); $i++) {
             $line = trim($dataArray[$i]);
-            //if (strpos($line, 'Thông tin về chủ sở hữu') !== false) {
-            //$position = $i;
-            // for ($i =  $position; $i < sizeof($dataArray); $i++) {
-            //  $line = trim($dataArray[$i]);
+         
             if (strpos($line, 'Họ và tên') !== false && strpos($line, '* Họ và tên') == false) {
                 $parts = explode(':', $line);
                 if (sizeof($parts) >= 2) {
@@ -345,14 +342,14 @@ class FileController extends Controller
                 $data['owner_info']['legal_document_place'] = $currentName;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
 
-                $address = trim($dataArray[$i]);
-                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false) {
+                $address = trim(str_replace("Địa chỉ thường trú: ","",$dataArray[$i]));
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false ) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }
                 if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ':') === false) {
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 3], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 3]);
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
@@ -363,7 +360,8 @@ class FileController extends Controller
                     $data['owner_info']['permanent_address']['country'] = trim($matches[4]);
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
-                $address = trim($dataArray[$i]);
+               // Địa chỉ liên lạc: 
+                $address = trim(str_replace("Địa chỉ liên lạc: ","",$dataArray[$i]));
                 if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], '/') === false && strpos($dataArray[$i + 1], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }
@@ -428,14 +426,14 @@ class FileController extends Controller
                 $data['legal_representative']['legal_document_place'] = $cus_legal_document_place;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
 
-                $address = trim($dataArray[$i]);
-                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false && strpos($dataArray[$i + 1], ':') === false) {
+                $address = trim(str_replace("Địa chỉ thường trú: ","",$dataArray[$i]));
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false ) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }
-                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false&& strpos($dataArray[$i + 2], ':') === false ) {
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false ) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 3], ':') === false && strpos($dataArray[$i + 3], ':') === false) {
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 3], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 3]);
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
@@ -446,7 +444,7 @@ class FileController extends Controller
                     $data['legal_representative']['permanent_address']['country'] = trim($matches[4]);
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
-                $address = trim($dataArray[$i]);
+                $address = trim(str_replace("Địa chỉ liên lạc: ","",$dataArray[$i]));
                 if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], '/') === false && strpos($dataArray[$i + 1], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 1]);
                 }

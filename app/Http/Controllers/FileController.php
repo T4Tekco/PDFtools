@@ -19,12 +19,6 @@ class FileController extends Controller
             'message' => 'INPUT_DATA_INCORRECT',
         ])->header('Content-Type', 'application/json; charset=utf-8');
     }
-    // public function getkeyapi(){
-    //     $user = Auth::user();
-    //     // Create an API token for the user
-    //     $apiToken = $user->createToken('My API Token')->plainTextToken;
-    //     return $apiToken;
-    // }
     public function process(Request $request)
     {
         //    try {
@@ -180,7 +174,7 @@ class FileController extends Controller
                     $name = trim($matches[3]);
                     $currentName =   $name;
                     if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', $dataArray[$i + 1], $matches) == 0) {
-                        $currentName .= ' '. $dataArray[$i + 1];
+                        $currentName .= ' ' . $dataArray[$i + 1];
                     }
                     switch ($type) {
                         case 'bằng tiếng việt':
@@ -193,15 +187,17 @@ class FileController extends Controller
                             $data['company_name']['abbreviation'] = trim(str_replace('Tên công ty viết tắt:', '', $name));
                             break;
                     }
-                }
-                elseif (strpos($line, '4. Địa chỉ trụ sở chính') !== false) {
-                    if (strpos($dataArray[$i + 2], ':') == false) {
-                        $address = trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);
-                    } else  if (strpos($dataArray[$i + 1], ':') == false) {
-                        $address = trim($dataArray[$i + 1]);
-                    } else {
-                        $address = trim($dataArray[$i]);
+                } elseif (strpos($line, '4. Địa chỉ trụ sở chính') !== false) {
+                    $address = trim($dataArray[$i]);
+                    if (isset($line[$dataArray + 1]) && strpos($line[$dataArray + 1], ':') === false) {
+                        $address .= " " . trim($line[$dataArray + 1]);
                     }
+                    if (isset($line[$dataArray + 2]) && strpos($line[$dataArray + 2], ':') === false) {
+                        $address .= " " . trim($line[$dataArray + 2]);
+                    }
+                    if (isset($line[$dataArray + 3]) && strpos($line[$dataArray + 2], ':') === false) {
+                      $address .= " " . trim($line[$dataArray + 3]);
+                  }
                     // = $address;
                     $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                     if (preg_match($pattern, $address, $matches)) {
@@ -211,7 +207,6 @@ class FileController extends Controller
                         $data['headquarters_address']['city'] = trim($matches[3]);
                         $data['headquarters_address']['country'] = trim($matches[4]);
                     }
-                  
                 } elseif (strpos($line, 'Điện thoại') !== false) {
 
                     if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
@@ -230,17 +225,16 @@ class FileController extends Controller
                 if (preg_match('/Fax:(\d+)/', $line, $matches)) {
                     $data['headquarters_address']['fax'] = trim(str_replace('Fax:', '', $matches[1]));
                 } elseif (strpos($line, 'Email') !== false) {
-                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') !== false) {
-                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]);
-                    } else  if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') !== false) {
-                        $value = trim($dataArray[$i]) . " " . trim($dataArray[$i + 1]) . " " . trim($dataArray[$i + 2]);;
-                    } else {
-                        $value = trim($dataArray[$i]);
+                    preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $dataArray[$i], $matches);
+                    $email = null;
+                    if (isset($matches[1])) {
+                        $email = trim($matches[1]);
+                        if (isset($lines[$i + 1]) && strpos($dataArray[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
+                            $email .=  trim($dataArray[$i + 1]);
+                        }
                     }
-                    $legal_representative = explode(':', $dataArray[$i]);
-                    if (sizeof($legal_representative) >= 2) {
-                        $data['headquarters_address']['Email'] =  trim(str_replace('Website', '', $legal_representative[1]));
-                    }
+                    $data['headquarters_address']['Email'] =  $email;
+
                     // $data['headquarters_address']['Email'] = trim(str_replace('Email', '', $line));
                 }
                 if (preg_match('/Website:(\S+)/', $line, $matches)) {
@@ -356,13 +350,12 @@ class FileController extends Controller
                     $legal = trim($dataArray[$i]) . "  " . trim($dataArray[$i + 1]);
                 }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
-                    if (preg_match($pattern, $address, $matches)) {
-                        $data['owner_info']['permanent_address']['street'] = trim($matches[1]);
-                        $data['owner_info']['permanent_address']['district'] = trim($matches[2]);
-                        $data['owner_info']['permanent_address']['city'] = trim($matches[3]);
-                        $data['owner_info']['permanent_address']['country'] = trim($matches[4]);
-                    }
-               
+                if (preg_match($pattern, $address, $matches)) {
+                    $data['owner_info']['permanent_address']['street'] = trim($matches[1]);
+                    $data['owner_info']['permanent_address']['district'] = trim($matches[2]);
+                    $data['owner_info']['permanent_address']['city'] = trim($matches[3]);
+                    $data['owner_info']['permanent_address']['country'] = trim($matches[4]);
+                }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);
@@ -376,8 +369,6 @@ class FileController extends Controller
                     $data['owner_info']['contact_address']['city'] = trim($matches[3]);
                     $data['owner_info']['contact_address']['country'] = trim($matches[4]);
                 }
-
-               
             }
             // echo '<pre>';
             // print_r($dataArray[$i]);
@@ -438,7 +429,6 @@ class FileController extends Controller
                     $data['legal_representative']['permanent_address']['city'] = trim($matches[3]);
                     $data['legal_representative']['permanent_address']['country'] = trim($matches[4]);
                 }
-               
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 if (strpos($dataArray[$i + 1], ':') !== false) {
                     $legal = trim($dataArray[$i]);
@@ -484,7 +474,7 @@ class FileController extends Controller
 
         // $newFilename =   $newName  . $today . '.json'; // your new JSON file name
         // // Storage::put($newFilename, $jsonData);
-        Storage::delete($textFile . '.txt');
+        Storage::delete($textFile);
         // echo '<pre>';
         // print_r($data);
         // Return the processed data along with the file name

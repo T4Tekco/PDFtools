@@ -61,83 +61,55 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-$currentName =null ;
-  if (preg_match('/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|tắt):\s*(.*)/iu', 'Tên công ty viết tắt: LAC HONG INVESTMENT CONSULTING CO., LTD', $matches) == 0) {
-    $currentName .=  1;
+  $line = [
+    "4. Địa chỉ trụ sở chính:",
+    "18 - MANOR 1 STR - SUNRISE A - Khu đô thị The Manor Central Park – Khu đô",
+    "thị Nam đường vành đai 3, Phường Đại Kim, Quận Hoàng Mai, Thành phố Hà Nội,",
+    "Việt Nam",
+    "Điện thoại: 0706888818 Fax:",
+];
+
+$address = null;
+
+foreach ($line as $key => $value) {
+    if (strpos($value, '4. Địa chỉ trụ sở chính') !== false) {
+        $address = trim($value);
+        if (isset($line[$key + 1]) && strpos($line[$key + 1], ':') === false) {
+            $address .= " " . trim($line[$key + 1]);
+        }
+        if (isset($line[$key + 2]) && strpos($line[$key + 2], ':') === false) {
+            $address .= " " . trim($line[$key + 2]);
+        }
+        if (isset($line[$key + 3]) && strpos($line[$key + 2], ':') === false) {
+          $address .= " " . trim($line[$key + 3]);
+      }
+        break;
+    }
 }
 
-dd($currentName );
+dd($address);
 
+
+  // email
   $lines = [
-    'tên doanh nghiệp viết bằng tiếng việt: công cty abc -',
-    'lang sonw',
+    'Email: phattriengiaoducthehetre@gma Website:',
+    'il.com',
+    '5. Ngành, nghề kinh doanh:'
   ];
-
-
-  $data['company_name'] = [];
-
-  $currentType = '';
-  $currentName = '';
+  $email = null;
 
   for ($i = 0; $i < sizeof($lines); $i++) {
-
-    $pattern = '/^tên (công ty|doanh nghiệp) viết (bằng tiếng Việt|bằng tiếng nước ngoài|viết tắt):\s*(.*)/iu';
-    if (preg_match($pattern,  $lines[$i], $matches)) {
-      $type = strtolower($matches[2]);
-      $name = trim($matches[3]);
-      $currentName =   $name;
-      // If previous type is 'bằng tiếng việt', concatenate the name with current line
-      if (preg_match('/^tên (công ty|doanh nghiệp) viết bằng tiếng Việt:\s*(.*)/iu', $lines[$i + 1], $matches) == 0) {
-        $currentName .= ' ' .  $lines[$i + 1];
-      }
-      switch ($type) {
-        case 'bằng tiếng việt':
-          $data['company_name']['vietnamese'] = $currentName;
-          break;
-        case 'bằng tiếng nước ngoài':
-          $data['company_name']['foreign'] = $name;
-          break;
-        case 'viết tắt':
-          $data['company_name']['abbreviation'] = $name;
-          break;
+    $matches = [];
+    preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches);
+    if (isset($matches[1])) {
+      $email = trim($matches[1]);
+      if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
+        $email .=  trim($lines[$i + 1]);
       }
     }
   }
 
-  // Remove trailing hyphen and extra spaces from the Vietnamese company name
-  if (isset($data['company_name']['vietnamese'])) {
-    $data['company_name']['vietnamese'] = rtrim($data['company_name']['vietnamese'], '- ');
-  }
-
-  // Output the result
-  dd($data['company_name']);
-
-  // $text1 = 'Số 86 Nguyễn Tri Phương, Khu Phố Tân Long, Phường Tân Hiệp, Thành phố Tân Uyên, Tỉnh Bình Dương, Việt Nam';
-  // $text2 = 'Số 34 Ngõ 2/114 phố Tân Phong, Phường Thụy Phương, Quận Bắc Từ Liêm, Thành phố Hà, Việt Nam';
-
-  // $address_parts = explode(',', $text1);
-  // $data = [
-  //   'headquarters_address' => [
-  //     'street' => '',
-  //     'district' => '',
-  //     'city' => ''
-  //   ]
-  // ];
-  // for ($i = 0; $i < sizeof($address_parts); $i++) {
-  //   if (strpos($address_parts[$i], 'Thành phố') !== false) {
-  //     $data['headquarters_address']['city'] = trim($address_parts[$i]);
-  //   } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
-  //     $data['headquarters_address']['district'] = trim($address_parts[$i]);
-  //   } elseif (strpos($address_parts[$i], 'Quận') !== false || strpos($address_parts[$i], 'Tỉnh') !== false) {
-  //     $data['headquarters_address']['district'] = trim($address_parts[$i]);
-  //   } else {
-  //     $data['headquarters_address']['street'] .= trim($address_parts[$i]);
-  //   }
-  //   # code...
-  // }
-
-  // // Output the results
-  // dd($data);
+  dd($email);
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);

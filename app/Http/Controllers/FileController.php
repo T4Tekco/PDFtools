@@ -189,15 +189,15 @@ class FileController extends Controller
                     }
                 } elseif (strpos($line, '4. Địa chỉ trụ sở chính') !== false) {
                     $address = trim($dataArray[$i]);
-                    if (isset($dataArray[$i+ 1] ) && strpos($dataArray[$i+ 1] , ':') === false) {
-                        $address .= " " . trim($dataArray[$i+1] );
+                    if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false) {
+                        $address .= " " . trim($dataArray[$i + 1]);
                     }
-                    if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ':') === false) {
+                    if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false) {
                         $address .= " " . trim($dataArray[$i + 2]);
                     }
-                    if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ':') === false) {
-                      $address .= " " . trim($dataArray[$i+ 3]);
-                  }
+                    if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ':') === false) {
+                        $address .= " " . trim($dataArray[$i + 3]);
+                    }
                     // = $address;
                     $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                     if (preg_match($pattern, $address, $matches)) {
@@ -344,17 +344,17 @@ class FileController extends Controller
                 }
                 $data['owner_info']['legal_document_place'] = $currentName;
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
-                
+
                 $address = trim($dataArray[$i]);
-                if (isset($dataArray[$i+ 1] ) && strpos($dataArray[$i+ 1] , ':') === false) {
-                    $address .= " " . trim($dataArray[$i+1] );
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false) {
+                    $address .= " " . trim($dataArray[$i + 1]);
                 }
-                if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ':') === false) {
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ':') === false) {
-                  $address .= " " . trim($dataArray[$i+ 3]);
-              }
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ':') === false) {
+                    $address .= " " . trim($dataArray[$i + 3]);
+                }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
                     $data['owner_info']['permanent_address']['street'] = trim($matches[1]);
@@ -364,15 +364,15 @@ class FileController extends Controller
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 $address = trim($dataArray[$i]);
-                    if (isset($dataArray[$i+ 1] ) && strpos($dataArray[$i+ 1] , ':') === false) {
-                        $address .= " " . trim($dataArray[$i+1] );
-                    }
-                    if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ':') === false) {
-                        $address .= " " . trim($dataArray[$i + 2]);
-                    }
-                    if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ':') === false) {
-                      $address .= " " . trim($dataArray[$i+ 3]);
-                  }
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ',') === true) {
+                    $address .= " " . trim($dataArray[$i + 1]);
+                }
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ',') === true) {
+                    $address .= " " . trim($dataArray[$i + 2]);
+                }
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ',') === true) {
+                    $address .= " " . trim($dataArray[$i + 3]);
+                }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
                     $data['owner_info']['contact_address']['street'] = trim($matches[1]);
@@ -429,15 +429,15 @@ class FileController extends Controller
             } elseif (strpos($line, 'Địa chỉ thường trú') !== false) {
 
                 $address = trim($dataArray[$i]);
-                    if (isset($dataArray[$i+ 1] ) && strpos($dataArray[$i+ 1] , ':') === false) {
-                        $address .= " " . trim($dataArray[$i+1] );
-                    }
-                    if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ':') === false) {
-                        $address .= " " . trim($dataArray[$i + 2]);
-                    }
-                    if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ':') === false) {
-                      $address .= " " . trim($dataArray[$i+ 3]);
-                  }
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ':') === false) {
+                    $address .= " " . trim($dataArray[$i + 1]);
+                }
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ':') === false) {
+                    $address .= " " . trim($dataArray[$i + 2]);
+                }
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ':') === false) {
+                    $address .= " " . trim($dataArray[$i + 3]);
+                }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
                     $data['legal_representative']['permanent_address']['street'] = trim($matches[1]);
@@ -447,15 +447,15 @@ class FileController extends Controller
                 }
             } elseif (strpos($line, 'Địa chỉ liên lạc') !== false) {
                 $address = trim($dataArray[$i]);
-                if (isset($dataArray[$i+ 1] ) && strpos($dataArray[$i+ 1] , ':') === false) {
-                    $address .= " " . trim($dataArray[$i+1] );
+                if (isset($dataArray[$i + 1]) && strpos($dataArray[$i + 1], ',') === true) {
+                    $address .= " " . trim($dataArray[$i + 1]);
                 }
-                if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ',') === true) {
+                if (isset($dataArray[$i + 2]) && strpos($dataArray[$i + 2], ',') === true) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ',') === true) {
-                  $address .= " " . trim($dataArray[$i+ 3]);
-              }
+                if (isset($dataArray[$i + 3]) && strpos($dataArray[$i + 2], ',') === true) {
+                    $address .= " " . trim($dataArray[$i + 3]);
+                }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';
                 if (preg_match($pattern, $address, $matches)) {
                     $data['legal_representative']['contact_address']['street'] = trim($matches[1]);

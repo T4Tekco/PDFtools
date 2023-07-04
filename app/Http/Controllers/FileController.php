@@ -450,10 +450,10 @@ class FileController extends Controller
                 if (isset($dataArray[$i+ 1] ) && strpos($dataArray[$i+ 1] , ':') === false) {
                     $address .= " " . trim($dataArray[$i+1] );
                 }
-                if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ':') === false) {
+                if (isset($dataArray[$i+ 2]) && strpos($dataArray[$i+ 2] , ',') === true) {
                     $address .= " " . trim($dataArray[$i + 2]);
                 }
-                if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ':') === false) {
+                if (isset($dataArray[$i+ 3]) && strpos($dataArray[$i + 2], ',') === true) {
                   $address .= " " . trim($dataArray[$i+ 3]);
               }
                 $pattern = '/^(.*),\s*(.*),\s*(.*),\s*([^\d]+)$/u';

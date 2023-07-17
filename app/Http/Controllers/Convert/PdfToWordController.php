@@ -38,7 +38,6 @@ class PdfToWordController extends Controller
             $request->validate([
                 'file' => 'required|max:2048',
             ]);
-
             // Get the file extension
             $extension = $request->file('file')->getClientOriginalExtension();
 
@@ -65,7 +64,6 @@ class PdfToWordController extends Controller
                 // Invalid file type
                 throw new \Exception('File type not supported');
             }
-
             // Return the output in JSON format
             // return response()->json([
             //     'status' => 'success',
@@ -135,7 +133,7 @@ class PdfToWordController extends Controller
             ], 422);
         }
     }
- 
+
     // pdf to word 
 
     public function convertToWord(Request $request)
@@ -161,12 +159,6 @@ class PdfToWordController extends Controller
 
             // Convert HTML to Word using PhpWord
             $htd = new HTML_TO_DOC();
-            // $htd -> createDoc($html ,  "my-document" ,  1 );
-            // $phpWord = new PhpWord();
-            // $section = $phpWord->addSection();
-            // \PhpOffice\PhpWord\Shared\Html::addHtml($section, $html);
-            // $tempFile = tempnam(sys_get_temp_dir(), 'word');
-            // $phpWord->save($tempFile . '.docx', 'Word2007');
 
             // // Return the Word file as a download
             return response()->download($html . '.docx', $pdfFile->getClientOriginalName() . '.docx');

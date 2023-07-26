@@ -105,5 +105,5 @@ Route::post('/api/pdf-to-jsont', [pdftxt::class, 'convertToJsontest']);
 Route::get('/api/word-to-pdf', [PdfToWordController::class, 'index']);
 Route::post('/api/word-to-pdf', [PdfToWordController::class, 'convertToPdf']);
 
-Route::get('api/process-file', [FileController::class, 'index']);
-Route::post('api/process-file', [FileController::class, 'process']);
+Route::get('/api/process-file', [FileController::class, 'index']);
+Route::post('/api/process-file', [FileController::class, 'process']);

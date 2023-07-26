@@ -23,7 +23,7 @@ class FileController extends Controller
     {
         //    try {
         // Validate the uploaded file
-        $request->validate([
+       $validator =  $request->validate([
             'file' => 'required|mimes:pdf|max:2048',
         ]);
         if ($validator && $request->hasFile('file')) {

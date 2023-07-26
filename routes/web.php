@@ -24,69 +24,69 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //admin
-Route::get('/admin', [homeAdmin::class, 'index']);
-Route::get('/admin/profile', [accountAdmin::class, 'index']);
+// Route::get('/admin', [homeAdmin::class, 'index']);
+// Route::get('/admin/profile', [accountAdmin::class, 'index']);
 
-Route::get('language/{locate}', function ($locate) {
-  if (!in_array($locate, ['en', 'vi'])) {
-    abort(404);
-  }
-  session()->put('locate', $locate);
-  return redirect()->back();
-});
-// account
-Route::get('/login', [AccountController::class, 'Login'])->name('Login');
-Route::post('/login', [AccountController::class, 'postlogin']);
-Route::get('/signup', [AccountController::class, 'Signup'])->name('signup');
-Route::get('/profile', [AccountController::class, 'Profile'])->name('profile');
-//change pass and forgot pass
-Route::get('/changepassword', [AccountController::class, 'ChangePass'])->name('change_pass');
-Route::get('/forgotpass', [AccountController::class, 'ForgotPass'])->name('forgotpas');
+// Route::get('language/{locate}', function ($locate) {
+//   if (!in_array($locate, ['en', 'vi'])) {
+//     abort(404);
+//   }
+//   session()->put('locate', $locate);
+//   return redirect()->back();
+// });
+// // account
+// Route::get('/login', [AccountController::class, 'Login'])->name('Login');
+// Route::post('/login', [AccountController::class, 'postlogin']);
+// Route::get('/signup', [AccountController::class, 'Signup'])->name('signup');
+// Route::get('/profile', [AccountController::class, 'Profile'])->name('profile');
+// //change pass and forgot pass
+// Route::get('/changepassword', [AccountController::class, 'ChangePass'])->name('change_pass');
+// Route::get('/forgotpass', [AccountController::class, 'ForgotPass'])->name('forgotpas');
 
-Route::get('/aboutus', [AccountController::class, 'AboutUs'])->name('aboutus');
-Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
-Route::get('/tool', [AccountController::class, 'Tool'])->name('tool');
+// Route::get('/aboutus', [AccountController::class, 'AboutUs'])->name('aboutus');
+// Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
+// Route::get('/tool', [AccountController::class, 'Tool'])->name('tool');
 
 Route::get('/', [homeapge::class, 'Homepage'])->name('Homepage');
-Route::get('/home', [ConvertFilesController::class, 'Convert'])->name('convert');
-Route::get('/policy', [AccountController::class, 'policy'])->name('policy');
-Route::get('/term', [AccountController::class, 'term'])->name('term');
-Route::get('/logout', function () {
-  session_start();
-  session_unset();
-  header("location: /");
-});
+// Route::get('/home', [ConvertFilesController::class, 'Convert'])->name('convert');
+// Route::get('/policy', [AccountController::class, 'policy'])->name('policy');
+// Route::get('/term', [AccountController::class, 'term'])->name('term');
+// Route::get('/logout', function () {
+//   session_start();
+//   session_unset();
+//   header("location: /");
+// });
 
-// convert file
-Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
-Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
-Route::get('/testform', function () {
+// // convert file
+// Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
+// Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
+// Route::get('/testform', function () {
 
 
 
-  // email
-  $lines = [
-    "Email: mayminhquang.2023@gmail.co Website:",
-    "m",
-    '5. Ngành, nghề kinh doanh:'
-  ];
-  $email = null;
+//   // email
+//   $lines = [
+//     "Email: mayminhquang.2023@gmail.co Website:",
+//     "m",
+//     '5. Ngành, nghề kinh doanh:'
+//   ];
+//   $email = null;
 
-  for ($i = 0; $i < sizeof($lines); $i++) {
-    $matches = [];
-   // (preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
-    if ((preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches))) {
-      $email = trim($matches[1]);
+//   for ($i = 0; $i < sizeof($lines); $i++) {
+//     $matches = [];
+//    // (preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
+//     if ((preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches))) {
+//       $email = trim($matches[1]);
      
-      if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
-        $email .=  trim($lines[$i + 1]);
-      }
-    }
-  }
+//       if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
+//         $email .=  trim($lines[$i + 1]);
+//       }
+//     }
+//   }
 
-  dd($email);
-});
-Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
+//   dd($email);
+// });
+// Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);
 
 Route::post('/convert', [ConversionController::class, 'pdfToTxt'])->name('pdfToTxt');

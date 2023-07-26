@@ -8,11 +8,11 @@ class homeapge extends Controller
 {
     public function Homepage()
     {
-        if (session()->has('role')) {
-            $redirectUrl = (session()->get('role') === 'admin') ? '/admin' : '/home';
-            return redirect($redirectUrl);
-        } else {
-            return view('login');
-        }
+        return response()->json([
+            'status' => '100',
+            'output' => null,
+            'error' => '',
+            // 'token' => Str::random(80)
+        ], 400);
     }
 }

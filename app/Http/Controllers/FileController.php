@@ -26,15 +26,24 @@ class FileController extends Controller
         $request->validate([
             'file' => 'required|mimes:pdf|max:2048',
         ]);
-        // Process the file and generate the required output
-        $output = $this->processFile1($request->file('file'));
+        if ($validator && $request->hasFile('file')) {
+            // Process the file and generate the required output
+            $output = $this->processFile1($request->file('file'));
 
-        // Return the output in JSON format
-        return response()->json([
-            'status' => '200',
-            'output' => $output,
-            // 'token' => Str::random(80)
-        ]);
+            // Return the output in JSON format
+            return response()->json([
+                'status' => '200',
+                'output' => $output,
+                // 'token' => Str::random(80)
+            ]);
+        } else {
+            return response()->json([
+                'status' => '100',
+                'output' => null,
+                'error' => 'File not found in the request.',
+                // 'token' => Str::random(80)
+            ], 400);
+        }
     }
 
 

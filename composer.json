@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "alimranahmed/laraocr": "^1.2",
         "barryvdh/laravel-dompdf": "^2.0",
         "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.5",
@@ -23,7 +24,10 @@
         "smalot/pdfparser": "^2.4",
         "spatie/browsershot": "^3.57",
         "spatie/pdf-to-text": "^1.52",
+        "symfony/finder": "^6.3",
+        "symfony/process": "^6.3",
         "tecnickcom/tcpdf": "^6.6",
+        "thiagoalessio/tesseract_ocr": "^2.12",
         "vaites/php-apache-tika": "^1.2"
     },
     "require-dev": {

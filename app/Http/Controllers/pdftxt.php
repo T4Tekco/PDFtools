@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Exception;
 use Illuminate\Http\Request;
 
@@ -26,16 +27,16 @@ class pdftxt extends Controller
             $request->validate([
                 'file' => 'required|mimes:pdf|max:2048',
             ]);
-    
+
             $pdfFile = $request->file('file');
             $pdfToText = (new Pdf(getenv('PDFTOTEXT_PATH')))
                 ->setPdf($pdfFile)
                 ->text();
-    
+
             // Save text data to a file
             $fileName = $pdfFile->getClientOriginalName() . '.txt';
             Storage::put($fileName, $pdfToText);
-    
+
             // Download the text file
             return response()->download(storage_path('app/' . $fileName))->deleteFileAfterSend(true);
         } catch (Exception $e) {
@@ -46,7 +47,7 @@ class pdftxt extends Controller
             ], 422);
         }
     }
-    
+
     public function convertToJson(Request $request)
     {
         try {
@@ -191,7 +192,6 @@ class pdftxt extends Controller
         $pdfToText = (new Pdf(getenv('PDFTOTEXT_PATH')))
             ->setOptions(['-enc' => 'MacRoman'])
             ->setPdf($pdfFile)
-
             ->text();
         // Save text data to a file
         $fileName = $pdfFile->getClientOriginalName() . '.txt';

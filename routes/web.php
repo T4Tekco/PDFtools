@@ -5,11 +5,7 @@ use App\Http\Controllers\pdftxt;
 use App\Http\Controllers\FileController;
 
 // giao dien
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\admin\accountAdmin;
-use App\Http\Controllers\admin\homeAdmin;
 use App\Http\Controllers\Convert\PdfToWordController;
-use App\Http\Controllers\ConvertFilesController;
 use App\Http\Controllers\homeapge;
 use Illuminate\Support\Facades\Route;
 
@@ -57,36 +53,29 @@ Route::get('/', [homeapge::class, 'Homepage'])->name('Homepage');
 //   header("location: /");
 // });
 
-// // convert file
-// Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
-// Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
-// Route::get('/testform', function () {
+// convert file
+Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
+Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
+Route::get('/testform', function () {
+  $line = "8. Bảo dưỡng, sửa chữa ô tô và xe có động cơ khác 4520(Chính)";
+  // $pattern = '/\b\d{3,4}\b/';
+
+  if (strpos($line, '(Chính)') !== false) {
+  $pattern = '/\b\d{3,4}\b/';
+  
+  if (preg_match_all($pattern, $line, $matches)) {
+      $numbers = $matches[0];
+      dd($numbers);
+      // $numbers will contain the matched numbers: ["1235", "456"]
+  }
+  }
 
 
+  
+  
 
-//   // email
-//   $lines = [
-//     "Email: mayminhquang.2023@gmail.co Website:",
-//     "m",
-//     '5. Ngành, nghề kinh doanh:'
-//   ];
-//   $email = null;
-
-//   for ($i = 0; $i < sizeof($lines); $i++) {
-//     $matches = [];
-//    // (preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
-//     if ((preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches))) {
-//       $email = trim($matches[1]);
-     
-//       if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
-//         $email .=  trim($lines[$i + 1]);
-//       }
-//     }
-//   }
-
-//   dd($email);
-// });
-// Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
+});
+Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);
 
 Route::post('/convert', [ConversionController::class, 'pdfToTxt'])->name('pdfToTxt');

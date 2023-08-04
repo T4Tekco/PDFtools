@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\convert\ImgToText;
 use App\Http\Controllers\FileController;
 
 use Illuminate\Http\Request;
@@ -24,3 +25,5 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('/ImgToText',[ImgToText::class,'convertImgToText_'])->name('img-to-text');
+Route::post('/base64/ImgToText',[ImgToText::class,'convertImgToTextBase64_'])->name('img-base64-to-text');

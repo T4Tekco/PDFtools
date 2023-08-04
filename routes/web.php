@@ -5,11 +5,7 @@ use App\Http\Controllers\pdftxt;
 use App\Http\Controllers\FileController;
 
 // giao dien
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\admin\accountAdmin;
-use App\Http\Controllers\admin\homeAdmin;
 use App\Http\Controllers\Convert\PdfToWordController;
-use App\Http\Controllers\ConvertFilesController;
 use App\Http\Controllers\homeapge;
 use Illuminate\Support\Facades\Route;
 

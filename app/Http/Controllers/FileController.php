@@ -281,13 +281,13 @@ class FileController extends Controller
                         } else {
                             if (preg_match('/\b\d{3,4}\b/', $arr, $matches)) {
                                 $data['business_lines'][] = [
-                                    'industry_code' =>  $matches[1]
+                                    'industry_code' => $matches[0]
                                 ];
                             }
 
                             if (strpos($arr, '(Chính)') !== false) {
                                 preg_match('/\b\d{3,4}\b/', $arr, $matches);
-                                $data['business_lines']['main_industry_code'] = trim(str_replace('(Chính)', '', $matches[1]));
+                                $data['business_lines']['main_industry_code'] = trim(str_replace('(Chính)', '', $matches[0]));
                             }
                         }
                     }

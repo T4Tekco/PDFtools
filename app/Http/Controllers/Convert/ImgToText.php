@@ -27,8 +27,6 @@ class ImgToText extends Controller
             $tempImageFile = tempnam(sys_get_temp_dir(), 'ocr_');
             file_put_contents($tempImageFile, $binaryImageData);
 
-            // Set the path to the Tesseract executable
-            $tesseractPath = 'tesseract';
 
             // Set the path to the "tessdata" directory
             $tessdataDir = 'C:\Program Files\Tesseract-OCR\tessdata';

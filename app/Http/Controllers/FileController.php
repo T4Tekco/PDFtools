@@ -23,7 +23,7 @@ class FileController extends Controller
     {
         //    try {
         // Validate the uploaded file
-       $validator =  $request->validate([
+        $validator =  $request->validate([
             'file' => 'required|mimes:pdf',
         ]);
         if ($validator && $request->hasFile('file')) {
@@ -259,11 +259,8 @@ class FileController extends Controller
                     //trim(str_replace('Ngày; thành lập:', '', $line));
                 } elseif (strpos($line, 'Ngành, nghề kinh doanh') !== false) {
                     continue;
-                } elseif (strpos($line, ' VNĐ') !== false) {
-                    $charter_capital = explode(':', $line);
-                    if (sizeof($charter_capital) >= 2) {
-                        $data['charter_capital'] = trim($charter_capital[1]);
-                    }
+                } else  if (preg_match('/Vốn điều lệ:\s*([\d.,]+)\s*VNĐ/', $line, $matches)) {
+                    $data['charter_capital']  = trim(str_replace('.', '', $matches[1]));
                 }
             }
         }

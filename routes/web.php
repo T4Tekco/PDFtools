@@ -57,30 +57,21 @@ Route::get('/logout', function () {
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
+  $line = "8. Bảo dưỡng, sửa chữa ô tô và xe có động cơ khác 4520(Chính)";
+  // $pattern = '/\b\d{3,4}\b/';
 
-
-
-  // email
-  $lines = [
-    "Email: mayminhquang.2023@gmail.co Website:",
-    "m",
-    '5. Ngành, nghề kinh doanh:'
-  ];
-  $email = null;
-
-  for ($i = 0; $i < sizeof($lines); $i++) {
-    $matches = [];
-   // (preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches));
-    if ((preg_match('/(?:Email:)\s*([\w\-.+]+@[\w\-.]+)/i', $lines[$i], $matches))) {
-      $email = trim($matches[1]);
-     
-      if (isset($lines[$i + 1]) && strpos($lines[$i + 1], '5. Ngành, nghề kinh doanh:') !== 0) {
-        $email .=  trim($lines[$i + 1]);
-      }
-    }
+  if (strpos($line, '(Chính)') !== false) {
+  $pattern = '/\b\d{3,4}\b/';
+  
+  if (preg_match_all($pattern, $line, $matches)) {
+      $numbers = $matches[0];
+      dd($numbers);
+      // $numbers will contain the matched numbers: ["1235", "456"]
+  }
   }
 
-  dd($email);
+  
+
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);

@@ -273,14 +273,14 @@ class FileController extends Controller
                         if (strpos($arr, 'Thời gian đăng') !== false) {
                             continue;
                         } else {
-                            if (preg_match('/\s(\d+)/', $arr, $matches)) {
+                            if (preg_match('/\b\d{3,4}\b/', $arr, $matches)) {
                                 $data['business_lines'][] = [
                                     'industry_code' =>  $matches[1]
                                 ];
                             }
 
                             if (strpos($arr, '(Chính)') !== false) {
-                                preg_match('/\s(\d+)\D/', $arr, $matches);
+                                preg_match('/\b\d{3,4}\b/', $arr, $matches);
                                 $data['business_lines']['main_industry_code'] = trim(str_replace('(Chính)', '', $matches[1]));
                             }
                         }

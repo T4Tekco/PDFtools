@@ -13,6 +13,7 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "dompdf/dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.5",
+        "initred/laravel-tabula": "*",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",

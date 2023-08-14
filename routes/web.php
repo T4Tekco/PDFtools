@@ -8,6 +8,7 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\Convert\PdfToWordController;
 use App\Http\Controllers\homeapge;
 use Illuminate\Support\Facades\Route;
+use InitRed\Tabula\Tabula;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,23 +58,19 @@ Route::get('/', [homeapge::class, 'Homepage'])->name('Homepage');
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
 Route::get('/test', [pdftxt::class, 'convertfilepdfencode']);
 Route::get('/testform', function () {
-  $line = "8. Bảo dưỡng, sửa chữa ô tô và xe có động cơ khác 4520(Chính)";
-  // $pattern = '/\b\d{3,4}\b/';
+  $file = storage_path('app/public/pdf/te.pdf');
 
-  if (strpos($line, '(Chính)') !== false) {
-  $pattern = '/\b\d{3,4}\b/';
+  $tabula = new Tabula('C:/Program Files/Java/jre1.8.0_361/bin/java.exe');
   
-  if (preg_match_all($pattern, $line, $matches)) {
-      $numbers = $matches[0];
-      dd($numbers);
-      // $numbers will contain the matched numbers: ["1235", "456"]
-  }
-  }
-
-
-  
-  
-
+  $tabula->setPdf($file)
+      ->setOptions([
+          'format' => 'csv',
+          'pages' => 'all',
+          'lattice' => true,
+          'stream' => true,
+          'outfile' => storage_path("app/public/csv/test.csv"),
+      ])
+      ->convert();
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
 // Route::get('/pdf-to-txt', [ConversionController::class, 'index']);

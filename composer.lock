@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8914ce1b32bc33112b5a4d9990030687",
+    "content-hash": "654a49c4cc14e5323adde04ba12d4b69",
     "packages": [
         {
             "name": "alimranahmed/laraocr",
@@ -1231,6 +1231,61 @@
                 }
             ],
             "time": "2021-10-07T12:57:01+00:00"
+        },
+        {
+            "name": "initred/laravel-tabula",
+            "version": "v3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/initred/laravel-tabula.git",
+                "reference": "2dd1c2a43fa6797e3f88cc735d3a686a22cbc2b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/initred/laravel-tabula/zipball/2dd1c2a43fa6797e3f88cc735d3a686a22cbc2b9",
+                "reference": "2dd1c2a43fa6797e3f88cc735d3a686a22cbc2b9",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=6.0",
+                "php": ">=7.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "InitRed": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "initred",
+                    "email": "initred@gmail.com"
+                }
+            ],
+            "description": "laravel-tabula is a tool for liberating data tables trapped inside PDF files for the Laravel framework.",
+            "keywords": [
+                "csv",
+                "json",
+                "laravel",
+                "pdf",
+                "table",
+                "tabula",
+                "tsv"
+            ],
+            "support": {
+                "issues": "https://github.com/initred/laravel-tabula/issues",
+                "source": "https://github.com/initred/laravel-tabula/tree/v3.0"
+            },
+            "time": "2021-04-06T12:34:55+00:00"
         },
         {
             "name": "intervention/image",
@@ -9966,5 +10021,5 @@
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }

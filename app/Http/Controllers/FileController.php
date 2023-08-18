@@ -22,23 +22,33 @@ class FileController extends Controller
     public function process(Request $request)
     {
         //    try {
-        // Validate the uploaded file
-        $validator =  $request->validate([
-            'file' => 'required|mimes:pdf',
-        ]);
-        if ($validator && $request->hasFile('file')) {
-            // Process the file and generate the required output
-            $output = $this->processFile1($request->file('file'));
+        try {
 
-            // Return the output in JSON format
-            return response()->json([
-                'status' => '200',
-                'output' => $output,
-                // 'token' => Str::random(80)
+            // Validate the uploaded file
+            $validator =  $request->validate([
+                'file' => 'required|mimes:pdf',
             ]);
-        } else {
+            if ($validator && $request->hasFile('file')) {
+                // Process the file and generate the required output
+                $output = $this->processFile1($request->file('file'));
+
+                // Return the output in JSON format
+                return response()->json([
+                    'status' => '200',
+                    'output' => $output,
+                    // 'token' => Str::random(80)
+                ]);
+            } else {
+                return response()->json([
+                    'status' => '400',
+                    'output' => null,
+                    'error' => 'File not found in the request.',
+                    // 'token' => Str::random(80)
+                ], 400);
+            }
+        } catch (\Throwable $th) {
             return response()->json([
-                'status' => '100',
+                'status' => '400',
                 'output' => null,
                 'error' => 'File not found in the request.',
                 // 'token' => Str::random(80)

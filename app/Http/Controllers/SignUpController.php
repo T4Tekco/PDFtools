@@ -6,16 +6,11 @@ use Illuminate\Http\Request;
 
 class SignUpController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function Signup()
     {
        return view('signup');
     }
-
     /**
      * Show the form for creating a new resource.
      *

@@ -51,7 +51,6 @@ class FileController extends Controller
                 'status' => '400',
                 'output' => null,
                 'error' => 'File not found in the request.',
-                // 'token' => Str::random(80)
             ], 400);
         }
     }

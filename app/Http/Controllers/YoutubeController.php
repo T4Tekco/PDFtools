@@ -3,10 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use YoutubeDl\Options;
+use YoutubeDl\YoutubeDl;
 
 class YoutubeController extends Controller
 {
     public function getVideo(Request $request)
+    {
+
+        if ($request->has('url')) {
+            $videoUrl = $request->input('url');
+
+            $yt = new YoutubeDl();
+            $downloadPath = public_path('/storage');
+
+            $collection = $yt->download(
+                Options::create()
+                    ->downloadPath($downloadPath)
+                    ->format('mp4')
+                    ->url($videoUrl)
+            );
+            foreach ($collection->getVideos() as $video) {
+                if ($video->getError() !== null) {
+                    return response()->json('error', "Error downloading video: ");
+                } else {
+                    $file = $video->getFile();
+                    $fileContent = base64_encode(file_get_contents($file->getPathname()));
+                    File::delete($file->getPathname());
+                    return response()->json([
+                        'file_content' => $fileContent
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['status', 404]);
+    }
+
+
+    public function getAudio(Request $request)
     {
 
         if ($request->has('url')) {
@@ -21,11 +57,9 @@ class YoutubeController extends Controller
 
             // Now $urls should contain two URLs: video and audio
             if (count($urls) >= 2) {
-                $videoUrl = $urls[0];
                 $audioUrl = $urls[1];
 
                 return response()->json([
-                    "url_video" => $videoUrl,
                     'url_audio' => $audioUrl
                 ]);
             } else {

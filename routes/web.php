@@ -10,49 +10,8 @@ use App\Http\Controllers\homeapge;
 use Illuminate\Support\Facades\Route;
 use InitRed\Tabula\Tabula;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-//admin
-// Route::get('/admin', [homeAdmin::class, 'index']);
-// Route::get('/admin/profile', [accountAdmin::class, 'index']);
-
-// Route::get('language/{locate}', function ($locate) {
-//   if (!in_array($locate, ['en', 'vi'])) {
-//     abort(404);
-//   }
-//   session()->put('locate', $locate);
-//   return redirect()->back();
-// });
-// // account
-// Route::get('/login', [AccountController::class, 'Login'])->name('Login');
-// Route::post('/login', [AccountController::class, 'postlogin']);
-// Route::get('/signup', [AccountController::class, 'Signup'])->name('signup');
-// Route::get('/profile', [AccountController::class, 'Profile'])->name('profile');
-// //change pass and forgot pass
-// Route::get('/changepassword', [AccountController::class, 'ChangePass'])->name('change_pass');
-// Route::get('/forgotpass', [AccountController::class, 'ForgotPass'])->name('forgotpas');
-
-// Route::get('/aboutus', [AccountController::class, 'AboutUs'])->name('aboutus');
-// Route::get('/contact', [AccountController::class, 'Contact'])->name('contact');
-// Route::get('/tool', [AccountController::class, 'Tool'])->name('tool');
 
 Route::get('/', [homeapge::class, 'Homepage'])->name('Homepage');
-// Route::get('/home', [ConvertFilesController::class, 'Convert'])->name('convert');
-// Route::get('/policy', [AccountController::class, 'policy'])->name('policy');
-// Route::get('/term', [AccountController::class, 'term'])->name('term');
-// Route::get('/logout', function () {
-//   session_start();
-//   session_unset();
-//   header("location: /");
-// });
 
 // convert file
 Route::get('/test/pdf-to-json', [pdftxt::class, 'index']);
@@ -73,9 +32,7 @@ Route::get('/testform', function () {
       ->convert();
 });
 Route::post('/testform', [pdftxt::class, 'convertPdfToText']);
-// Route::get('/pdf-to-txt', [ConversionController::class, 'index']);
 
-Route::post('/convert', [ConversionController::class, 'pdfToTxt'])->name('pdfToTxt');
 Route::get('/pdf-to-json', 'App\Http\Controllers\FileController@index');
 Route::post('/pdf-to-json', 'App\Http\Controllers\FileController@pdfToJson');
 

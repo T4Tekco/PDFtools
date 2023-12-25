@@ -26,7 +26,7 @@ class YoutubeController extends Controller
             );
             foreach ($collection->getVideos() as $video) {
                 if ($video->getError() !== null) {
-                    return response()->json('error', "Error downloading video: ");
+                    return response()->json(['error' => "Error downloading video"]);
                 } else {
                     $file = $video->getFile();
                     $fileContent = base64_encode(file_get_contents($file->getPathname()));

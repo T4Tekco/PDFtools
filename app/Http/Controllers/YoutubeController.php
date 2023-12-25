@@ -12,6 +12,7 @@ class YoutubeController extends Controller
     public function getVideo(Request $request)
     {
         ini_set('max_execution_time', 300);
+
         if ($request->has('url')) {
             $videoUrl = $request->input('url');
 
@@ -30,7 +31,6 @@ class YoutubeController extends Controller
                 } else {
                     $file = $video->getFile();
                     $fileContent = base64_encode(file_get_contents($file->getPathname()));
-                    File::delete($file->getPathname());
                     return response()->json([
                         'file_content' => $fileContent
                     ]);

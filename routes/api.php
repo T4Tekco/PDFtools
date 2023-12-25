@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\convert\ImgToText;
 use App\Http\Controllers\FileController;
-
+use App\Http\Controllers\YoutubeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('getVideo',[YoutubeController::class,'getVideo']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -12,7 +12,7 @@ class YoutubeController extends Controller
         if ($request->has('url')) {
             $videoUrl = $request->input('url');
 
-            $command = 'youtube-dl --verbose -g -e -f best ' . $videoUrl;
+            $command = 'youtube-dl --verbose -g -e --get-thumbnail -f best ' . $videoUrl;
             // Execute the command
             $output = shell_exec($command);
 
@@ -22,10 +22,12 @@ class YoutubeController extends Controller
             if (count($urls)) {
                 $title = $urls[0];
                 $videoUrl = $urls[1];
+                $videothumbnail = $urls[2];
 
                 return response()->json([
                     'title' =>   $title,
                     "url_video" => $videoUrl,
+                    'thumbnail'=>$videothumbnail
                 ]);
             } else {
                 return response()->json(['error', "Error retrieving video and audio URLs."]);

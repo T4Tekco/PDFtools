@@ -8,7 +8,7 @@ class YoutubeController extends Controller
 {
     public function getVideo(Request $request)
     {
-        // try {
+        try {
             if ($request->has('url')) {
                 $videoUrl = $request->input('url');
 
@@ -34,12 +34,12 @@ class YoutubeController extends Controller
             }
 
             return response()->json(['status', 404]);
-        // } catch (\Exception $e) {
-        //     return response()->json([
-        //         'status', 500,
-        //         'error' => $e
-        //     ]);
-        // }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status', 500,
+                'error' => $e
+            ]);
+        }
     }
 
 

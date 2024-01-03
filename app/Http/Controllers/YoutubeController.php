@@ -12,7 +12,7 @@ class YoutubeController extends Controller
             if ($request->has('url')) {
                 $videoUrl = $request->input('url');
 
-                $command = getenv('Path_ytb_dl')." --verbose -g -e --get-thumbnail -f best 'https://www.youtube.com/watch?v=$videoUrl'";
+                $command = getenv('Path_ytb_dl')." --verbose -g -e --get-thumbnail -f b 'https://www.youtube.com/watch?v=$videoUrl'";
 
                 $output = shell_exec($command);
 
